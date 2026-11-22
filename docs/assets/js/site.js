@@ -271,3 +271,49 @@
     run(form);
   });
 })();
+
+/* Chapters 16–28: deterministic risk, position and factor teaching labs; synthetic inputs only. */
+(() => {
+  "use strict";
+  const n = (form, key) => Number(form.querySelector('[name="' + key + '"]').value);
+  const fmt = (v, d = 2) => Number.isFinite(v) ? v.toLocaleString("zh-CN", {
+    minimumFractionDigits: d, maximumFractionDigits: d
+  }) : "不可计算";
+  const types = new Set(["var95", "kelly"]);
+  function run(form) {
+    let result = NaN, unit = "", note = "输入不在此教学模型的有效范围内。";
+    const finite = (...keys) => keys.every(k => Number.isFinite(n(form, k)));
+    switch (form.dataset.calc) {
+      case "var95": {
+        if (!finite("mean", "sigma", "z")) break;
+        const mean = n(form, "mean"), sigma = n(form, "sigma"), z = n(form, "z");
+        if (sigma < 0 || z <= 0) { note = "波动率须非负，z 值须为正。"; break; }
+        result = mean - z * sigma;
+        unit = "%";
+        note = "参数法分位点：VaR = μ − z·σ = " + fmt(mean) + " − " + fmt(z) + "×" + fmt(sigma)
+          + " = " + fmt(result) + "%（单期，单位与输入一致）。它是一条分位线，不是最大亏损，也未计入厚尾。";
+        break;
+      }
+      case "kelly": {
+        if (!finite("p", "b")) break;
+        const p = n(form, "p") / 100, b = n(form, "b");
+        if (p < 0 || p > 1 || b <= 0) { note = "胜率须在 0\u2013100%，净赔率须为正。"; break; }
+        result = (b * p - (1 - p)) / b * 100;
+        unit = "%";
+        note = "最优比例 f* = (b·p − (1−p))/b。半凯利为 " + fmt(result / 2)
+          + "%。此结果假设每期独立同分布且胜率已知；现实中须把 f* 当作上限锚而非指令。";
+        break;
+      }
+    }
+    const output = form.querySelector("output");
+    if (output) output.textContent = Number.isFinite(result) ? fmt(result) + unit : "参数不满足模型条件";
+    const explain = form.querySelector("[data-explain]");
+    if (explain) explain.textContent = note;
+  }
+  document.querySelectorAll("form[data-calc]").forEach(form => {
+    if (!types.has(form.dataset.calc)) return;
+    form.addEventListener("submit", event => event.preventDefault());
+    form.addEventListener("input", () => run(form));
+    run(form);
+  });
+})();
