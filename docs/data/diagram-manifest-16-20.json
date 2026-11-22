@@ -1,0 +1,17 @@
+{
+  "16-risk-system.svg": "Risk governance loop: identify exposures, quantify, set tolerance and review.",
+  "16-var-es.svg": "Loss distribution: VaR quantile and conditional tail mean.",
+  "16-drawdown.svg": "High-water mark, trough, maximum drawdown and recovery asymmetry.",
+  "17-prospect-value.svg": "Reference-dependent prospect-theory value function.",
+  "17-disposition.svg": "Disposition effect: realizing gains versus holding losses.",
+  "17-herding-loop.svg": "Attention, flows and price feedback loop.",
+  "18-style-map.svg": "Value, growth and momentum research dimensions.",
+  "18-reflexivity.svg": "Reflexive price-fundamental feedback as an interpretive framework.",
+  "18-style-regimes.svg": "Synthetic style regime comparison matrix.",
+  "19-quant-pipeline.svg": "Point-in-time quantitative research and execution pipeline.",
+  "19-point-in-time.svg": "Fiscal period, public disclosure, signal and trade timestamps.",
+  "19-walk-forward.svg": "Chronological training, validation, test and deployment workflow.",
+  "20-five-factors.svg": "Fama-French five factors with momentum shown as an extension.",
+  "20-factor-evaluation.svg": "Cross-sectional IC and time-series ICIR distinction.",
+  "20-crowding.svg": "Factor crowding, liquidity and unwind feedback."
+}

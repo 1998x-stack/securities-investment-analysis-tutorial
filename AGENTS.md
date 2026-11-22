@@ -6,7 +6,7 @@ Make independently readable, evidence-grounded Chinese long-form lessons. Each a
 ## Canonical paths
 - `docs/index.html` landing; `docs/lessons/NN.html` chapters; `docs/assets/css/site.css` common styles; `docs/assets/js/site.js` interactive enhancements; `docs/assets/svg/` standalone diagrams; `docs/data/evidence.json` evidence ledger.
 - Root `index.html`, `NN.html` only redirect old links; never edit as the canonical source.
-- Chapters 16–28 are presently legacy HTML, with `docs/lessons/theme.css`, and must be modernized one-by-one without breaking URLs.
+- Chapters 21–28 are presently legacy HTML, with `docs/lessons/theme.css`, and must be modernized one-by-one without breaking URLs.
 - Frontend static, no NPM/CDN required. Do not commit built caches.
 
 ## Narrative contract (Olah-style-posts)
@@ -49,3 +49,11 @@ Prefer branch/PR, verify CI diff, deploy and then verify live URL. Every batch l
 - Fundamentals: document management claims separately from audited filing facts; make investor thesis falsifiable.
 - Technical analysis: differentiate OHLC availability, adjusted-price events, indicator warm-up and delayed executable orders. RSI examples using average gains/losses must identify Wilder seeding and zero-loss behavior.
 - Portfolio theory: specify the sampling period, volatilities, correlation, portfolio weights and covariance cross term. Efficient-frontier examples should derive from actual weights and assumptions, not illustrative graphics masquerading as calculated results.
+
+
+## Chapter 16–20 risk, behavioral and quantitative research contract
+- **Risk:** Define loss variable, tail, confidence, horizon and valuation convention. VaR is a quantile, not a maximum loss; ES is a tail conditional average. Label the distribution and square-root-of-time assumptions. Basel's 97.5% one-tailed ES belongs to its market-risk IMA framework, not a universal retail rule. Maximum drawdown uses the prior high-water mark; show recovery asymmetry. Stop trigger price is not a guaranteed fill.
+- **Behavioral finance:** Attribute prospect theory to Kahneman–Tversky and distinguish its value function from probability weighting. Do not claim a universal loss-aversion coefficient. State sample and scope for disposition-effect/overtrading evidence. Translate bias labels into falsifiable process interventions.
+- **Investment strategies:** Treat value, growth and momentum as overlapping exposures. Distinguish cross-sectional from time-series momentum; discuss momentum crash and implementation costs. Present Soros reflexivity as an author-proposed interpretive framework, not a universally validated law. Discuss limits to arbitrage and capacity.
+- **Quantitative research:** Use point-in-time data, contemporaneous investable universes, delisting/corporate-action handling and signal-to-order timestamps. Do not use same-close execution for a close-generated signal without a defensible auction model. Report all trials, costs, turnover, capacity, and genuinely untouched out-of-sample periods. PBO is a backtest-selection diagnostic, not a future loss probability.
+- **Multi-factor:** Distinguish time-series factor regressions from cross-sectional stock scores. Define factor direction, construction, data lag, neutralization, weighting, rebalancing and transaction cost. Fama–French five factors are MKT/SMB/HML/RMW/CMA; UMD is an additional momentum factor, not part of FF5. Never transplant US factor return series as local-market evidence without a separately validated construction.

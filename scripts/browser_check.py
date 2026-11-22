@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Browser QA for the course's first fifteen canonical chapters and landing page.
+"""Browser QA for the course's first twenty canonical chapters and landing page.
 Needs: pip install playwright; python -m playwright install chromium.
 """
 from pathlib import Path
@@ -8,9 +8,9 @@ import json, sys
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"qa"/"browser"
 OUT.mkdir(parents=True,exist_ok=True)
-FILES=["index.html"]+[f"lessons/{i:02d}.html" for i in range(1,16)]
+FILES=["index.html"]+[f"lessons/{i:02d}.html" for i in range(1,21)]
 SIZES=[(1440,900),(390,844),(360,780)]
-EXPECTED={"01.html":"16,288.95","02.html":"972.77","03.html":"3,000.00","04.html":"30.00","05.html":"17.28","06.html":"2.94","07.html":"15,000.00","08.html":"1,726.79","09.html":"1.00","10.html":"8.00","11.html":"249.51","12.html":"15,000.00","13.html":"6.00","14.html":"75.00","15.html":"14.14"}
+EXPECTED={"01.html":"16,288.95","02.html":"972.77","03.html":"3,000.00","04.html":"30.00","05.html":"17.28","06.html":"2.94","07.html":"15,000.00","08.html":"1,726.79","09.html":"1.00","10.html":"8.00","11.html":"249.51","12.html":"15,000.00","13.html":"6.00","14.html":"75.00","15.html":"14.14","16.html":"24,672.80","17.html":"2.25","18.html":"6.80","19.html":"0.78","20.html":"0.64"}
 def main():
     errors=[];results=[]
     with sync_playwright() as pw:
@@ -93,6 +93,31 @@ def main():
                         f.locator('[name="rho"]').fill("1.5")
                         if "参数不满足" not in f.locator("output").inner_text():
                             errors.append("15 correlation >1 not rejected")
+                    if w==1440 and name=="lessons/16.html":
+                        f=page.locator('form[data-calc="risk"]')
+                        f.locator('[name="confidence"]').fill("90")
+                        if "参数不满足" not in f.locator("output").inner_text():
+                            errors.append("16 invalid confidence not rejected")
+                    if w==1440 and name=="lessons/17.html":
+                        f=page.locator('form[data-calc="prospect"]')
+                        f.locator('[name="lambda"]').fill("0.5")
+                        if "参数不满足" not in f.locator("output").inner_text():
+                            errors.append("17 lambda below 1 not rejected")
+                    if w==1440 and name=="lessons/18.html":
+                        f=page.locator('form[data-calc="styleblend"]')
+                        f.locator('[name="wm"]').fill("20")
+                        if "参数不满足" not in f.locator("output").inner_text():
+                            errors.append("18 weights not summing to 100 rejected")
+                    if w==1440 and name=="lessons/19.html":
+                        f=page.locator('form[data-calc="qsharpe"]')
+                        f.locator('[name="vol"]').fill("0")
+                        if "参数不满足" not in f.locator("output").inner_text():
+                            errors.append("19 zero volatility not rejected")
+                    if w==1440 and name=="lessons/20.html":
+                        f=page.locator('form[data-calc="factor"]')
+                        f.locator('[name="wc"]').fill("10")
+                        if "参数不满足" not in f.locator("output").inner_text():
+                            errors.append("20 factor weights not summing to 100 rejected")
                     if name=="index.html" and w==1440:
                         inp=page.locator("[data-course-search]")
                         inp.fill("财务比率分析")
