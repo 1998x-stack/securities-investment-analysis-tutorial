@@ -44,7 +44,7 @@ def main():
                         if page.locator("figure figcaption").count()<2:errors.append(f"{name}@{w}: missing figure captions")
                     if name=="index.html" and w==1440:
                         inp=page.locator("[data-course-search]")
-                        inp.fill("杜邦")
+                        inp.fill("财务比率分析")
                         visible=page.locator("[data-chapter]:visible").count()
                         if visible!=1:errors.append(f"search filter expected 1 match; got {visible}")
                         inp.fill("")
