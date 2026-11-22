@@ -12,8 +12,9 @@ LLM calls, API keys, market-data entitlements, or brokerage connectivity.
 
 - `aggregate_sentiment`: point-in-time, confidence/relevance/recency weighted classifier scores.
 - `currency_adjusted_return`: a simplified residual-FX-exposure illustration; excludes forward points, carry, basis, collateral and rebalancing.
-- `portfolio_risk_contributions`: covariance-aware Euler volatility contributions.
-- `composite_scores`, `allocate_capped`, `limit_one_way_turnover`: cross-sectional ranks and explicit portfolio constraints.
+- `portfolio_risk_contributions`: covariance-aware Euler volatility contributions with symmetry and positive-semidefinite checks.
+- `composite_scores`, `allocate_capped`, `limit_one_way_turnover`: cross-sectional ranks and explicit portfolio constraints; turnover inputs must include cash and sum to one.
+- `brinson_fachler_attribution`: sector allocation, selection and interaction effects with active-return reconciliation.
 - `net_return`, `max_drawdown`, `risk_budget_weight`: basic portfolio diagnostics and position sizing.
 
 This is an educational research skeleton, not a complete production backtester, financial advice,

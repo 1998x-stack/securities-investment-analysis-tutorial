@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-11-22",
+  "as_of": "2026-11-23",
   "scope": "Official primary references; all worked financial numbers and graphs are synthetic illustrations, not market data.",
   "chapters": {
     "10": {
@@ -836,29 +836,32 @@
         {
           "id": "batch6-26-06",
           "claim": "NIST and FSB guidance emphasize risk identification, governance, testing, monitoring and accountability for AI/ML use.",
-          "kind": "official access policy",
+          "kind": "NIST framework and FSB financial-stability policy report",
           "source_url": "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence",
           "locator": "Linked original paper, official documentation or regulator source; see lesson section.",
           "status": "verified",
-          "notes": "Claim limited to the source's stated dataset, jurisdiction, version and scope."
+          "notes": "NIST AI RMF GenAI Profile (2024) and FSB measures 1–6 discuss lifecycle risk management, governance, testing and monitoring.",
+          "supporting_sources": [
+            "https://www.fsb.org/2021/09/the-use-of-artificial-intelligence-ai-and-machine-learning-ml-by-market-intermediaries-and-asset-managers/"
+          ]
         },
         {
           "id": "batch6-26-07",
           "claim": "SEC/NASAA/FINRA caution investors not to rely solely on AI-generated information because outputs can be inaccurate, outdated or fabricated.",
-          "kind": "official framework",
+          "kind": "Joint SEC/NASAA/FINRA investor alert",
           "source_url": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-alerts/artificial-intelligence-fraud",
           "locator": "Linked original paper, official documentation or regulator source; see lesson section.",
           "status": "verified",
-          "notes": "Claim limited to the source's stated dataset, jurisdiction, version and scope."
+          "notes": "Official investor alert cautions that AI-generated information can be inaccurate or misleading; it is not a claim about model performance."
         },
         {
           "id": "batch6-26-08",
           "claim": "The interactive sentiment score is a synthetic confidence/recency-weighted classifier aggregation, not a fitted or validated market predictor.",
-          "kind": "financial stability policy report",
+          "kind": "Illustrative repository calculation",
           "source_url": "",
           "locator": "Synthetic example or repository implementation; no external performance claim.",
           "status": "illustrative",
-          "notes": "Synthetic calculation or teaching-code behavior; not an empirical market result."
+          "notes": "Synthetic confidence/recency aggregation implemented locally; no external model or market-return claim."
         }
       ]
     },
@@ -947,38 +950,38 @@
         {
           "id": "batch6-27-05",
           "claim": "China's QDII rules regulate qualified domestic institutional investors and institutional overseas securities investment; they do not create a blanket personal direct-trading entitlement.",
-          "kind": "original research",
+          "kind": "CSRC official regulation",
           "source_url": "https://www.csrc.gov.cn/csrc/c106256/c1653919/content.shtml",
           "locator": "Linked original paper, official documentation or regulator source; see lesson section.",
           "status": "verified",
-          "notes": "Claim limited to the source's stated dataset, jurisdiction, version and scope."
+          "notes": "CSRC Order No. 46 defines QDII as approved domestic fund managers/securities institutions; it is not a blanket individual overseas brokerage permission."
         },
         {
           "id": "batch6-27-06",
           "claim": "HKEX publishes an eligibility list for Stock Connect securities that changes over time; the linked official page displayed a November 2026 update.",
-          "kind": "official regulation",
+          "kind": "HKEX official eligible-securities list",
           "source_url": "https://www.hkex.com.hk/Mutual-Market/Stock-Connect/Eligible-Stocks/View-All-Eligible-Securities?sc_lang=en",
           "locator": "Linked original paper, official documentation or regulator source; see lesson section.",
           "status": "verified",
-          "notes": "Claim limited to the source's stated dataset, jurisdiction, version and scope."
+          "notes": "Official live list; the page showed an update dated 20 November 2026 when checked on 23 November 2026."
         },
         {
           "id": "batch6-27-07",
           "claim": "China's 2020 foreign-income individual income-tax notice describes source categories and foreign-tax credit rules; individual treatment depends on taxpayer and income facts.",
-          "kind": "official eligibility list",
+          "kind": "Official Ministry of Finance / State Taxation Administration notice",
           "source_url": "https://www.chinatax.gov.cn/chinatax/n810219/n810744/n3752930/n3752974/c5143076/content.html",
           "locator": "Linked original paper, official documentation or regulator source; see lesson section.",
           "status": "verified",
-          "notes": "Claim limited to the source's stated dataset, jurisdiction, version and scope."
+          "notes": "2020 notice covers foreign-source income categories, resident-individual tax calculation and foreign tax credit limits; it does not imply one universal tax rate."
         },
         {
           "id": "batch6-27-08",
           "claim": "FX, covariance and portfolio-risk lab values are synthetic; partial hedge output is a simplified residual-exposure proxy, not a quoted forward contract.",
-          "kind": "official tax notice",
+          "kind": "Illustrative repository calculation",
           "source_url": "",
           "locator": "Synthetic example or repository implementation; no external performance claim.",
           "status": "illustrative",
-          "notes": "Synthetic calculation or teaching-code behavior; not an empirical market result."
+          "notes": "Synthetic FX and covariance examples; hedge output is a simplified residual-exposure proxy, not a market-quoted forward contract."
         }
       ]
     },
@@ -1067,38 +1070,41 @@
         {
           "id": "batch6-28-05",
           "claim": "The capstone code combines PIT filtering, sentiment, FX, covariance, ranking, caps, turnover, cost and drawdown primitives; it is an educational skeleton, not a complete production backtester.",
-          "kind": "official vendor documentation",
+          "kind": "Repository implementation",
           "source_url": "",
           "locator": "Synthetic example or repository implementation; no external performance claim.",
           "status": "illustrative",
-          "notes": "Claim limited to the source's stated dataset, jurisdiction, version and scope."
+          "notes": "Claims describe local offline code primitives; no market feed, external dataset or live trading is connected."
         },
         {
           "id": "batch6-28-06",
           "claim": "Risk-budget sizing and greedy sector caps are synthetic rule examples, not a validated optimizer or expected-return model.",
-          "kind": "official framework",
+          "kind": "Illustrative repository methodology",
           "source_url": "",
           "locator": "Synthetic example or repository implementation; no external performance claim.",
           "status": "illustrative",
-          "notes": "Claim limited to the source's stated dataset, jurisdiction, version and scope."
+          "notes": "Greedy sector caps and risk-budget sizing are teaching approximations, not validated optimizers."
         },
         {
           "id": "batch6-28-07",
           "claim": "AI and financial-market governance require testing, monitoring, accountability and model-risk controls.",
-          "kind": "financial stability policy report",
+          "kind": "NIST framework and FSB financial-stability policy report",
           "source_url": "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence",
           "locator": "Linked original paper, official documentation or regulator source; see lesson section.",
           "status": "verified",
-          "notes": "Claim limited to the source's stated dataset, jurisdiction, version and scope."
+          "notes": "NIST AI RMF GenAI Profile and FSB report support lifecycle risk management, testing, monitoring and accountability.",
+          "supporting_sources": [
+            "https://www.fsb.org/2021/09/the-use-of-artificial-intelligence-ai-and-machine-learning-ml-by-market-intermediaries-and-asset-managers/"
+          ]
         },
         {
           "id": "batch6-28-08",
           "claim": "China's securities program-trading rules and exchange implementation rules must be checked for the applicable market and current effective version.",
-          "kind": "official regulation",
-          "source_url": "https://www.csrc.gov.cn/c100028/c7480577/content.shtml",
+          "kind": "CSRC official regulation",
+          "source_url": "https://www.csrc.gov.cn/csrc/c100028/c7480577/content.shtml",
           "locator": "Linked original paper, official documentation or regulator source; see lesson section.",
           "status": "verified",
-          "notes": "Synthetic calculation or teaching-code behavior; not an empirical market result."
+          "notes": "CSRC rule is the national-level program-trading reference; applicable exchange implementation notices and current amendments must be checked separately."
         }
       ]
     },
