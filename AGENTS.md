@@ -6,7 +6,7 @@ Make independently readable, evidence-grounded Chinese long-form lessons. Each a
 ## Canonical paths
 - `docs/index.html` landing; `docs/lessons/NN.html` chapters; `docs/assets/css/site.css` common styles; `docs/assets/js/site.js` interactive enhancements; `docs/assets/svg/` standalone diagrams; `docs/data/evidence.json` evidence ledger.
 - Root `index.html`, `NN.html` only redirect old links; never edit as the canonical source.
-- Chapters 06–28 are presently legacy HTML, with `docs/lessons/theme.css`, and must be modernized one-by-one without breaking URLs.
+- Chapters 11–28 are presently legacy HTML, with `docs/lessons/theme.css`, and must be modernized one-by-one without breaking URLs.
 - Frontend static, no NPM/CDN required. Do not commit built caches.
 
 ## Narrative contract (Olah-style-posts)

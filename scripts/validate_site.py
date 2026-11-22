@@ -19,7 +19,7 @@ def main():
         if not (BASE/"lessons"/c["file"]).exists():errors.append("missing lesson "+c["file"])
     for p in pages:
         html=p.read_text(encoding="utf8");s=Scan();s.feed(html);errors.extend(f"{p}: {e}" for e in s.errors)
-        if p==BASE/"index.html" or p.name in [f"{i:02}.html" for i in range(1,6)]:
+        if p==BASE/"index.html" or p.name in [f"{i:02}.html" for i in range(1,11)]:
             if s.h1!=1:errors.append(f"{p}: expected one H1; got {s.h1}")
             if "javascript:void(0)" in html:errors.append(f"{p}: inert JS link")
         for u in s.refs:
@@ -34,7 +34,7 @@ def main():
             if "viewBox" not in x.attrib or x.find(ns+"title") is None or x.find(ns+"desc") is None:errors.append(f"{p}: SVG metadata")
         except Exception as e:errors.append(f"{p}: {e}")
     ev=json.loads((BASE/"data/evidence.json").read_text(encoding="utf8"))
-    for n in ["01","02","03","04","05"]:
+    for n in [f"{i:02d}" for i in range(1,11)]:
         if not ev["chapters"].get(n,{}).get("sources"):errors.append(f"no sources for {n}")
     print("Scanned",len(pages),"HTML and",len(icons),"SVG")
     for x in errors:print("FAIL:",x)

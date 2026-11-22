@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Browser QA for the course's first five canonical chapters and landing page.
+"""Browser QA for the course's first ten canonical chapters and landing page.
 Needs: pip install playwright; python -m playwright install chromium.
 """
 from pathlib import Path
@@ -8,9 +8,9 @@ import json, sys
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"qa"/"browser"
 OUT.mkdir(parents=True,exist_ok=True)
-FILES=["index.html"]+[f"lessons/{i:02d}.html" for i in range(1,6)]
+FILES=["index.html"]+[f"lessons/{i:02d}.html" for i in range(1,11)]
 SIZES=[(1440,900),(390,844),(360,780)]
-EXPECTED={"01.html":"16,288.95","02.html":"972.77","03.html":"3,000.00","04.html":"30.00","05.html":"17.28"}
+EXPECTED={"01.html":"16,288.95","02.html":"972.77","03.html":"3,000.00","04.html":"30.00","05.html":"17.28","06.html":"125.00","07.html":"5.00","08.html":"9.75","09.html":"1.67","10.html":"8.00"}
 def main():
     errors=[];results=[]
     with sync_playwright() as pw:
@@ -42,6 +42,14 @@ def main():
                         if EXPECTED[Path(name).name] not in actual:
                             errors.append(f"{name}@{w}: calculator expected {EXPECTED[Path(name).name]} got {actual}")
                         if page.locator("figure figcaption").count()<2:errors.append(f"{name}@{w}: missing figure captions")
+                    if name=="lessons/08.html" and w==1440:
+                        page.locator('form[data-calc="dcf"] [name="g"]').fill("10")
+                        if "不可计算" not in page.locator('form[data-calc="dcf"] output').inner_text():
+                            errors.append("08 invalid WACC<=g not rejected")
+                    if name=="lessons/10.html" and w==1440:
+                        page.locator('form[data-calc="ddm"] [name="g"]').fill("10")
+                        if "不可计算" not in page.locator('form[data-calc="ddm"] output').inner_text():
+                            errors.append("10 invalid Ke<=g not rejected")
                     if name=="index.html" and w==1440:
                         inp=page.locator("[data-course-search]")
                         inp.fill("财务比率分析")
