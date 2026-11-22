@@ -270,56 +270,71 @@
       "num": "21",
       "title": "前沿因子探索",
       "topics": [
-        "研发因子",
-        "业绩透支度POR",
-        "资金流因子",
-        "行业轮动因子化"
+        "研发与创新效率",
+        "POR原方法与简化代理",
+        "资金流分类",
+        "预期修正与时点"
       ],
-      "file": "21.html"
+      "file": "21.html",
+      "refactored": true,
+      "review_date": "2026-11-22",
+      "article_style": "independent narrative + original SVG + MathML + calculator + offline runnable examples"
     },
     {
       "num": "22",
       "title": "行业估值与轮动",
       "topics": [
-        "行业PB-ROE矩阵",
-        "景气投资四阶段",
-        "行业轮动策略",
-        "拥挤度预警"
+        "稳态PB–ROE",
+        "行业景气识别",
+        "行业轮动回测",
+        "拥挤与退出容量"
       ],
-      "file": "22.html"
+      "file": "22.html",
+      "refactored": true,
+      "review_date": "2026-11-22",
+      "article_style": "independent narrative + original SVG + MathML + calculator + offline runnable examples"
     },
     {
       "num": "23",
       "title": "数据获取与处理",
       "topics": [
-        "Wind/Choice/Tushare",
-        "数据清洗",
-        "复权处理",
-        "API调用实战"
+        "数据供应商与许可",
+        "拆股与复权锚点",
+        "Point-in-time版本",
+        "离线Python实验"
       ],
-      "file": "23.html"
+      "file": "23.html",
+      "refactored": true,
+      "review_date": "2026-11-22",
+      "article_style": "independent narrative + original SVG + MathML + calculator + offline runnable examples"
     },
     {
       "num": "24",
       "title": "Python量化工具链",
       "topics": [
-        "Pandas/NumPy",
-        "Matplotlib可视化",
-        "TA-Lib指标库",
-        "回测框架搭建"
+        "Pandas/NumPy/TA-Lib",
+        "下一交易时点回测",
+        "交易成本",
+        "可执行测试"
       ],
-      "file": "24.html"
+      "file": "24.html",
+      "refactored": true,
+      "review_date": "2026-11-22",
+      "article_style": "independent narrative + original SVG + MathML + calculator + offline runnable examples"
     },
     {
       "num": "25",
       "title": "实盘交易系统",
       "topics": [
-        "模拟交易到实盘",
-        "QMT/Ptrade平台",
-        "程序化交易监管新规",
-        "滑点与冲击成本"
+        "订单状态与幂等",
+        "QMT/PTrade适配边界",
+        "2024/2025监管",
+        "滑点与风控"
       ],
-      "file": "25.html"
+      "file": "25.html",
+      "refactored": true,
+      "review_date": "2026-11-22",
+      "article_style": "independent narrative + original SVG + MathML + calculator + offline runnable examples"
     },
     {
       "num": "26",

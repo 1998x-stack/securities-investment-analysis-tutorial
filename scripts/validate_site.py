@@ -19,7 +19,7 @@ def main():
         if not (BASE/"lessons"/c["file"]).exists():errors.append("missing lesson "+c["file"])
     for p in pages:
         html=p.read_text(encoding="utf8");s=Scan();s.feed(html);errors.extend(f"{p}: {e}" for e in s.errors)
-        if p==BASE/"index.html" or p.name in [f"{i:02}.html" for i in range(1,21)]:
+        if p==BASE/"index.html" or p.name in [f"{i:02}.html" for i in range(1,26)]:
             if s.h1!=1:errors.append(f"{p}: expected one H1; got {s.h1}")
             if "javascript:void(0)" in html:errors.append(f"{p}: inert JS link")
         for u in s.refs:
@@ -36,6 +36,12 @@ def main():
     ev=json.loads((BASE/"data/evidence.json").read_text(encoding="utf8"))
     for n in [f"{i:02d}" for i in range(1,21)]:
         if not ev["chapters"].get(n,{}).get("sources"):errors.append(f"no sources for {n}")
+    for n in range(21,26):
+        p=BASE/"lessons"/f"{n:02d}.html"
+        html=p.read_text(encoding="utf8")
+        if html.count("<figure ")<3: errors.append(f"{p}: need at least 3 explanatory figures")
+        if 'data-calc="' not in html: errors.append(f"{p}: missing model lab")
+        if "<math " not in html: errors.append(f"{p}: missing semantic math")
     print("Scanned",len(pages),"HTML and",len(icons),"SVG")
     for x in errors:print("FAIL:",x)
     if errors:sys.exit(1)

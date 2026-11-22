@@ -1,0 +1,17 @@
+{
+  "21-rnd-bridge.svg": "R&D resources → outcomes → commercialization → cash returns",
+  "21-por-band.svg": "Synthetic reference value band vs price; deliberately simplified proxy",
+  "21-signal-clock.svg": "Financial period end, publication, vendor availability, executable time",
+  "22-pbroe.svg": "Sustainable ROE, g and cost of equity in steady-state P/B identity",
+  "22-cycle.svg": "Four descriptive industry regime states with measurement lags",
+  "22-crowding.svg": "Crowding, ownership overlap, exit capacity and risk limits",
+  "23-data-lineage.svg": "Licensed vendor → raw version → point-in-time feature → decision",
+  "23-adjustment.svg": "Two-for-one stock split with conserved synthetic holding value",
+  "23-pit.svg": "Period end, initial disclosure and financial restatement revisions",
+  "24-research-pipeline.svg": "Data checks → feature generation → next-open execution → audit",
+  "24-lookahead.svg": "Close-generated signal and next tradable open execution",
+  "24-cost-bridge.svg": "Turnover and bps costs bridge gross to net hypothetical return",
+  "25-order-state.svg": "ACK vs partial fills vs complete fills with unique order identities",
+  "25-gateway.svg": "Research, risk gate, broker-authorized adapter and reconciliation",
+  "25-slippage.svg": "Explicit fees, spread, slippage and market impact decomposition"
+}

@@ -434,6 +434,310 @@
         }
       ]
     },
+    "21": {
+      "claims": [
+        "Research and development intensity is input relative to revenue and does not directly imply shareholder returns.",
+        "The POR Performance Overextension Ratio is an author-specific 2026 research construction using estimated value bands; this tutorial's (P−V)/P proxy is deliberately NOT the full published POR.",
+        "Order-flow classification and analyst revisions depend on vendor definitions and point-in-time availability, not a universal net-flow ledger."
+      ],
+      "sources": [
+        [
+          "开源证券2026年5月POR因子研究方法（转引）",
+          "https://finance.sina.com.cn/wm/2026-05-22/doc-inhyumqn6097502.shtml"
+        ],
+        [
+          "POR原研究报告目录与具体方法",
+          "https://www.fxbaogao.com/detail/5431840"
+        ],
+        [
+          "CFA Institute 2026 Equity Valuation Concepts",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/equity-valuation-concepts-basic-tools"
+        ],
+        [
+          "CFA Institute 2026 Backtesting and Simulation",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/backtesting-and-simulation"
+        ]
+      ],
+      "claim_evidence": [
+        {
+          "id": "batch5-21-01",
+          "claim": "Research and development intensity is input relative to revenue and does not directly imply shareholder returns.",
+          "kind": "research or documentation claim",
+          "source_url": "https://finance.sina.com.cn/wm/2026-05-22/doc-inhyumqn6097502.shtml",
+          "locator": "Method and definition",
+          "status": "verified",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        },
+        {
+          "id": "batch5-21-02",
+          "claim": "The POR Performance Overextension Ratio is an author-specific 2026 research construction using estimated value bands; this tutorial's (P−V)/P proxy is deliberately NOT the full published POR.",
+          "kind": "research or documentation claim",
+          "source_url": "https://www.fxbaogao.com/detail/5431840",
+          "locator": "Overview / parameter caveats",
+          "status": "verified",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        },
+        {
+          "id": "batch5-21-03",
+          "claim": "Order-flow classification and analyst revisions depend on vendor definitions and point-in-time availability, not a universal net-flow ledger.",
+          "kind": "derived teaching synthesis",
+          "source_url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/equity-valuation-concepts-basic-tools",
+          "locator": "Overview / parameter caveats",
+          "status": "illustrative",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        }
+      ]
+    },
+    "22": {
+      "claims": [
+        "Under stable growth, clean-surplus, sustainable ROE and compatible payout assumptions, P/B≈(ROE−g)/(Ke−g) when Ke>g and ROE≥g.",
+        "Synthetic ROE12%, g4%, Ke10% yield P/B≈1.33, not a market prediction.",
+        "Industry regimes, congestion and rotation are model-dependent; their historical backtests require point-in-time data, capacity and transaction costs."
+      ],
+      "sources": [
+        [
+          "CFA Institute 2026 Discounted Dividend Valuation",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/discounted-dividend-valuation"
+        ],
+        [
+          "CFA Institute 2026 Market-Based Valuation Multiples",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/market-based-valuation-price-enterprise-value-multiples"
+        ],
+        [
+          "CFA Institute 2026 Company Analysis",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/company-analysis-past-and-present"
+        ],
+        [
+          "CFA Institute 2026 Backtesting and Simulation",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/backtesting-and-simulation"
+        ]
+      ],
+      "claim_evidence": [
+        {
+          "id": "batch5-22-01",
+          "claim": "Under stable growth, clean-surplus, sustainable ROE and compatible payout assumptions, P/B≈(ROE−g)/(Ke−g) when Ke>g and ROE≥g.",
+          "kind": "research or documentation claim",
+          "source_url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/discounted-dividend-valuation",
+          "locator": "Method and definition",
+          "status": "verified",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        },
+        {
+          "id": "batch5-22-02",
+          "claim": "Synthetic ROE12%, g4%, Ke10% yield P/B≈1.33, not a market prediction.",
+          "kind": "research or documentation claim",
+          "source_url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/market-based-valuation-price-enterprise-value-multiples",
+          "locator": "Overview / parameter caveats",
+          "status": "verified",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        },
+        {
+          "id": "batch5-22-03",
+          "claim": "Industry regimes, congestion and rotation are model-dependent; their historical backtests require point-in-time data, capacity and transaction costs.",
+          "kind": "derived teaching synthesis",
+          "source_url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/company-analysis-past-and-present",
+          "locator": "Overview / parameter caveats",
+          "status": "illustrative",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        }
+      ]
+    },
+    "23": {
+      "claims": [
+        "Tushare Pro API access may be restricted by point and permissions; API availability is not automatically granted.",
+        "Tushare describes adjusted A-share price series whose qfq anchor can depend on query end_date.",
+        "Synthetic split 100 shares×100 price -> 200 shares×50 keeps market value unchanged; adjusted_close([100,50],[1,2]) returns [50,50] under the specified example factor convention.",
+        "Financial statements need fiscal_end and available_at and versions so amended values do not leak into past decisions."
+      ],
+      "sources": [
+        [
+          "Tushare Pro 日线接口",
+          "https://tushare.pro/document/1?doc_id=27"
+        ],
+        [
+          "Tushare Pro 复权日期锚定文档",
+          "https://tushare.pro/document/2?doc_id=146"
+        ],
+        [
+          "Tushare Pro 交易日历",
+          "https://tushare.pro/document/2?doc_id=40"
+        ],
+        [
+          "Tushare Pro 积分与权限",
+          "https://tushare.pro/document/1?doc_id=108"
+        ],
+        [
+          "pandas DataFrame.shift",
+          "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.shift.html"
+        ]
+      ],
+      "claim_evidence": [
+        {
+          "id": "batch5-23-01",
+          "claim": "Tushare Pro API access may be restricted by point and permissions; API availability is not automatically granted.",
+          "kind": "research or documentation claim",
+          "source_url": "https://tushare.pro/document/1?doc_id=27",
+          "locator": "Method and definition",
+          "status": "verified",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        },
+        {
+          "id": "batch5-23-02",
+          "claim": "Tushare describes adjusted A-share price series whose qfq anchor can depend on query end_date.",
+          "kind": "research or documentation claim",
+          "source_url": "https://tushare.pro/document/2?doc_id=146",
+          "locator": "Overview / parameter caveats",
+          "status": "verified",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        },
+        {
+          "id": "batch5-23-03",
+          "claim": "Synthetic split 100 shares×100 price -> 200 shares×50 keeps market value unchanged; adjusted_close([100,50],[1,2]) returns [50,50] under the specified example factor convention.",
+          "kind": "research or documentation claim",
+          "source_url": "https://tushare.pro/document/2?doc_id=40",
+          "locator": "Overview / parameter caveats",
+          "status": "verified",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        },
+        {
+          "id": "batch5-23-04",
+          "claim": "Financial statements need fiscal_end and available_at and versions so amended values do not leak into past decisions.",
+          "kind": "derived teaching synthesis",
+          "source_url": "https://tushare.pro/document/1?doc_id=108",
+          "locator": "Overview / parameter caveats",
+          "status": "illustrative",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        }
+      ]
+    },
+    "24": {
+      "claims": [
+        "pandas rolling windows have warm-up periods and shift semantics distinct from trade execution.",
+        "A daily close-generated signal can only execute at a valid later market time unless a defensible closing auction model is specified.",
+        "Simplified annual net return = gross percent − turnover_pct×total_cost_bp/10000; synthetic 8%, 100% one-way turnover, 20bp cost yield 7.80%.",
+        "Offline Python example executes an intended next-open strategy and carries seven automated tests; it does NOT model real exchange matching."
+      ],
+      "sources": [
+        [
+          "pandas DataFrame.rolling",
+          "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.rolling.html"
+        ],
+        [
+          "pandas DataFrame.shift",
+          "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.shift.html"
+        ],
+        [
+          "TA-Lib Python 文档",
+          "https://ta-lib.github.io/ta-lib-python/"
+        ],
+        [
+          "CFA Institute 2026 Backtesting and Simulation",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/backtesting-and-simulation"
+        ]
+      ],
+      "claim_evidence": [
+        {
+          "id": "batch5-24-01",
+          "claim": "pandas rolling windows have warm-up periods and shift semantics distinct from trade execution.",
+          "kind": "research or documentation claim",
+          "source_url": "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.rolling.html",
+          "locator": "Method and definition",
+          "status": "verified",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        },
+        {
+          "id": "batch5-24-02",
+          "claim": "A daily close-generated signal can only execute at a valid later market time unless a defensible closing auction model is specified.",
+          "kind": "research or documentation claim",
+          "source_url": "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.shift.html",
+          "locator": "Overview / parameter caveats",
+          "status": "verified",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        },
+        {
+          "id": "batch5-24-03",
+          "claim": "Simplified annual net return = gross percent − turnover_pct×total_cost_bp/10000; synthetic 8%, 100% one-way turnover, 20bp cost yield 7.80%.",
+          "kind": "research or documentation claim",
+          "source_url": "https://ta-lib.github.io/ta-lib-python/",
+          "locator": "Overview / parameter caveats",
+          "status": "verified",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        },
+        {
+          "id": "batch5-24-04",
+          "claim": "Offline Python example executes an intended next-open strategy and carries seven automated tests; it does NOT model real exchange matching.",
+          "kind": "derived teaching synthesis",
+          "source_url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/backtesting-and-simulation",
+          "locator": "Overview / parameter caveats",
+          "status": "illustrative",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        }
+      ]
+    },
+    "25": {
+      "claims": [
+        "CSRC securities program trading interim rules came into force 2024-10-08; SSE and SZSE implementation rules came into force 2025-07-07.",
+        "QMT/PTrade practical availability depends on broker authorization, supported API versions and current regulations; no live broker credentials or connections are included.",
+        "An order ACK does not equal a fill; client order IDs, partial fills and reconciliation are necessary for safe execution systems.",
+        "Execution costs include explicit fees, spread, slippage and impact; synthetic 100000 CNY × 25bp = 250 CNY."
+      ],
+      "sources": [
+        [
+          "证监会《证券市场程序化交易管理规定（试行）》2024-10-08",
+          "https://www.csrc.gov.cn/c100028/c7480577/content.shtml"
+        ],
+        [
+          "上交所《程序化交易管理实施细则》2025-07-07",
+          "https://www.sse.com.cn/lawandrules/sselawsrules2025/trade/universal/c/c_20250612_10781696.shtml"
+        ],
+        [
+          "深交所《程序化交易管理实施细则》2025-07-07",
+          "https://www.szse.cn/lawrules/rule/trade/current/t20250403_612770.html"
+        ],
+        [
+          "CFA Institute 2026 Backtesting and Simulation",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/backtesting-and-simulation"
+        ]
+      ],
+      "claim_evidence": [
+        {
+          "id": "batch5-25-01",
+          "claim": "CSRC securities program trading interim rules came into force 2024-10-08; SSE and SZSE implementation rules came into force 2025-07-07.",
+          "kind": "research or documentation claim",
+          "source_url": "https://www.csrc.gov.cn/c100028/c7480577/content.shtml",
+          "locator": "Method and definition",
+          "status": "verified",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        },
+        {
+          "id": "batch5-25-02",
+          "claim": "QMT/PTrade practical availability depends on broker authorization, supported API versions and current regulations; no live broker credentials or connections are included.",
+          "kind": "research or documentation claim",
+          "source_url": "https://www.sse.com.cn/lawandrules/sselawsrules2025/trade/universal/c/c_20250612_10781696.shtml",
+          "locator": "Overview / parameter caveats",
+          "status": "verified",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        },
+        {
+          "id": "batch5-25-03",
+          "claim": "An order ACK does not equal a fill; client order IDs, partial fills and reconciliation are necessary for safe execution systems.",
+          "kind": "research or documentation claim",
+          "source_url": "https://www.szse.cn/lawrules/rule/trade/current/t20250403_612770.html",
+          "locator": "Overview / parameter caveats",
+          "status": "verified",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        },
+        {
+          "id": "batch5-25-04",
+          "claim": "Execution costs include explicit fees, spread, slippage and impact; synthetic 100000 CNY × 25bp = 250 CNY.",
+          "kind": "derived teaching synthesis",
+          "source_url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/backtesting-and-simulation",
+          "locator": "Overview / parameter caveats",
+          "status": "illustrative",
+          "notes": "Numerical example is synthetic; specific assumptions and limits stated in chapter."
+        }
+      ]
+    },
     "01": {
       "claims": [
         "持有期收益取决于价格与分配，风险与分散投资有边界",
@@ -645,6 +949,7 @@
     "Automated static structural and browser QA checks do not replace external link freshness and factual review.",
     "Financial reporting and market-specific trading rules must be reverified as they evolve.",
     "Chapters 11–15: derived indicators are features, not tested forecasts; constructed valuation and covariance matrices are hypothetical.",
-    "Chapters 16–20: all calculator inputs and diagrams are synthetic teaching examples; risk models, factor premia and behavioral findings have sample- and assumption-specific scope. No local-market return is asserted without a separate point-in-time test."
+    "Chapters 16–20: all calculator inputs and diagrams are synthetic teaching examples; risk models, factor premia and behavioral findings have sample- and assumption-specific scope. No local-market return is asserted without a separate point-in-time test.",
+    "Chapters 21–25: POR proxy is not the full original value-band factor, PB–ROE requires specific steady-state assumptions, and examples/quant_lab.py is an offline teaching program with no live trading functionality."
   ]
 }

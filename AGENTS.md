@@ -6,7 +6,7 @@ Make independently readable, evidence-grounded Chinese long-form lessons. Each a
 ## Canonical paths
 - `docs/index.html` landing; `docs/lessons/NN.html` chapters; `docs/assets/css/site.css` common styles; `docs/assets/js/site.js` interactive enhancements; `docs/assets/svg/` standalone diagrams; `docs/data/evidence.json` evidence ledger.
 - Root `index.html`, `NN.html` only redirect old links; never edit as the canonical source.
-- Chapters 21–28 are presently legacy HTML, with `docs/lessons/theme.css`, and must be modernized one-by-one without breaking URLs.
+- Chapters 26–28 are presently legacy HTML, with `docs/lessons/theme.css`, and must be modernized one-by-one without breaking URLs.
 - Frontend static, no NPM/CDN required. Do not commit built caches.
 
 ## Narrative contract (Olah-style-posts)
@@ -57,3 +57,11 @@ Prefer branch/PR, verify CI diff, deploy and then verify live URL. Every batch l
 - **Investment strategies:** Treat value, growth and momentum as overlapping exposures. Distinguish cross-sectional from time-series momentum; discuss momentum crash and implementation costs. Present Soros reflexivity as an author-proposed interpretive framework, not a universally validated law. Discuss limits to arbitrage and capacity.
 - **Quantitative research:** Use point-in-time data, contemporaneous investable universes, delisting/corporate-action handling and signal-to-order timestamps. Do not use same-close execution for a close-generated signal without a defensible auction model. Report all trials, costs, turnover, capacity, and genuinely untouched out-of-sample periods. PBO is a backtest-selection diagnostic, not a future loss probability.
 - **Multi-factor:** Distinguish time-series factor regressions from cross-sectional stock scores. Define factor direction, construction, data lag, neutralization, weighting, rebalancing and transaction cost. Fama–French five factors are MKT/SMB/HML/RMW/CMA; UMD is an additional momentum factor, not part of FF5. Never transplant US factor return series as local-market evidence without a separately validated construction.
+
+## Chapter 21–25 data, research and execution contract
+- POR is the name of an author-specific 2026 value-band factor from Kaiyuan Securities; simplified (price−reference_value)/price is NOT its complete reproducible definition. Verify the original source and disclose sample, assumptions, horizon and implementation differences.
+- Industry P/B ≈ (ROE−g)/(Ke−g) needs clean-surplus accounting, long-run sustainable ROE, consistent retention/payout, and Ke>g. Never market it as a general identity or target price.
+- Vendor documentation and access rights evolve. Keep API credentials out of source control; distinguish point-in-time actual availability, restatements, security survivorship and corporate-action anchors. Do not claim real dataset access without it.
+- In quant tutorials, a signal using close[t] must not be executed at close[t] unless a proven order path exists; default to a permitted future execution time and include transaction costs, capacity, warm-up and testing for temporal leakage.
+- QMT/PTrade access is broker-authorized and version-specific. Keep all repo examples paper-only. No real order submission, credentials, hidden network calls or blanket claims of regulatory compliance. CSRC securities program trading rules effective 2024-10-08 and SSE/SZSE implementation effective 2025-07-07: reverify subsequent amendments.
+- Preserve deterministic sample calculations, 15 independent explanatory diagrams, offline Python examples, at least 7 unit tests and static/Playwright coverage before merging.
