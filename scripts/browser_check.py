@@ -30,6 +30,9 @@ def main():
                     if page.locator("main").count()!=1:errors.append(f"{name}@{w}: missing main")
                     overflow=page.evaluate("document.documentElement.scrollWidth - window.innerWidth")
                     if overflow>1:errors.append(f"{name}@{w}: page width overflow {overflow}px")
+                    # Eagerly resolve lazy images before asserting successful decode.
+                    page.locator("img").evaluate_all("(xs)=>xs.forEach(img=>{img.loading='eager';img.decoding='sync'})")
+                    page.wait_for_function("Array.from(document.images).every(img=>img.complete)",timeout=15000)
                     broken=page.locator("img").evaluate_all("(xs)=>xs.filter(x=>!x.complete||x.naturalWidth===0).map(x=>x.src)")
                     if broken:errors.append(f"{name}@{w}: broken images {broken}")
                     if js_errors:errors.append(f"{name}@{w}: JS errors {js_errors}")
