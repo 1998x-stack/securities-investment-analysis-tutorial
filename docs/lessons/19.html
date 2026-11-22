@@ -1,290 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>第19章 量化选股入门</title>
-    <link rel="stylesheet" href="theme.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="量化选股把投资决策写成可复现的规则：因子如何解释收益，回测的四个环节，幸存者偏差、前视偏差与过拟合为什么会让回测结果失真。">
+<title>量化选股入门：因子、回测与过拟合｜证券投资分析</title>
+<link rel="stylesheet" href="../assets/css/site.css">
 </head>
 <body>
-<div class="double-border">
-<div class="container">
-    <div class="sidebar">
-        <h3>📈 课程目录</h3>
-        <ul class="chapter-list">
-            <li><a href="01.html">第1章 证券投资导论</a></li>
-            <li><a href="02.html">第2章 主要证券品种</a></li>
-            <li><a href="03.html">第3章 交易机制与规则</a></li>
-            <li><a href="04.html">第4章 财务报表入门</a></li>
-            <li><a href="05.html">第5章 财务比率分析</a></li>
-            <li><a href="06.html">第6章 宏观经济与市场</a></li>
-            <li><a href="07.html">第7章 行业分析方法</a></li>
-            <li><a href="08.html">第8章 绝对估值法</a></li>
-            <li><a href="09.html">第9章 相对估值法(上)</a></li>
-            <li><a href="10.html">第10章 相对估值法(下)</a></li>
-            <li><a href="11.html">第11章 成长股估值</a></li>
-            <li><a href="12.html">第12章 基本面分析实战</a></li>
-            <li><a href="13.html">第13章 技术分析基础</a></li>
-            <li><a href="14.html">第14章 技术指标精讲</a></li>
-            <li><a href="15.html">第15章 现代投资组合理论</a></li>
-            <li><a href="16.html">第16章 风险管理体系</a></li>
-            <li><a href="17.html">第17章 行为金融学</a></li>
-            <li><a href="18.html">第18章 投资策略流派</a></li>
-            <li><a href="19.html" class="active">第19章 量化选股入门</a></li>
-            <li><a href="20.html">第20章 多因子模型实战</a></li>
-            <li><a href="21.html">第21章 前沿因子探索</a></li>
-            <li><a href="22.html">第22章 行业估值与轮动</a></li>
-            <li><a href="23.html">第23章 数据获取与处理</a></li>
-            <li><a href="24.html">第24章 Python量化工具链</a></li>
-            <li><a href="25.html">第25章 实盘交易系统</a></li>
-            <li><a href="26.html">第26章 AI驱动的投资分析</a></li>
-            <li><a href="27.html">第27章 宏观对冲与全球配置</a></li>
-            <li><a href="28.html">第28章 综合实战项目</a></li>
-        </ul>
-    </div>
-    <div class="main-content">
-
-        <h1>第19章 量化选股入门</h1>
-
-        <p>大家好，我是你们的讲师。前面我们用了整整18章的篇幅，系统地学习了基本面分析、技术分析、投资组合理论和行为金融学。从这一章开始，我们将进入一个全新的世界——<strong>量化投资</strong>。</p>
-
-        <p>你可能觉得"量化"离散户很遥远，那是华尔街用几百亿资金玩的游戏。但事实上，过去十年量化投资在中国的普及速度远超大多数人的想象。截至2025年，A股市场的量化交易量占比已经达到30%左右，而早在2021年就曾突破40%。更重要的是，曾经需要大型IT团队才能搭建的量化系统，如今一个普通投资者用一台笔记本电脑加一些开源库就能跑起来。这不是天方夜谭——这门课接下来的7章，就是要带你从零到一，搭建属于自己的量化分析框架。</p>
-
-        <h2>19.1 什么是量化选股</h2>
-
-        <p>先给一个定义。<strong>量化选股（Quantitative Stock Selection）</strong>，就是用数据和数学模型来驱动投资决策，而不是凭感觉、凭消息、凭"我觉得它要涨"。</p>
-
-        <p>听起来很玄乎？换个说法你就明白了。传统的非量化投资决策流程是这样的：</p>
-
-        <ul>
-            <li>看到一条利好新闻 → 觉得这家公司不错 → 看一眼K线图好像要突破 → 买入</li>
-            <li>朋友推荐了一只股票 → 上网搜了搜好像确实有题材 → 买入</li>
-            <li>这只股票跌了10% → 心里发慌 → 割肉</li>
-        </ul>
-
-        <p>量化投资的流程则是这样的：</p>
-
-        <ul>
-            <li>定义一个选股逻辑（比如"低市盈率+高ROE"）→ 用历史数据回测 → 评估效果 → 如果有效，形成规则 → 严格执行</li>
-            <li>市场条件变化了 → 回测新的逻辑 → 比较哪个更优 → 切换策略</li>
-        </ul>
-
-        <p>这两者的本质区别是什么？<strong>纪律性</strong>。非量化决策充满了情绪和随机性，量化决策则是规则驱动的、可重复的、可验证的。</p>
-
-        <p>量化选股的优势总结起来有三个：</p>
-
-        <ul>
-            <li><strong>纪律性</strong>：模型说买就买，说卖就卖，不掺杂"再等等看"的情绪干扰</li>
-            <li><strong>广度</strong>：一个量化模型可以同时覆盖全市场5000多只股票，人脑做不到这一点</li>
-            <li><strong>可复现</strong>：同一套规则在不同时间段的收益表现可以回测评估，策略的好坏是可检验的</li>
-        </ul>
-
-        <p>说到量化投资，就绕不开一个人——<strong>詹姆斯·西蒙斯</strong>（James Simons）。这位数学教授出身的对冲基金经理，在1988年创立了大奖章基金（Medallion Fund），在1988年到2018年的30年间创造了约66%的年化收益率（扣除管理费前）。这个数字有多惊人？如果巴菲特的年化20%是"股神"，那西蒙斯的66%已经超越了"神"的范畴。不过需要说明的是，大奖章基金主要依靠高频交易和极其复杂的数学模型，普通投资者不可能复制。但西蒙斯证明了：<strong>数学和模型确实可以在金融市场中找到赚钱的规律</strong>。</p>
-
-        <h2>19.2 因子投资的逻辑</h2>
-
-        <p>因子（Factor）是量化选股最基础的概念。<strong>因子就是能够解释股票收益率差异的某种特征</strong>。</p>
-
-        <p>举个例子：假设你发现"市盈率低的股票平均比市盈率高的股票表现更好"，那么"市盈率"就是一个因子。再比如"过去一个月涨得好的股票接下来一个月继续涨"——"过去一个月的收益率"也是一个因子，通常叫"动量因子"。</p>
-
-        <p>因子投资的逻辑很简单：<strong>超额收益不是随机的，而是可以由某些系统性的因子来解释的</strong>。如果把股票的收益率拆开来看：</p>
-
-        <pre><code>股票收益率 = 市场收益（Beta） + 因子收益（Alpha因子） + 个股特异性收益</code></pre>
-
-        <p>这里的<strong>Alpha</strong>就是相对于市场的超额收益，而<strong>Beta</strong>就是市场整体的涨跌。因子投资的目标，就是找到能够稳定产生Alpha的那些特征。</p>
-
-        <p>从经济学角度，因子溢价有两种解释：</p>
-
-        <ul>
-            <li><strong>风险补偿解释</strong>：某些因子之所以能产生超额收益，是因为它们承担了某种系统性风险。比如"低波动因子"——低波动股票之所以表现好，是因为投资者的"彩票偏好"让高波动股票被高估了。</li>
-            <li><strong>行为偏差解释</strong>：某些因子利用了市场参与者的系统性行为偏差。比如"价值因子"——投资者对成长股过度乐观导致其被高估，对价值股过度悲观导致其被低估。</li>
-        </ul>
-
-        <p>实践中，一个优秀的量化策略往往不是靠单一因子，而是<strong>多因子组合</strong>。因为单个因子总会有"失灵期"，多个低相关性因子组合在一起，可以在不同市场环境下保持相对稳定的表现。</p>
-
-        <p>为了更直观地理解量化和主动投资的区别，我们来看一张对比表：</p>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>维度</th>
-                    <th>量化投资</th>
-                    <th>主动投资（非量化）</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>决策依据</td>
-                    <td>数据、模型、统计检验</td>
-                    <td>基本面研究、经验判断</td>
-                </tr>
-                <tr>
-                    <td>覆盖广度</td>
-                    <td>全市场5000+只股票</td>
-                    <td>通常覆盖50-100只</td>
-                </tr>
-                <tr>
-                    <td>决策方式</td>
-                    <td>规则化、系统化</td>
-                    <td>个案分析、主观判断</td>
-                </tr>
-                <tr>
-                    <td>情绪影响</td>
-                    <td>极低（由模型执行）</td>
-                    <td>较高（容易受恐惧贪婪影响）</td>
-                </tr>
-                <tr>
-                    <td>可复现性</td>
-                    <td>完全可复现、可回测</td>
-                    <td>难以复现（每次决策逻辑不同）</td>
-                </tr>
-                <tr>
-                    <td>策略容量</td>
-                    <td>通常较大（尤其低频策略）</td>
-                    <td>取决于个股流动性</td>
-                </tr>
-                <tr>
-                    <td>适用场景</td>
-                    <td>规律性、重复性机会</td>
-                    <td>深度研究、特殊情况</td>
-                </tr>
-                <tr>
-                    <td>典型代表</td>
-                    <td>西蒙斯、Two Sigma</td>
-                    <td>巴菲特、彼得·林奇</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class="highlight">
-            <p><strong>关键认知</strong>：量化和主动投资不是非此即彼的关系。最好的投资者往往把两者结合起来——用量化框架做广度筛选，用主动研究做深度决策。这种"量化+主动"的融合模式，在业内被称为"系统化基本面投资"（Systematic Fundamental Investing）。</p>
-        </div>
-
-        <h2>19.3 回测：量化的实验室</h2>
-
-        <p>如果说量化策略是一座大楼，那么<strong>回测（Backtesting）</strong>就是这座大楼的结构力学测试。在没有投入真金白银之前，你需要先在历史数据上验证你的策略是否有效。</p>
-
-        <p>一个完整的回测流程包括以下步骤：</p>
-
-        <ol>
-            <li><strong>数据准备</strong>：获取历史行情数据（开盘价、收盘价、成交量等）和财务数据（PE、PB、ROE等）</li>
-            <li><strong>信号生成</strong>：根据你的选股规则，在每个调仓日生成买入/卖出信号</li>
-            <li><strong>组合构建</strong>：根据信号构建投资组合，确定每只股票的权重</li>
-            <li><strong>绩效评估</strong>：计算策略在回测期内的收益率、波动率、最大回撤、夏普比率等指标</li>
-        </ol>
-
-        <p>下面是一个非常简化的因子回测伪代码，展示了核心逻辑：</p>
-
-        <pre><code># 简化版因子回测框架伪代码
-def factor_backtest(data, factor_name, holding_days=20):
-    """
-    data: DataFrame, 包含每只股票每个时点的因子值和收益率
-    factor_name: 因子列名
-    holding_days: 持有期天数
-    """
-    results = []
-
-    # 在每个调仓日（每月末）
-    for rebalance_date in get_monthly_end_dates(data):
-        # 1. 获取当前时点的因子值
-        current_data = data.loc[rebalance_date]
-
-        # 2. 按因子值排序，分为10组（十分位组）
-        current_data['decile'] = pd.qcut(
-            current_data[factor_name], 10,
-            labels=False, duplicates='drop'
-        )
-
-        # 3. 做多最高组（第9组），做空最低组（第0组）
-        long_stocks = current_data[current_data['decile'] == 9].index
-        short_stocks = current_data[current_data['decile'] == 0].index
-
-        # 4. 计算持有期内的组合收益
-        forward_returns = get_forward_returns(
-            data, rebalance_date, holding_days
-        )
-
-        long_return = forward_returns.loc[long_stocks].mean()
-        short_return = forward_returns.loc[short_stocks].mean()
-        spread_return = long_return - short_return
-
-        results.append({
-            'date': rebalance_date,
-            'long_return': long_return,
-            'short_return': short_return,
-            'spread_return': spread_return
-        })
-
-    # 5. 汇总评估
-    df_results = pd.DataFrame(results)
-    annual_return = df_results['spread_return'].mean() * 12
-    annual_vol = df_results['spread_return'].std() * sqrt(12)
-    sharpe = annual_return / annual_vol
-    max_drawdown = calculate_max_drawdown(df_results['spread_return'])
-
-    return {
-        'annual_return': annual_return,
-        'annual_vol': annual_vol,
-        'sharpe_ratio': sharpe,
-        'max_drawdown': max_drawdown,
-        'monthly_returns': df_results
-    }</code></pre>
-
-        <p>但是，回测远没有看起来那么简单。回测的陷阱很多，新手几乎一定会踩，下面是最常见的几个：</p>
-
-        <ul>
-            <li><strong>幸存者偏差（Survivorship Bias）</strong>：回测中只使用了当前还在上市的股票，忽略那些已经退市的股票。这会高估策略的表现——因为你只看到了"活下来"的股票。</li>
-            <li><strong>前视偏差（Look-ahead Bias）</strong>：在回测中使用了你当时不可能知道的信息。比如用2024年12月31日发布的年报数据来做2024年6月的选股决策——这在现实中是不可能的，因为年报发布有延迟。</li>
-            <li><strong>数据窥探偏差（Data Snooping）</strong>：反复在同样的数据上试验不同的参数组合，直到找到一个"表现最优"的。这种方式找到的策略在样本外几乎必然失效。</li>
-            <li><strong>参数过度优化（Overfitting）</strong>：把参数调整到完美拟合历史数据，但丧失了泛化能力。</li>
-        </ul>
-
-        <h2>19.4 过拟合：量化最大的敌人</h2>
-
-        <p>如果说量化选股有一个"第一公敌"，那非<strong>过拟合（Overfitting）</strong>莫属。</p>
-
-        <p>过拟合在机器学习里是指模型在训练数据上表现很好，但在新数据上表现很差。在量化投资中，过拟合意味着你的策略在回测中看起来很完美，但一到实盘就露馅了。</p>
-
-        <div class="warning">
-            <p><strong>踩坑故事：回测年化50%，实盘亏钱的经典案例</strong></p>
-            <p>2017年前后，国内量化私募刚刚兴起。有一家当时颇有名气的私募团队，开发了一套"基于技术指标的多因子策略"。回测做到了惊人的年化50%，夏普比率超过3，最大回撤不到10%。团队信心满满地发行了产品，自营资金加客户资金一共投入了5个多亿。</p>
-            <p>结果怎么样？实盘前三个月就亏了8%。团队一开始以为是执行问题，各种调试优化。等到第六个月，产品净值已经跌了15%。而同期回溯同一策略在最新的样本外数据上——年化收益变成了-5%。</p>
-            <p>问题出在哪？事后复盘发现了三个致命错误：第一，回测中使用了未来函数，计算均线时无意中包含了未来数据；第二，策略依赖了大量参数调整，在2008-2016年数据上反复"调参数"直到完美，实际上是在拟合那个特定历史区间的噪音；第三，完全没有考虑交易成本，实盘后发现频繁换手导致交易成本吞噬了大部分收益。</p>
-            <p>这个故事的教训：<strong>任何策略如果不是用严格的样本外测试验证过，它在回测中展示的收益率约等于零</strong>。量化界有一句经典的话——"回测是最大回撤最低的时期，也是收益率最高的时期。"（笑）</p>
-        </div>
-
-        <h2>19.5 从回测到实盘的鸿沟</h2>
-
-        <p>即使你的回测做得天衣无缝，从回测到实盘之间仍然存在一条巨大的鸿沟。主要的实盘摩擦成本包括：</p>
-
-        <ul>
-            <li><strong>交易成本</strong>：佣金、印花税、冲击成本。回测中往往假设以收盘价无成本交易，实盘中做不到。</li>
-            <li><strong>滑点（Slippage）</strong>：你的订单提交时的价格和成交价格之间的差异，尤其是在快速变动的市场中。</li>
-            <li><strong>流动性限制</strong>：涨跌停时无法交易，停牌股票无法买卖，小市值股票冲击成本高。</li>
-            <li><strong>资金容量</strong>：一个在小资金下表现很好的策略，资金量上去后收益会被冲击成本吃掉。</li>
-        </ul>
-
-        <p>业内有一个经验法则：<strong>回测夏普比率打八折，才是真实的预期夏普</strong>。如果你的回测夏普是2.0，预期实盘夏普大概在1.6左右。如果回测夏普只有1.0，打八折后只有0.8，那这个策略的性价比就存疑了。</p>
-
-        <p>为什么是八折？这个数字来自于大量私募实盘数据的统计。回测中可以完美控制的各种微观结构摩擦，在实盘中都会变成实实在在的成本。有人做过更严格的计算：A股市场单边交易成本（佣金+印花税+冲击成本）平均在0.1%-0.3%之间，一个每年换手50倍的策略，仅交易成本就会吃掉5%-15%的收益。</p>
-
-        <div class="highlight">
-            <p><strong>核心启示</strong>：在评估一个量化策略时，不要把回测数据当作"预期收益"，而是当作"理想情况下的收益上限"。真正的考验永远在实盘。这也是为什么量化团队通常会用"模拟盘"（Paper Trading）来作为中间环节——在不投入真金白银的情况下，看看策略在实时市场中的表现。</p>
-        </div>
-
-        <h2>小结与预习</h2>
-
-        <p>这一章我们打开了量化投资的大门。我们讨论了：什么是量化选股及其纪律性/广度/可复现的优势；因子投资的基本逻辑——因子是超额收益的驱动基因；回测作为量化实验室的基本流程和常见陷阱；以及过拟合这个量化最大的敌人。最后我们谈到了从回测到实盘之间不可忽视的鸿沟。</p>
-
-        <p>"知其然不如知其所以然"，了解了量化选股的基本概念之后，下一章我们将进入最核心的实战环节——<strong>多因子模型</strong>。我们会学习A股市场中表现最稳定的五大经典因子：价值、成长、质量、动量、低波，以及如何评价一个因子到底好不好用。准备好了吗？让我们进入因子投资的实战世界。</p>
-
-        <div class="footer-nav">
-            <a href="18.html">← 上一章</a>
-            <a href="index.html">📖 返回目录</a>
-            <a href="20.html">下一章 →</a>
-        </div>
-    </div>
+<a class="skip-link" href="#content">跳转至正文</a>
+<header class="site-header"><div class="header-inner"><a class="brand" href="../index.html">证券投资分析 · 研究手册</a><nav class="header-links" aria-label="全站导航"><a href="../index.html">课程地图</a><a href="https://github.com/1998x-stack/securities-investment-analysis-tutorial">GitHub</a></nav></div></header>
+<div class="article-layout">
+<nav class="toc" aria-label="本章目录"><strong>CHAPTER 19</strong><details open><summary>跳转小节</summary><ol>
+<li><a href="#puzzle">回测年化很高，为什么实盘可能亏钱</a></li>
+<li><a href="#what">量化选股：把决策写成可复现的规则</a></li>
+<li><a href="#factor">因子：收益分解与两种解释</a></li>
+<li><a href="#backtest">回测的四个环节</a></li>
+<li><a href="#traps">回测的四种典型偏差</a></li>
+<li><a href="#overfitting">过拟合：样本内与样本外</a></li>
+<li><a href="#gap">从回测到实盘的摩擦</a></li>
+<li><a href="#practice">自我检验</a></li>
+<li><a href="#references">资料来源与适用范围</a></li>
+</ol></details></nav>
+<main id="content"><article class="article-content">
+<header class="article-header"><p class="overline">CHAPTER 19 · QUANTITATIVE SELECTION</p><h1>量化选股入门：因子、回测与过拟合</h1><p class="dek">量化不是把感觉换成公式就万事大吉；它交换出去的是可复现的纪律，交换进来的是偏差、过拟合与交易成本这些新风险。</p><p class="article-meta">资料核对：2026-11-22 · 文中曲线与算例均为构造的教学数据，不代表任何策略的历史业绩</p></header>
+<section id="puzzle" aria-labelledby="h-puzzle"><h2 id="h-puzzle">回测年化很高，为什么实盘可能亏钱</h2><p>一份回测报告显示年化收益很高、回撤很小，看起来无懈可击。但同一套规则搬到实盘后可能很快亏损。这并不是“市场变了”这一句话能解释的：更常见的原因是，回测本身就已经包含了实盘不可能具备的条件——用了当时还不知道的信息、用今天的股票池回看过去、或者把参数调到完美拟合历史噪声。</p><p>因此量化研究的第一步不是找因子，而是<strong>先想清楚回测结果在什么条件下才可信</strong>。本章的顺序是：先说清楚量化在做什么，再讲因子为什么能解释收益，最后集中处理回测与实盘之间的三道鸿沟——偏差、过拟合与交易摩擦。</p><div class="insight"><p><strong>本章边界：</strong>量化策略的收益是概率性的，不是确定性的。文中所有曲线与数值均为构造的教学示意，不代表任何真实策略或基金的历史表现。</p></div></section>
+<section id="what" aria-labelledby="h-what"><h2 id="h-what">量化选股：把决策写成可复现的规则</h2><p><strong>量化选股</strong>指用数据和模型驱动选股与调仓，而不是凭消息与感觉。它并不要求预测力更强，而是要求决策可重复、可检验：同一条规则换一个时间段、换一个人来执行，结果应当基本一致。</p><p>它带来三个性质：<strong>纪律性</strong>（规则说买说卖，减少临场情绪）、<strong>广度</strong>（可同时处理全市场数千只标的）、<strong>可复现</strong>（同一规则可回测比较）。代价也同样明显：规则会系统性地重复同一类错误，且对数据质量与执行成本高度敏感。</p><p>需区分两类应用：以高频交易为目标的系统依赖极短持有期与微观结构优势，普通投资者难以复制；而<strong>低频因子选股</strong>持有期较长、容量较大，是本课程的重点。</p></section>
+<section id="factor" aria-labelledby="h-factor"><h2 id="h-factor">因子：收益分解与两种解释</h2><p><strong>因子（Factor）</strong>是能够解释股票收益差异的可度量特征，例如估值、动量、质量或波动率。把单只股票的收益拆成市场部分、因子部分与特异性部分：</p><div class="mathbox math-scroll" role="region" tabindex="0" aria-label="收益的因子分解"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="股票收益等于alpha加beta乘市场收益加各因子贡献与特异性收益"><msub><mi>r</mi><mi>i</mi></msub><mo>=</mo><msub><mi>α</mi><mi>i</mi></msub><mo>+</mo><msub><mi>β</mi><mi>i</mi></msub><msub><mi>r</mi><mtext>mkt</mtext></msub><mo>+</mo><munder><mo>∑</mo><mi>k</mi></munder><msub><mi>β</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><msub><mi>f</mi><mi>k</mi></msub><mo>+</mo><msub><mi>ε</mi><mi>i</mi></msub></math><small>r为收益，r_mkt为市场收益，f_k为第k个因子的收益，β为暴露（载荷），ε为特异性残差，α为无法被这些因子解释的部分。各项单位一致，均为同频率、同区间收益。</small></div><p>因子溢价有两种常见解释：<strong>风险补偿</strong>（承担了某种系统性风险，因此要求更高回报）与<strong>行为偏差</strong>（利用参与者的系统性错误定价）。同一因子的溢价可能同时包含两部分，哪种成分占主导往往难以直接区分。</p><p>实践中很少只用单一因子，因为每个因子都有“失灵期”。把几个低相关因子组合起来，目的是让暴露不集中于同一种风险。至于一个因子“好不好用”，需要看它的信息系数（IC）与因子收益的稳定性，这将在下一章展开。</p><form class="formula-lab" data-calc="zscore"><h3>动手算一遍：因子标准化</h3><p>不同因子的量纲不同（市盈率与收益率不可直接比较），通常先在同一截面上做 z 标准化再合成。</p><div class="controls"><label>原始因子值<input type="number" name="value" value="15" step="0.5" required></label><label>截面均值<input type="number" name="mean" value="20" step="0.5" required></label><label>截面标准差<input type="number" name="std" value="5" step="0.5" min="0.01" required></label></div><output aria-live="polite">计算中</output><p data-explain>启用脚本后自动显示结果。</p></form></section>
+<section id="backtest" aria-labelledby="h-backtest"><h2 id="h-backtest">回测的四个环节</h2><p><strong>回测（Backtesting）</strong>是在历史数据上检验规则的过程。一个完整的回测至少包含四个环节，每一步都需要记录“当时可得的信息边界”：</p><ol><li><strong>数据准备</strong>：行情与财务数据，需处理退市、停牌与价格复权。</li><li><strong>信号生成</strong>：在每个调仓日按规则产生买入与卖出信号。</li><li><strong>组合构建</strong>：确定权重与调仓频率，并约束单票与行业上限。</li><li><strong>绩效评估</strong>：计算收益、波动、最大回撤与夏普比率，并扣除交易成本与滑点。</li></ol><figure class="figure"><div class="diagram-scroll"><img src="../assets/svg/19-backtest-pipeline.svg" width="960" height="300" alt="数据准备、信号生成、组合构建、绩效评估四个回测环节的流程图" loading="lazy"></div><figcaption>回测是一条链：从数据准备到绩效评估，每个环节的假设都会传递到最终结果。定位偏差的关键，是逐步检查每个环节“当时能不能知道这件事”。</figcaption></figure><p>只有四个环节都写清楚，结果才有讨论价值。例如“年化 20%”如果不说明是否包含交易成本、是否使用退市样本、调仓频率如何，这个数字就无法被复现，也无法与别的策略比较。</p></section>
+<section id="traps" aria-labelledby="h-traps"><h2 id="h-traps">回测的四种典型偏差</h2><p>这四类错误几乎一定会出现在新手的第一版回测里，它们都会系统地高估策略表现：</p><table class="data-table"><thead><tr><th scope="col">偏差</th><th scope="col">成因</th><th scope="col">修正方向</th></tr></thead><tbody><tr><td>幸存者偏差</td><td>只用当前仍上市的股票，忽略退市与重组</td><td>使用包含已退市标的的历史成分股</td></tr><tr><td>前视偏差</td><td>用了当时尚未公布或尚未发生的信息</td><td>按公告实际披露日对齐信号</td></tr><tr><td>数据窥探</td><td>在同一段数据上反复试探直到“最优”</td><td>预留样本外区间，先定规则后看结果</td></tr><tr><td>参数过优化</td><td>参数完美拟合历史噪声</td><td>减少参数、增加参数敏感性测试</td></tr></tbody></table><p>特别要注意前视偏差的一种隐蔽形式：用当日收盘价信号按当日收盘价成交。现实中你只能在收盘后才能算出这个信号，因此成交至少应推到下一交易日。这类细节对高频策略影响极大。</p></section>
+<section id="overfitting" aria-labelledby="h-overfitting"><h2 id="h-overfitting">过拟合：样本内与样本外</h2><p><strong>过拟合</strong>指模型把历史数据中的噪声也当成规律，于是样本内表现很好、样本外表现很差。它的典型形状是一条“样本内误差单调下降、样本外误差先降后升”的曲线：复杂度过低时偏差大，复杂度过高时方差大。</p><figure class="figure"><div class="diagram-scroll"><img src="../assets/svg/19-overfit.svg" width="960" height="450" alt="样本内误差单调下降而样本外误差先降后升的U形曲线" loading="lazy"></div><figcaption>复杂度的最优区域在样本外误差的最低点附近，而不是样本内误差最小处。过了这个点，模型学到的主要是噪声。</figcaption></figure><p>识别过拟合的常用做法：把数据切成样本内与样本外，用样本内定规则、用样本外评估；或做滚动前推检验（walk-forward）；并把参数数量写进研究记录。任何“只在回测里成立”的规律，都应视为尚未验证。</p></section>
+<section id="gap" aria-labelledby="h-gap"><h2 id="h-gap">从回测到实盘的摩擦</h2><p>即使回测无偏差，实盘仍会多出几项成本：<strong>佣金与税费</strong>、<strong>滑点</strong>（下单价与成交价的差）、<strong>流动性与涨跌停限制</strong>，以及<strong>资金容量</strong>（规模变大后冲击成本上升）。这些成本随换手率放大：换手越高，被吃掉的收益越多。</p><p>“回测夏普打几折”这类经验法则流传很广，但缺少可核验的统一来源，因此本章不引用具体折扣数字。更稳妥的做法是把佣金、印花税与冲击成本写成参数，在回测中显式扣除，然后对这些成本假设做敏感性测试：如果成本翻倍策略就不赚，那它的安全边际就很薄。</p></section>
+<section id="practice" aria-labelledby="h-practice"><h2 id="h-practice">自我检验</h2><div class="example"><h3>练习</h3><ol><li>说出幸存者偏差与前视偏差的区别，各举一个例子。</li><li>给定 value=15、mean=20、std=5，算出标准化 z 值，并说明为什么要先标准化再合成因子。</li><li>为一个简单规则写出样本内与样本外的时间切分方案，并说明为何不能反复用样本外调试参数。</li></ol></div><p>完成后应能独立回答：因子为什么能解释收益？回测的四个环节分别在哪里可能出错？过拟合为什么会导致样本外失效？这三个问题都不需要先学其他章节。</p></section>
+<section id="references" aria-labelledby="h-references"><h2 id="h-references">资料来源与适用范围</h2><p>下列文献用于核对因子定价与回测过拟合的学术讨论；章节中的图形与数字均为自造的构造数据，不含任何真实策略或基金业绩。</p><ol class="source-list"><li><a href="https://doi.org/10.1016/0304-405X(93)90023-5" target="_blank" rel="noopener noreferrer">Fama &amp; French (1993)｜Common Risk Factors in the Returns on Stocks and Bonds, JFE</a></li><li><a href="https://doi.org/10.1090/noti1105" target="_blank" rel="noopener noreferrer">Bailey, Borwein, López de Prado &amp; Zhu (2014)｜Pseudo-Mathematics and Financial Charlatanism, Notices of the AMS</a></li></ol></section>
+<nav class="chapter-nav" aria-label="前后篇"><a href="18.html">← 第18章</a><a href="../index.html">课程总目录</a><a href="20.html">第20章 →</a></nav>
+</article></main>
 </div>
-</div>
+<footer class="site-footer">仅用于证券投资教育，不构成个性化投资建议。</footer>
+<script defer src="../assets/js/site.js"></script>
 </body>
 </html>

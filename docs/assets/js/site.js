@@ -279,11 +279,20 @@
   const fmt = (v, d = 2) => Number.isFinite(v) ? v.toLocaleString("zh-CN", {
     minimumFractionDigits: d, maximumFractionDigits: d
   }) : "不可计算";
-  const types = new Set(["var95", "kelly", "prospect", "graham"]);
+  const types = new Set(["var95", "kelly", "prospect", "graham", "zscore"]);
   function run(form) {
     let result = NaN, unit = "", note = "输入不在此教学模型的有效范围内。";
     const finite = (...keys) => keys.every(k => Number.isFinite(n(form, k)));
     switch (form.dataset.calc) {
+      case "zscore": {
+        if (!finite("value", "mean", "std")) break;
+        const value = n(form, "value"), mean = n(form, "mean"), std = n(form, "std");
+        if (std <= 0) { note = "标准差须为正数。"; break; }
+        result = (value - mean) / std;
+        note = "标准化 z = (原始值 − 均值) / 标准差 = " + fmt(result)
+          + "。同一 z 在不同截面上可比，前提是均值与标准差在同一样本与同一日期上计算。";
+        break;
+      }
       case "graham": {
         if (!finite("eps", "bvps", "price")) break;
         const eps = n(form, "eps"), bvps = n(form, "bvps"), price = n(form, "price");
