@@ -363,3 +363,66 @@
     calculate(form);
   });
 })();
+
+
+/* Lessons 21–25: source-defined factor proxy, sector PB, split, cost and order economics. */
+(() => {
+  "use strict";
+  const types=new Set(["porproxy","sectorpb","split","netreturn","execution"]);
+  const number=(f,name)=>Number(f.querySelector('[name="'+name+'"]').value);
+  const fmt=(x,d=2)=>x.toLocaleString("zh-CN",{minimumFractionDigits:d,maximumFractionDigits:d});
+  function refresh(form) {
+    const get=name=>number(form,name);
+    let value=NaN,unit="",explain="请检查输入值的有效范围。";
+    switch(form.dataset.calc) {
+      case "porproxy": {
+        const p=get("price"),v=get("fair");
+        if(Number.isFinite(p)&&Number.isFinite(v)&&p>0&&v>=0) {
+          value=(p-v)/p*100;unit="%";
+          explain="简化(P−V)/P，不是原研究的完整POR价值带。估值参照错误时，偏离值没有预测能力。";
+        }break;
+      }
+      case "sectorpb": {
+        const roe=get("roe"),g=get("growth"),ke=get("ke");
+        if([roe,g,ke].every(Number.isFinite)&&roe>=0&&roe<=100&&g>=0&&g<=roe&&ke>g&&ke<=100) {
+          value=(roe-g)/(ke-g);unit=" 倍";
+          explain="稳态分红/清洁盈余模型；要求Ke>g、ROE≥g，不等于观察PB或目标价。";
+        }break;
+      }
+      case "split": {
+        const before=get("before"),after=get("after"),ratio=get("ratio");
+        if([before,after,ratio].every(Number.isFinite)&&before>0&&after>0&&ratio>0&&ratio<=1000) {
+          const adjusted=before/ratio;
+          value=(after/adjusted-1)*100;unit="%";
+          explain="拆股前价格调整后为 "+fmt(adjusted)+" 元。只模拟拆股，不包含股息再投或真实成交。";
+        }break;
+      }
+      case "netreturn": {
+        const gross=get("gross"),turn=get("turnover"),cost=get("cost");
+        if([gross,turn,cost].every(Number.isFinite)&&turn>=0&&cost>=0) {
+          const fee=turn*cost/10000;
+          value=gross-fee;unit="%";
+          explain="毛收益 "+fmt(gross)+"%，单边换手成本约 "+fmt(fee)+" 个百分点。实际市场冲击可能非线性。";
+        }break;
+      }
+      case "execution": {
+        const n=get("notional"),fee=get("fee"),spread=get("spread"),slippage=get("slippage");
+        if([n,fee,spread,slippage].every(Number.isFinite)&&n>0&&fee>=0&&spread>=0&&slippage>=0) {
+          const bp=fee+spread+slippage;
+          value=n*bp/10000;unit=" 元";
+          explain="合计 "+fmt(bp)+" bp，仍需核查实际税费、滑点与市场冲击是否重复计量。";
+        }break;
+      }
+    }
+    const out=form.querySelector("output"),detail=form.querySelector("[data-explain]");
+    if(out) out.textContent=Number.isFinite(value)
+      ? (value<0?"−":"")+fmt(Math.abs(value))+unit : "参数不满足模型条件";
+    if(detail) detail.textContent=explain;
+  }
+  document.querySelectorAll("form[data-calc]").forEach(form=>{
+    if(!types.has(form.dataset.calc))return;
+    form.addEventListener("submit",event=>event.preventDefault());
+    form.addEventListener("input",()=>refresh(form));
+    refresh(form);
+  });
+})();
