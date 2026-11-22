@@ -1,49 +1,69 @@
 #!/usr/bin/env python3
-"""Check static Pages artifacts without external packages."""
+"""Static structural, local-link, source-ledger and SVG checks for the course."""
 from pathlib import Path
 from html.parser import HTMLParser
 import json, sys, xml.etree.ElementTree as ET
-BASE=Path(__file__).resolve().parents[1]/"docs"
+
+ROOT=Path(__file__).resolve().parents[1]
+BASE=ROOT/"docs"
+
 class Scan(HTMLParser):
-    def __init__(self): super().__init__(); self.refs=[]; self.h1=0; self.errors=[]
-    def handle_starttag(self, tag, attrs):
+    def __init__(self):
+        super().__init__(); self.refs=[]; self.h1=0; self.errors=[]
+    def handle_starttag(self,tag,attrs):
         d=dict(attrs)
         if tag=="h1": self.h1+=1
-        if tag=="img" and not d.get("alt"):self.errors.append("img without alt")
-        if any(k.startswith("on") for k in d):self.errors.append("inline event")
-        for k in ("href","src"):
-            if k in d:self.refs.append(d[k])
+        if tag=="img" and not d.get("alt"): self.errors.append("img without alt")
+        if any(k.lower().startswith("on") for k in d): self.errors.append("inline event handler")
+        for key in ("href","src"):
+            if key in d:self.refs.append(d[key])
+
 def main():
-    errors=[]; pages=list(BASE.rglob("*.html")); chapters=json.loads((BASE/"data/courses.json").read_text())["chapters"]
-    for c in chapters:
-        if not (BASE/"lessons"/c["file"]).exists():errors.append("missing lesson "+c["file"])
-    for p in pages:
-        html=p.read_text(encoding="utf8");s=Scan();s.feed(html);errors.extend(f"{p}: {e}" for e in s.errors)
-        if p==BASE/"index.html" or p.name in [f"{i:02}.html" for i in range(1,26)]:
-            if s.h1!=1:errors.append(f"{p}: expected one H1; got {s.h1}")
-            if "javascript:void(0)" in html:errors.append(f"{p}: inert JS link")
-        for u in s.refs:
-            if u.startswith(("https:","http:","mailto:","tel:","data:","#")):continue
-            if u.startswith("javascript:"):errors.append(f"{p}: javascript link");continue
-            path=(p.parent/u.split("#")[0].split("?")[0]).resolve()
-            if not path.is_relative_to(BASE.resolve()) or not path.is_file():errors.append(f"{p}: broken local link {u}")
-    icons=list((BASE/"assets/svg").glob("*.svg"))
-    for p in icons:
+    errors=[]
+    pages=list(BASE.rglob("*.html"))
+    catalog=json.loads((BASE/"data/courses.json").read_text(encoding="utf8"))
+    canonical={f"{i:02d}.html" for i in range(1,29)}
+    for chapter in catalog["chapters"]:
+        if not (BASE/"lessons"/chapter["file"]).is_file():
+            errors.append("missing lesson "+chapter["file"])
+    for page in pages:
+        content=page.read_text(encoding="utf8")
+        scan=Scan();scan.feed(content)
+        errors.extend(f"{page}: {problem}" for problem in scan.errors)
+        if page==BASE/"index.html" or page.name in canonical:
+            if scan.h1!=1:errors.append(f"{page}: expected exactly one H1; got {scan.h1}")
+            if "<main" not in content:errors.append(f"{page}: missing main landmark")
+            if "javascript:void(0)" in content:errors.append(f"{page}: inert JavaScript link")
+        for ref in scan.refs:
+            if ref.startswith(("https:","http:","mailto:","tel:","data:","#")):continue
+            if ref.startswith("javascript:"):
+                errors.append(f"{page}: javascript link");continue
+            local=(page.parent/ref.split("#")[0].split("?")[0]).resolve()
+            if not local.is_relative_to(BASE.resolve()) or not local.is_file():
+                errors.append(f"{page}: broken local link {ref}")
+    svgs=list((BASE/"assets/svg").glob("*.svg"))
+    for path in svgs:
         try:
-            x=ET.parse(p).getroot(); ns="{http://www.w3.org/2000/svg}"
-            if "viewBox" not in x.attrib or x.find(ns+"title") is None or x.find(ns+"desc") is None:errors.append(f"{p}: SVG metadata")
-        except Exception as e:errors.append(f"{p}: {e}")
-    ev=json.loads((BASE/"data/evidence.json").read_text(encoding="utf8"))
-    for n in [f"{i:02d}" for i in range(1,21)]:
-        if not ev["chapters"].get(n,{}).get("sources"):errors.append(f"no sources for {n}")
-    for n in range(21,26):
-        p=BASE/"lessons"/f"{n:02d}.html"
-        html=p.read_text(encoding="utf8")
-        if html.count("<figure ")<3: errors.append(f"{p}: need at least 3 explanatory figures")
-        if 'data-calc="' not in html: errors.append(f"{p}: missing model lab")
-        if "<math " not in html: errors.append(f"{p}: missing semantic math")
-    print("Scanned",len(pages),"HTML and",len(icons),"SVG")
-    for x in errors:print("FAIL:",x)
+            root=ET.parse(path).getroot(); ns="{http://www.w3.org/2000/svg}"
+            if "viewBox" not in root.attrib or root.find(ns+"title") is None or root.find(ns+"desc") is None:
+                errors.append(f"{path}: missing SVG viewBox/title/desc")
+        except Exception as exc:errors.append(f"{path}: SVG parse: {exc}")
+    ledger=json.loads((BASE/"data/evidence.json").read_text(encoding="utf8"))
+    for n in range(1,29):
+        key=f"{n:02d}"
+        if not ledger["chapters"].get(key,{}).get("sources"):
+            errors.append(f"evidence ledger has no sources for chapter {key}")
+    for n in range(21,29):
+        page=BASE/"lessons"/f"{n:02d}.html"
+        content=page.read_text(encoding="utf8")
+        if content.count("<figure ")<3:errors.append(f"{page}: fewer than three explanatory figures")
+        if 'data-calc="' not in content:errors.append(f"{page}: missing interactive calculation")
+        if "<math " not in content:errors.append(f"{page}: missing semantic MathML")
+        if "theme.css" in content:errors.append(f"{page}: legacy stylesheet still loaded")
+    for name in ("capstone_lab.py","test_capstone_lab.py"):
+        if not (ROOT/"examples"/name).is_file():errors.append("missing examples/"+name)
+    print("Scanned",len(pages),"HTML pages and",len(svgs),"SVG files")
+    for error in errors:print("FAIL:",error)
     if errors:sys.exit(1)
     print("PASS static checks; browser QA remains separate")
 if __name__=="__main__":main()
