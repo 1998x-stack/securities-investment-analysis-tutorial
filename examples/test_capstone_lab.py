@@ -47,6 +47,12 @@ class CapstoneTests(unittest.TestCase):
         self.assertAlmostEqual(sum(result["contributions"]),result["volatility"])
         self.assertAlmostEqual(sum(result["shares"]),1.0)
         with self.assertRaises(ValueError):portfolio_risk_contributions([0.5,0.4],cov)
+        # Positive portfolio variance alone does not make an indefinite matrix valid.
+        with self.assertRaises(ValueError):
+            portfolio_risk_contributions([0.5,0.5],[[1.0,2.0],[2.0,1.0]])
+        # Singular positive-semidefinite covariance is valid when portfolio variance is positive.
+        singular=portfolio_risk_contributions([0.5,0.5],[[0.04,0.0],[0.0,0.0]])
+        self.assertGreater(singular["volatility"],0)
 
     def test_cross_sectional_rank_and_composite(self):
         ranks=cross_sectional_ranks({"A":1,"B":2,"C":2,"D":4})
@@ -72,11 +78,31 @@ class CapstoneTests(unittest.TestCase):
         target={"A":0.0,"B":1.0}
         limited=limit_one_way_turnover(current,target,0.1)
         self.assertAlmostEqual(0.5*(abs(limited["A"]-0.5)+abs(limited["B"]-0.5)),0.1)
+        self.assertAlmostEqual(sum(limited.values()),1.0)
+        with self.assertRaises(ValueError):
+            limit_one_way_turnover({"A":0.5},{"A":0.4},0.1)
 
     def test_cost_and_drawdown(self):
         self.assertAlmostEqual(net_return(0.08,1.0,20),0.078)
         self.assertAlmostEqual(max_drawdown([0.1,-0.2,0.05]),-0.2)
         with self.assertRaises(ValueError):max_drawdown([0.1,-1.0])
+
+    def test_brinson_fachler_attribution_reconciles(self):
+        result=brinson_fachler_attribution(
+            {"Tech":0.60,"Health":0.40},
+            {"Tech":0.50,"Health":0.50},
+            {"Tech":0.12,"Health":0.05},
+            {"Tech":0.10,"Health":0.04},
+        )
+        self.assertAlmostEqual(result["totals"]["total"],result["active_return"])
+        self.assertAlmostEqual(result["reconciliation_error"],0.0)
+        self.assertAlmostEqual(
+            result["totals"]["allocation"]+result["totals"]["selection"]+
+            result["totals"]["interaction"],result["active_return"])
+        with self.assertRaises(ValueError):
+            brinson_fachler_attribution(
+                {"Tech":0.6,"Health":0.3},{"Tech":0.5,"Health":0.5},
+                {"Tech":0.12,"Health":0.05},{"Tech":0.10,"Health":0.04})
 
     def test_risk_budget_position_size(self):
         self.assertAlmostEqual(risk_budget_weight(30,25,0.8,5,1,0.5),0.96)
