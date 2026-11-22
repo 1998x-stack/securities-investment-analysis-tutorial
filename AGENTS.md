@@ -6,7 +6,7 @@ Make independently readable, evidence-grounded Chinese long-form lessons. Each a
 ## Canonical paths
 - `docs/index.html` landing; `docs/lessons/NN.html` chapters; `docs/assets/css/site.css` common styles; `docs/assets/js/site.js` interactive enhancements; `docs/assets/svg/` standalone diagrams; `docs/data/evidence.json` evidence ledger.
 - Root `index.html`, `NN.html` only redirect old links; never edit as the canonical source.
-- Chapters 11–28 are presently legacy HTML, with `docs/lessons/theme.css`, and must be modernized one-by-one without breaking URLs.
+- Chapters 16–28 are presently legacy HTML, with `docs/lessons/theme.css`, and must be modernized one-by-one without breaking URLs.
 - Frontend static, no NPM/CDN required. Do not commit built caches.
 
 ## Narrative contract (Olah-style-posts)
@@ -43,3 +43,9 @@ Prefer branch/PR, verify CI diff, deploy and then verify live URL. Every batch l
 - Validate all Gordon stable-growth formulas require discount rate strictly larger than g. Test both the nominal numerator period and terminal discount year. Compute terminal-value share as a sensitivity warning, not a quality signal.
 - Never treat EBITDA as free cash flow, a negative P/E as a bargain, PEG as an intrinsic-value identity, or P/B less than one as a safety guarantee.
 - Browser QA for refactored chapters must verify at least one deterministic calculation, offline SVG loads, MathML visibility, 360/390/1440 viewports and an invalid-input guard. Update evidence.json for each refactored batch.
+
+## Chapter 11–15 research contract
+- Growth stocks: project cash flow after reinvestment and dilution; do not present PEGR/R–IRR as a proof that standard multistage DCF is obsolete. Attribute author-specific frameworks.
+- Fundamentals: document management claims separately from audited filing facts; make investor thesis falsifiable.
+- Technical analysis: differentiate OHLC availability, adjusted-price events, indicator warm-up and delayed executable orders. RSI examples using average gains/losses must identify Wilder seeding and zero-loss behavior.
+- Portfolio theory: specify the sampling period, volatilities, correlation, portfolio weights and covariance cross term. Efficient-frontier examples should derive from actual weights and assumptions, not illustrative graphics masquerading as calculated results.

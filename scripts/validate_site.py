@@ -19,7 +19,7 @@ def main():
         if not (BASE/"lessons"/c["file"]).exists():errors.append("missing lesson "+c["file"])
     for p in pages:
         html=p.read_text(encoding="utf8");s=Scan();s.feed(html);errors.extend(f"{p}: {e}" for e in s.errors)
-        if p==BASE/"index.html" or p.name in [f"{i:02}.html" for i in range(1,11)]:
+        if p==BASE/"index.html" or p.name in [f"{i:02}.html" for i in range(1,16)]:
             if s.h1!=1:errors.append(f"{p}: expected one H1; got {s.h1}")
             if "javascript:void(0)" in html:errors.append(f"{p}: inert JS link")
         for u in s.refs:
