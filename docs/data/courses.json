@@ -340,34 +340,43 @@
       "num": "26",
       "title": "AI驱动的投资分析",
       "topics": [
-        "LLM因子挖掘",
-        "深度学习选股/LSTM",
-        "Verbal Technical Analysis",
-        "FinBERT情绪分析"
+        "金融文本分类与FinBERT",
+        "RAG检索与来源核验",
+        "XBRL数值推理",
+        "AI治理与样本外验证"
       ],
-      "file": "26.html"
+      "file": "26.html",
+      "refactored": true,
+      "review_date": "2026-11-23",
+      "article_style": "independent narrative + original SVG + MathML + interactive calculator + offline Python lab"
     },
     {
       "num": "27",
       "title": "宏观对冲与全球配置",
       "topics": [
-        "大类资产配置",
-        "美林时钟改进",
-        "跨境投资/QDII/QFII",
-        "全天候策略"
+        "增长-通胀情景矩阵",
+        "协方差与风险贡献",
+        "外币收益与汇率对冲",
+        "QDII/港股通与税务边界"
       ],
-      "file": "27.html"
+      "file": "27.html",
+      "refactored": true,
+      "review_date": "2026-11-23",
+      "article_style": "independent narrative + original SVG + MathML + interactive calculator + offline Python lab"
     },
     {
       "num": "28",
       "title": "综合实战项目",
       "topics": [
-        "完整投资分析系统",
-        "多维度选股框架",
-        "回测评估报告",
-        "投资哲学形成"
+        "投资研究章程与PIT数据",
+        "因子评分与组合约束",
+        "下一时点回测与成本",
+        "归因、监控与停止机制"
       ],
-      "file": "28.html"
+      "file": "28.html",
+      "refactored": true,
+      "review_date": "2026-11-23",
+      "article_style": "independent narrative + original SVG + MathML + interactive calculator + offline Python lab"
     }
   ]
 }
