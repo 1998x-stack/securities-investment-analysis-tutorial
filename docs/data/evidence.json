@@ -831,7 +831,10 @@
           "source_url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces",
           "locator": "Linked original paper, official documentation or regulator source; see lesson section.",
           "status": "verified",
-          "notes": "Claim limited to the source's stated dataset, jurisdiction, version and scope."
+          "notes": "Claim limited to the source's stated dataset, jurisdiction, version and scope.",
+          "supporting_sources": [
+            "https://www.sec.gov/about/developer-resources"
+          ]
         },
         {
           "id": "batch6-26-06",
@@ -1070,7 +1073,10 @@
           "source_url": "https://tushare.pro/document/1?doc_id=27",
           "locator": "Linked original paper, official documentation or regulator source; see lesson section.",
           "status": "verified",
-          "notes": "Claim limited to the source's stated dataset, jurisdiction, version and scope."
+          "notes": "Claim limited to the source's stated dataset, jurisdiction, version and scope.",
+          "supporting_sources": [
+            "https://tushare.pro/document/2?doc_id=146"
+          ]
         },
         {
           "id": "batch6-28-05",
