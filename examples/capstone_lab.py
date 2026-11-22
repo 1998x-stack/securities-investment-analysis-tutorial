@@ -80,6 +80,30 @@ def currency_adjusted_return(asset_return, fx_return, hedge_ratio=0.0,
     return gross - hedge_ratio * hedge_cost_bps / 10000
 
 
+def _is_positive_semidefinite(matrix, tolerance=1e-10):
+    """Pivoted Schur-complement test for a symmetric positive-semidefinite matrix."""
+    n = len(matrix)
+    a = [list(row) for row in matrix]
+    scale = max((abs(value) for row in a for value in row), default=0.0)
+    tol = tolerance * max(scale, 1e-16)
+    for k in range(n):
+        pivot_index = max(range(k, n), key=lambda i: a[i][i])
+        if a[pivot_index][pivot_index] < -tol:
+            return False
+        if pivot_index != k:
+            a[k], a[pivot_index] = a[pivot_index], a[k]
+            for row in a:
+                row[k], row[pivot_index] = row[pivot_index], row[k]
+        pivot = a[k][k]
+        if pivot <= tol:
+            return all(abs(a[i][j]) <= tol
+                       for i in range(k, n) for j in range(k, n))
+        for i in range(k + 1, n):
+            for j in range(k + 1, n):
+                a[i][j] -= a[i][k] * a[k][j] / pivot
+    return True
+
+
 def portfolio_risk_contributions(weights, covariance):
     """Euler volatility contributions for a fully invested long-only portfolio."""
     n = len(weights)
@@ -92,6 +116,8 @@ def portfolio_risk_contributions(weights, covariance):
     if any(abs(covariance[i][j] - covariance[j][i]) > 1e-8
            for i in range(n) for j in range(n)):
         raise ValueError("covariance matrix must be symmetric")
+    if not _is_positive_semidefinite(covariance):
+        raise ValueError("covariance matrix must be positive semidefinite")
     sigma_w = [sum(covariance[i][j] * weights[j] for j in range(n))
                for i in range(n)]
     variance = sum(weights[i] * sigma_w[i] for i in range(n))
@@ -173,13 +199,19 @@ def allocate_capped(scores, sectors, max_weight=0.25, sector_cap=0.40):
 
 
 def limit_one_way_turnover(current, target, max_one_way_turnover):
-    """Scale all weight changes proportionally to the one-way turnover limit."""
+    """Scale changes to a one-way turnover limit for fully invested long-only weights.
+
+    Include cash as an explicit asset when the invested weights do not sum to one.
+    """
     if not isfinite(max_one_way_turnover) or not 0 <= max_one_way_turnover <= 1:
         raise ValueError("turnover cap must be in [0, 1]")
     keys = set(current) | set(target)
     if any(not isfinite(current.get(k, 0.0)) or not isfinite(target.get(k, 0.0))
-           or current.get(k, 0.0) < 0 or target.get(k, 0.0) < 0 for k in keys):
-        raise ValueError("long-only finite weights required")
+           or current.get(k, 0.0) < 0 or target.get(k, 0.0) < 0
+           or current.get(k, 0.0) > 1 or target.get(k, 0.0) > 1 for k in keys):
+        raise ValueError("long-only finite weights in [0, 1] required")
+    if abs(sum(current.values()) - 1.0) > 1e-8 or abs(sum(target.values()) - 1.0) > 1e-8:
+        raise ValueError("current and target weights must each sum to one (include cash)")
     delta = {k: target.get(k, 0.0) - current.get(k, 0.0) for k in keys}
     turnover = 0.5 * sum(abs(v) for v in delta.values())
     if turnover <= max_one_way_turnover or turnover == 0:
@@ -192,8 +224,8 @@ def net_return(gross_return, one_way_turnover, cost_bps):
     """Linear teaching approximation; turnover is a fraction, costs are bps."""
     if not all(isfinite(x) for x in (gross_return, one_way_turnover, cost_bps)):
         raise ValueError("finite inputs required")
-    if gross_return <= -1 or one_way_turnover < 0 or cost_bps < 0:
-        raise ValueError("invalid return, turnover or cost")
+    if gross_return <= -1 or not 0 <= one_way_turnover <= 1 or cost_bps < 0:
+        raise ValueError("return must exceed -100%; one-way turnover must be in [0, 1]; costs nonnegative")
     return gross_return - one_way_turnover * cost_bps / 10000
 
 
@@ -224,6 +256,54 @@ def risk_budget_weight(risk_budget_bps, annual_vol_pct, signal_strength,
     raw = min(max_weight_pct, risk_budget_bps / annual_vol_pct * signal_strength)
     delta = max(-max_change_pct, min(max_change_pct, raw - current_weight_pct))
     return current_weight_pct + delta
+
+
+def brinson_fachler_attribution(portfolio_weights, benchmark_weights,
+                                  portfolio_returns, benchmark_returns):
+    """Brinson-Fachler sector attribution; all weights must sum to one.
+
+    Returns allocation, selection and interaction effects by sector and verifies
+    that their sum reconciles to portfolio return minus benchmark return.
+    """
+    keys = set(portfolio_weights)
+    if not keys or keys != set(benchmark_weights) or keys != set(portfolio_returns) or keys != set(benchmark_returns):
+        raise ValueError("portfolio/benchmark weights and returns need identical nonempty sectors")
+    maps = (portfolio_weights, benchmark_weights, portfolio_returns, benchmark_returns)
+    if any(not isfinite(value) for mapping in maps for value in mapping.values()):
+        raise ValueError("finite weights and returns required")
+    for weights in (portfolio_weights, benchmark_weights):
+        if any(value < 0 or value > 1 for value in weights.values()) or abs(sum(weights.values()) - 1.0) > 1e-8:
+            raise ValueError("portfolio and benchmark weights must be long-only and sum to one")
+    benchmark_total = sum(benchmark_weights[k] * benchmark_returns[k] for k in keys)
+    portfolio_total = sum(portfolio_weights[k] * portfolio_returns[k] for k in keys)
+    by_sector = {}
+    for sector in sorted(keys):
+        active_weight = portfolio_weights[sector] - benchmark_weights[sector]
+        allocation = active_weight * (benchmark_returns[sector] - benchmark_total)
+        selection = benchmark_weights[sector] * (portfolio_returns[sector] - benchmark_returns[sector])
+        interaction = active_weight * (portfolio_returns[sector] - benchmark_returns[sector])
+        by_sector[sector] = {
+            "allocation": allocation,
+            "selection": selection,
+            "interaction": interaction,
+            "total": allocation + selection + interaction,
+        }
+    totals = {
+        name: sum(row[name] for row in by_sector.values())
+        for name in ("allocation", "selection", "interaction", "total")
+    }
+    active_return = portfolio_total - benchmark_total
+    error = totals["total"] - active_return
+    if abs(error) > 1e-8:
+        raise ArithmeticError("Brinson-Fachler attribution does not reconcile")
+    return {
+        "portfolio_return": portfolio_total,
+        "benchmark_return": benchmark_total,
+        "active_return": active_return,
+        "totals": totals,
+        "by_sector": by_sector,
+        "reconciliation_error": error,
+    }
 
 
 def demo():
