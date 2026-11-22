@@ -279,11 +279,20 @@
   const fmt = (v, d = 2) => Number.isFinite(v) ? v.toLocaleString("zh-CN", {
     minimumFractionDigits: d, maximumFractionDigits: d
   }) : "不可计算";
-  const types = new Set(["var95", "kelly"]);
+  const types = new Set(["var95", "kelly", "prospect"]);
   function run(form) {
     let result = NaN, unit = "", note = "输入不在此教学模型的有效范围内。";
     const finite = (...keys) => keys.every(k => Number.isFinite(n(form, k)));
     switch (form.dataset.calc) {
+      case "prospect": {
+        if (!finite("gain", "alpha", "lambda")) break;
+        const g = n(form, "gain"), a = n(form, "alpha"), lam = n(form, "lambda");
+        if (g <= 0 || a <= 0 || lam <= 0) { note = "收益幅度、alpha 与损失厌恶系数均须为正。"; break; }
+        result = Math.pow(g, a);
+        note = "收益侧 v = " + fmt(result) + "；同等损失的效用 v = −" + fmt(lam * result)
+          + "，损失约为收益的 " + fmt(lam) + " 倍（这是模型中直接设定的系数）。教学公式，不代表真实心理测量。";
+        break;
+      }
       case "var95": {
         if (!finite("mean", "sigma", "z")) break;
         const mean = n(form, "mean"), sigma = n(form, "sigma"), z = n(form, "z");
