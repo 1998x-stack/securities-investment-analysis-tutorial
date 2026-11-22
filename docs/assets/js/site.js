@@ -271,3 +271,95 @@
     run(form);
   });
 })();
+
+
+/* Chapters 16–20: risk, behavioral value, strategy mix and factor research labs. */
+(() => {
+  "use strict";
+  const value = (form, key) => Number(form.querySelector('[name="' + key + '"]').value);
+  const fmt = (x, digits = 2) => Number.isFinite(x)
+    ? x.toLocaleString("zh-CN", {minimumFractionDigits: digits, maximumFractionDigits: digits})
+    : "不可计算";
+  const finite = (...xs) => xs.every(Number.isFinite);
+  const forms = new Set(["risk", "prospect", "styleblend", "qsharpe", "factor"]);
+  function calculate(form) {
+    const get = key => value(form, key);
+    let output = "", explanation = "", invalid = false;
+    switch (form.dataset.calc) {
+      case "risk": {
+        const V=get("notional"), vol=get("vol")/100, conf=get("confidence"), h=get("horizon");
+        invalid = !finite(V,vol,conf,h) || V<=0 || vol<0 || vol>1 ||
+          ![95,99].includes(conf) || !Number.isInteger(h) || h<1 || h>252;
+        if (!invalid) {
+          const alpha=conf/100;
+          const z=conf===95 ? 1.6448536269514722 : 2.3263478740408408;
+          const density=Math.exp(-z*z/2)/Math.sqrt(2*Math.PI);
+          const scale=V*vol*Math.sqrt(h);
+          const VaR=scale*z, ES=scale*density/(1-alpha);
+          output="VaR "+fmt(VaR)+" 元";
+          explanation="ES "+fmt(ES)+" 元；零均值正态、独立同分布与平方根时间缩放假设。不是最大可能损失。";
+        }
+        break;
+      }
+      case "prospect": {
+        const gain=get("gain"), loss=get("loss"), a=get("alpha"), b=get("beta"), lambda=get("lambda");
+        invalid=!finite(gain,loss,a,b,lambda) || gain<=0 || loss<=0 || a<=0 || a>1.5 ||
+          b<=0 || b>1.5 || lambda<1 || lambda>10;
+        if (!invalid) {
+          const vg=Math.pow(gain,a), vl=-lambda*Math.pow(loss,b);
+          output="损失/收益价值比 "+fmt(Math.abs(vl)/vg);
+          explanation="v(+"+fmt(gain,0)+")="+fmt(vg)+"；v(−"+fmt(loss,0)+")=−"+fmt(Math.abs(vl))+
+            "。分段价值函数示意，不包含概率加权。";
+        }
+        break;
+      }
+      case "styleblend": {
+        const wv=get("wv"),wg=get("wg"),wm=get("wm"),rv=get("rv"),rg=get("rg"),rm=get("rm"),
+          turnover=get("turnover"),cost=get("cost");
+        invalid=!finite(wv,wg,wm,rv,rg,rm,turnover,cost) || wv<0 || wg<0 || wm<0 ||
+          Math.abs(wv+wg+wm-100)>0.001 || turnover<0 || cost<0;
+        if (!invalid) {
+          const gross=(wv*rv+wg*rg+wm*rm)/100, expense=turnover*cost/10000, net=gross-expense;
+          output="净情景收益 "+fmt(net)+"%";
+          explanation="毛情景收益 "+fmt(gross)+"%；交易成本 "+fmt(expense)+" 个百分点。假设收益可线性加权、成本按单边换手估算。";
+        }
+        break;
+      }
+      case "qsharpe": {
+        const mean=get("mean"),vol=get("vol"),days=get("days"),turnover=get("turnover"),cost=get("cost");
+        invalid=!finite(mean,vol,days,turnover,cost) || vol<=0 || days<200 || days>260 ||
+          !Number.isInteger(days) || turnover<0 || cost<0;
+        if (!invalid) {
+          const gross=mean*days, expense=turnover*cost/10000, net=gross-expense;
+          const annualVol=vol*Math.sqrt(days), sharpe=net/annualVol;
+          output=fmt(sharpe);
+          explanation="成本后年化算术超额收益 "+fmt(net)+"%；年化波动率 "+fmt(annualVol)+
+            "%。不含复利、融资、税费及序列相关修正。";
+        }
+        break;
+      }
+      case "factor": {
+        const zv=get("zv"),zq=get("zq"),zm=get("zm"),zc=get("zc"),
+          wv=get("wv"),wq=get("wq"),wm=get("wm"),wc=get("wc");
+        invalid=!finite(zv,zq,zm,zc,wv,wq,wm,wc) ||
+          [wv,wq,wm,wc].some(x=>x<0) || Math.abs(wv+wq+wm+wc-100)>0.001 ||
+          [zv,zq,zm,zc].some(x=>Math.abs(x)>10);
+        if (!invalid) {
+          const score=(zv*wv+zq*wq+zm*wm+zc*wc)/100;
+          output=fmt(score);
+          explanation="综合Z分数 "+fmt(score)+"；它是统一方向后的横截面评分，不是未来收益率。";
+        }
+        break;
+      }
+    }
+    const out=form.querySelector("output"), note=form.querySelector("[data-explain]");
+    if (out) out.textContent=invalid ? "参数不满足模型条件" : output;
+    if (note) note.textContent=invalid ? "请检查输入范围、单位与权重和。" : explanation;
+  }
+  document.querySelectorAll("form[data-calc]").forEach(form=>{
+    if(!forms.has(form.dataset.calc)) return;
+    form.addEventListener("submit",event=>event.preventDefault());
+    form.addEventListener("input",()=>calculate(form));
+    calculate(form);
+  });
+})();
