@@ -1,0 +1,124 @@
+{
+  "as_of": "2026-11-22",
+  "scope": "Official primary references; all worked financial numbers and graphs are synthetic illustrations, not market data.",
+  "chapters": {
+    "01": {
+      "claims": [
+        "持有期收益取决于价格与分配，风险与分散投资有边界",
+        "一级与二级市场的功能不同"
+      ],
+      "sources": [
+        [
+          "CSRC risks and return",
+          "https://www.csrc.gov.cn/csrc/c100211/c1452117/content.shtml"
+        ],
+        [
+          "Investor.gov diversification",
+          "https://www.investor.gov/introduction-investing/getting-started/asset-allocation"
+        ],
+        [
+          "SSE stock service",
+          "https://one.sse.com.cn/onething/gptz/"
+        ]
+      ]
+    },
+    "02": {
+      "claims": [
+        "股票、债券、基金及衍生品对应不同合约权利",
+        "债券价格贴现示例是数学计算而非市场预测"
+      ],
+      "sources": [
+        [
+          "SEC investment products",
+          "https://www.investor.gov/introduction-investing/investing-basics/investment-products"
+        ],
+        [
+          "SSE ETF education",
+          "https://edu.sse.com.cn/college/required/basicinfo/index.shtml"
+        ],
+        [
+          "SZSE bond types",
+          "https://investor.szse.cn/bond/introduction/varieties/index.html"
+        ]
+      ]
+    },
+    "03": {
+      "claims": [
+        "SSE/SZSE published 2026 exchange trading rule revisions",
+        "SSE revised rule effective 2026-07-06, some items deferred",
+        "All auction data are hypothetical"
+      ],
+      "sources": [
+        [
+          "SSE 2026 rules",
+          "https://www.sse.com.cn/lawandrules/sselawsrules2025/stocks/exchange/c/c_20260424_10816482.shtml"
+        ],
+        [
+          "SZSE 2026 rules",
+          "https://www.szse.cn/lawrules/rule/trade/current/t20260424_620190.html"
+        ],
+        [
+          "SSE stock service",
+          "https://one.sse.com.cn/onething/gptz/"
+        ],
+        [
+          "SSE amendment summary",
+          "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20260424_10816474.shtml"
+        ]
+      ]
+    },
+    "04": {
+      "claims": [
+        "Balance sheet measures stocks at a point in time; profit and cash flow measure activities across time",
+        "2026 CAS 30 has phased mandatory adoption: 2027/2029/2030"
+      ],
+      "sources": [
+        [
+          "美国 SEC：财务报表入门",
+          "https://www.sec.gov/about/reports-publications/investorpubsbegfinstmtguide"
+        ],
+        [
+          "财政部：2026年新列报准则及分阶段执行安排",
+          "https://app.mof.gov.cn/mofmobile2026/zcfb/202608/t20260805_3999529.htm"
+        ],
+        [
+          "财政部：新列报准则答记者问",
+          "https://app.mof.gov.cn/mofmobile2026/zcjd/202608/t20260805_3999642.htm"
+        ],
+        [
+          "中国证监会：上市公司信息披露管理办法",
+          "https://www.csrc.gov.cn/c106256/c1653948/content.shtml"
+        ]
+      ]
+    },
+    "05": {
+      "claims": [
+        "ROE DuPont decomposition is algebraic when matching numerator and denominator conventions",
+        "Leverage can increase ROE without improving cash quality"
+      ],
+      "sources": [
+        [
+          "美国 SEC：财务报表基础解读",
+          "https://www.sec.gov/about/reports-publications/investorpubsbegfinstmtguide"
+        ],
+        [
+          "财政部：企业会计准则第30号（2026年）",
+          "https://kjs.mof.gov.cn/zt/kjzzss/kuaijizhunzeshishi/202608/t20260806_3995008.htm"
+        ],
+        [
+          "中国证监会：2025年年度财务报告会计监管报告",
+          "https://www.csrc.gov.cn/csrc/c100028/c7652148/content.shtml"
+        ],
+        [
+          "美国 SEC：风险与收益教育",
+          "https://www.investor.gov/additional-resources/information/youth/teachers-classroom-resources/risk-and-return"
+        ]
+      ]
+    }
+  },
+  "limitations": [
+    "Figures and calculators are deterministic teaching cases.",
+    "Static checks are automated; a separate 1440/390/360 pixel browser QA is needed.",
+    "Regulatory rules should be reverified when content is edited."
+  ]
+}
