@@ -143,6 +143,10 @@ def main():
                         f.locator('[name="c1"]').fill("1.5")
                         if "参数不满足" not in f.locator("output").inner_text():
                             errors.append("26 confidence >1 not rejected")
+                        f.locator('[name="c1"]').fill("")
+                        if "参数不满足" not in f.locator("output").inner_text():
+                            errors.append("26 blank confidence not rejected")
+                        f.locator('[name="c1"]').fill("0.9")
                     if w==1440 and name=="lessons/27.html":
                         f=page.locator('form[data-calc="fxhedge"]')
                         if "5.25%" not in f.locator("output").inner_text():
@@ -150,15 +154,30 @@ def main():
                         f.locator('[name="hedge"]').fill("120")
                         if "参数不满足" not in f.locator("output").inner_text():
                             errors.append("27 hedge ratio >100 not rejected")
+                        f.locator('[name="hedge"]').fill("50")
+                        f.locator('[name="cost"]').fill("")
+                        if "参数不满足" not in f.locator("output").inner_text():
+                            errors.append("27 blank hedge cost not rejected")
+                        f.locator('[name="cost"]').fill("10")
                         risk=page.locator('form[data-calc="risk3"]')
                         risk.locator('[name="r12"]').fill("1.5")
                         if "参数不满足" not in risk.locator("output").inner_text():
                             errors.append("27 invalid correlation not rejected")
+                        risk.locator('[name="r12"]').fill("0.15")
+                        risk.locator('[name="w1"]').fill("-10")
+                        if "参数不满足" not in risk.locator("output").inner_text():
+                            errors.append("27 negative asset weight not rejected")
+                        risk.locator('[name="w1"]').fill("40")
                     if w==1440 and name=="lessons/28.html":
                         f=page.locator('form[data-calc="allocation"]')
                         f.locator('[name="vol"]').fill("0")
                         if "参数不满足" not in f.locator("output").inner_text():
                             errors.append("28 zero volatility not rejected")
+                        f.locator('[name="vol"]').fill("25")
+                        f.locator('[name="capital"]').fill("")
+                        if "参数不满足" not in f.locator("output").inner_text():
+                            errors.append("28 blank portfolio capital not rejected")
+                        f.locator('[name="capital"]').fill("1000000")
                     if name=="index.html" and w==1440:
                         inp=page.locator("[data-course-search]")
                         inp.fill("财务比率分析")
