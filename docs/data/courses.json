@@ -10,7 +10,8 @@
         "A股市场全景",
         "注册制改革"
       ],
-      "file": "01.html"
+      "file": "01.html",
+      "refactored": true
     },
     {
       "num": "02",
@@ -21,7 +22,8 @@
         "ETF与LOF",
         "期权期货入门"
       ],
-      "file": "02.html"
+      "file": "02.html",
+      "refactored": true
     },
     {
       "num": "03",
@@ -32,7 +34,8 @@
         "涨跌停制度",
         "T+1与融资融券"
       ],
-      "file": "03.html"
+      "file": "03.html",
+      "refactored": true
     },
     {
       "num": "04",
@@ -43,7 +46,8 @@
         "现金流量表",
         "三大报表勾稽关系"
       ],
-      "file": "04.html"
+      "file": "04.html",
+      "refactored": true
     },
     {
       "num": "05",
@@ -54,7 +58,8 @@
         "营运能力/周转率",
         "成长能力/营收增速"
       ],
-      "file": "05.html"
+      "file": "05.html",
+      "refactored": true
     },
     {
       "num": "06",
@@ -65,7 +70,10 @@
         "财政政策",
         "利率与股市关系"
       ],
-      "file": "06.html"
+      "file": "06.html",
+      "refactored": true,
+      "review_date": "2026-11-22",
+      "article_style": "independent narrative + SVG + MathML + calculator"
     },
     {
       "num": "07",
@@ -76,7 +84,10 @@
         "产业链分析",
         "行业轮动规律"
       ],
-      "file": "07.html"
+      "file": "07.html",
+      "refactored": true,
+      "review_date": "2026-11-22",
+      "article_style": "independent narrative + SVG + MathML + calculator"
     },
     {
       "num": "08",
@@ -87,7 +98,10 @@
         "WACC加权资本成本",
         "终值假设的陷阱"
       ],
-      "file": "08.html"
+      "file": "08.html",
+      "refactored": true,
+      "review_date": "2026-11-22",
+      "article_style": "independent narrative + SVG + MathML + calculator"
     },
     {
       "num": "09",
@@ -98,7 +112,10 @@
         "PB市净率",
         "PE-G与PB-ROE框架"
       ],
-      "file": "09.html"
+      "file": "09.html",
+      "refactored": true,
+      "review_date": "2026-11-22",
+      "article_style": "independent narrative + SVG + MathML + calculator"
     },
     {
       "num": "10",
@@ -109,7 +126,10 @@
         "DDM股利折现",
         "退出倍数法EMM"
       ],
-      "file": "10.html"
+      "file": "10.html",
+      "refactored": true,
+      "review_date": "2026-11-22",
+      "article_style": "independent narrative + SVG + MathML + calculator"
     },
     {
       "num": "11",

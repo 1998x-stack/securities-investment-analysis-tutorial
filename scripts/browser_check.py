@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Browser QA for the course's first five canonical chapters and landing page.
+"""Browser QA for the course's first ten canonical chapters and landing page.
 Needs: pip install playwright; python -m playwright install chromium.
 """
 from pathlib import Path
@@ -8,9 +8,9 @@ import json, sys
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"qa"/"browser"
 OUT.mkdir(parents=True,exist_ok=True)
-FILES=["index.html"]+[f"lessons/{i:02d}.html" for i in range(1,6)]
+FILES=["index.html"]+[f"lessons/{i:02d}.html" for i in range(1,11)]
 SIZES=[(1440,900),(390,844),(360,780)]
-EXPECTED={"01.html":"16,288.95","02.html":"972.77","03.html":"3,000.00","04.html":"30.00","05.html":"17.28"}
+EXPECTED={"01.html":"16,288.95","02.html":"972.77","03.html":"3,000.00","04.html":"30.00","05.html":"17.28","06.html":"2.94","07.html":"15,000.00","08.html":"1,726.79","09.html":"1.00","10.html":"8.00"}
 def main():
     errors=[];results=[]
     with sync_playwright() as pw:
@@ -30,6 +30,9 @@ def main():
                     if page.locator("main").count()!=1:errors.append(f"{name}@{w}: missing main")
                     overflow=page.evaluate("document.documentElement.scrollWidth - window.innerWidth")
                     if overflow>1:errors.append(f"{name}@{w}: page width overflow {overflow}px")
+                    # Eagerly resolve lazy images before asserting successful decode.
+                    page.locator("img").evaluate_all("(xs)=>xs.forEach(img=>{img.loading='eager';img.decoding='sync'})")
+                    page.wait_for_function("Array.from(document.images).every(img=>img.complete)",timeout=15000)
                     broken=page.locator("img").evaluate_all("(xs)=>xs.filter(x=>!x.complete||x.naturalWidth===0).map(x=>x.src)")
                     if broken:errors.append(f"{name}@{w}: broken images {broken}")
                     if js_errors:errors.append(f"{name}@{w}: JS errors {js_errors}")
@@ -42,6 +45,24 @@ def main():
                         if EXPECTED[Path(name).name] not in actual:
                             errors.append(f"{name}@{w}: calculator expected {EXPECTED[Path(name).name]} got {actual}")
                         if page.locator("figure figcaption").count()<2:errors.append(f"{name}@{w}: missing figure captions")
+                        if Path(name).name=="09.html":
+                            second=page.locator("form[data-calc] output").nth(1).inner_text().strip()
+                            if "1.29" not in second:errors.append(f"{name}@{w}: PB second calculator {second}")
+                        if Path(name).name=="10.html":
+                            second=page.locator("form[data-calc] output").nth(1).inner_text().strip()
+                            if "40.00" not in second:errors.append(f"{name}@{w}: DDM second calculator {second}")
+                        if Path(name).name in ["08.html","09.html","10.html"]:
+                            badform=page.locator("form[data-calc=dcf],form[data-calc=pb],form[data-calc=ddm]").first
+                            if badform.count():
+                                if Path(name).name=="08.html":
+                                    badform.locator("[name=growth]").fill("10")
+                                else:
+                                    badform.locator("[name=growth]").fill("99")
+                                invalid_output=badform.locator("output").inner_text().strip()
+                                if "参数不满足" not in invalid_output:errors.append(f"{name}@{w}: no invalid-input feedback")
+                                if Path(name).name=="08.html":badform.locator("[name=growth]").fill("3")
+                                elif Path(name).name=="09.html":badform.locator("[name=growth]").fill("3")
+                                else:badform.locator("[name=growth]").fill("3")
                     if name=="index.html" and w==1440:
                         inp=page.locator("[data-course-search]")
                         inp.fill("财务比率分析")
