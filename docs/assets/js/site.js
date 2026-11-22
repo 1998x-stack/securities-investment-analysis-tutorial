@@ -426,3 +426,95 @@
     refresh(form);
   });
 })();
+
+
+/* Lessons 26–28: evidence-weighted sentiment, currency hedging and capstone sizing. */
+(() => {
+  "use strict";
+  const supported = new Set(["sentiment","fxhedge","risk3","allocation"]);
+  const fmt = (v, d=2) => v.toLocaleString("zh-CN",{minimumFractionDigits:d,maximumFractionDigits:d});
+  const num = (form, name) => Number(form.querySelector('[name="'+name+'"]').value);
+  function update(form) {
+    const get = name => num(form,name);
+    let valid = true, result = "", note = "";
+    switch (form.dataset.calc) {
+      case "sentiment": {
+        const half=get("half");
+        const docs=[1,2,3].map(i=>({s:get("s"+i),c:get("c"+i),a:get("a"+i)}));
+        valid=Number.isFinite(half)&&half>0&&docs.every(x=>
+          Number.isFinite(x.s)&&x.s>=-1&&x.s<=1&&
+          Number.isFinite(x.c)&&x.c>=0&&x.c<=1&&
+          Number.isFinite(x.a)&&x.a>=0);
+        if(valid){
+          let numerator=0,denominator=0;
+          for(const x of docs){
+            const w=x.c*Math.pow(2,-x.a/half);
+            numerator+=w*x.s;denominator+=w;
+          }
+          if(denominator<=0)valid=false;
+          else{
+            result=fmt(numerator/denominator);
+            note="置信度×时间衰减加权平均；未处理重复新闻和公司相关性，实际研究还需加入这些维度。该分数不是未来收益预测。";
+          }
+        }break;
+      }
+      case "fxhedge": {
+        const asset=get("asset"),fx=get("fx"),hedge=get("hedge"),cost=get("cost");
+        valid=[asset,fx,hedge,cost].every(Number.isFinite)&&asset>-100&&fx>-100&&hedge>=0&&hedge<=100&&cost>=0;
+        if(valid){
+          const h=hedge/100;
+          const gross=(1+asset/100)*(1+(1-h)*fx/100)-1;
+          const net=gross-h*cost/10000;
+          result=fmt(net*100)+"%";
+          note="剩余外汇敞口的简化收益代理，扣除按对冲名义金额近似的成本；未包含远期点、carry、基差、保证金和展期。";
+        }break;
+      }
+      case "risk3": {
+        const w=[get("w1"),get("w2"),get("w3")];
+        const v=[get("v1"),get("v2"),get("v3")].map(x=>x/100);
+        const r12=get("r12"),r13=get("r13"),r23=get("r23");
+        valid=w.every(Number.isFinite)&&v.every(x=>Number.isFinite(x)&&x>0)&&
+          [r12,r13,r23].every(x=>Number.isFinite(x)&&x>=-1&&x<=1)&&
+          Math.abs(w.reduce((a,b)=>a+b,0)-100)<1e-6;
+        const determinant=1+2*r12*r13*r23-r12*r12-r13*r13-r23*r23;
+        if(determinant < -1e-9)valid=false;
+        if(valid){
+          const ww=w.map(x=>x/100);
+          const corr=[[1,r12,r13],[r12,1,r23],[r13,r23,1]];
+          const cov=corr.map((row,i)=>row.map((rho,j)=>rho*v[i]*v[j]));
+          const sigmaW=cov.map(row=>row.reduce((sum,c,j)=>sum+c*ww[j],0));
+          const variance=ww.reduce((sum,wi,i)=>sum+wi*sigmaW[i],0);
+          if(variance<=0)valid=false;
+          else{
+            const vol=Math.sqrt(variance);
+            const shares=ww.map((wi,i)=>wi*sigmaW[i]/variance*100);
+            result="组合波动率 "+fmt(vol*100)+"%；风险贡献 "+shares.map(x=>fmt(x,1)+"%").join(" / ");
+            note="风险贡献顺序为股票 / 债券 / 黄金。相关性改变会改变贡献；历史协方差不是未来保证。";
+          }
+        }break;
+      }
+      case "allocation": {
+        const risk=get("risk"),vol=get("vol"),signal=get("signal"),max=get("max");
+        const current=get("current"),change=get("change"),capital=get("capital");
+        valid=[risk,vol,signal,max,current,change,capital].every(Number.isFinite)&&
+          risk>=0&&vol>0&&signal>=0&&signal<=1&&max>0&&current>=0&&current<=max&&change>=0&&capital>0;
+        if(valid){
+          const raw=Math.min(max,risk/vol*signal);
+          const delta=Math.max(-change,Math.min(change,raw-current));
+          const target=current+delta;
+          result="目标权重 "+fmt(target)+"% · 名义金额 "+fmt(capital*target/100)+" 元";
+          note="按单名风险预算近似后，再限制单名上限和本期权重变化；不含协方差、行业限额、流动性与真实订单规则。";
+        }break;
+      }
+    }
+    const output=form.querySelector("output"), explanation=form.querySelector("[data-explain]");
+    if(output)output.textContent=valid?result:"参数不满足模型条件";
+    if(explanation)explanation.textContent=valid?note:"请检查数值范围、权重和、相关矩阵半正定条件与单位。";
+  }
+  document.querySelectorAll("form[data-calc]").forEach(form=>{
+    if(!supported.has(form.dataset.calc))return;
+    form.addEventListener("submit",event=>event.preventDefault());
+    form.addEventListener("input",()=>update(form));
+    update(form);
+  });
+})();
