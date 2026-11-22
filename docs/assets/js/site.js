@@ -433,7 +433,10 @@
   "use strict";
   const supported = new Set(["sentiment","fxhedge","risk3","allocation"]);
   const fmt = (v, d=2) => v.toLocaleString("zh-CN",{minimumFractionDigits:d,maximumFractionDigits:d});
-  const num = (form, name) => Number(form.querySelector('[name="'+name+'"]').value);
+  const num = (form, name) => {
+    const field = form.querySelector('[name="'+name+'"]');
+    return field && field.value.trim() !== "" ? Number(field.value) : NaN;
+  };
   function update(form) {
     const get = name => num(form,name);
     let valid = true, result = "", note = "";
@@ -473,7 +476,7 @@
         const w=[get("w1"),get("w2"),get("w3")];
         const v=[get("v1"),get("v2"),get("v3")].map(x=>x/100);
         const r12=get("r12"),r13=get("r13"),r23=get("r23");
-        valid=w.every(Number.isFinite)&&v.every(x=>Number.isFinite(x)&&x>0)&&
+        valid=w.every(x=>Number.isFinite(x)&&x>=0&&x<=100)&&v.every(x=>Number.isFinite(x)&&x>0)&&
           [r12,r13,r23].every(x=>Number.isFinite(x)&&x>=-1&&x<=1)&&
           Math.abs(w.reduce((a,b)=>a+b,0)-100)<1e-6;
         const determinant=1+2*r12*r13*r23-r12*r12-r13*r13-r23*r23;
