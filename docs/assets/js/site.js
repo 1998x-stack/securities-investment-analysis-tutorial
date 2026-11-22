@@ -279,11 +279,20 @@
   const fmt = (v, d = 2) => Number.isFinite(v) ? v.toLocaleString("zh-CN", {
     minimumFractionDigits: d, maximumFractionDigits: d
   }) : "不可计算";
-  const types = new Set(["var95", "kelly", "prospect", "graham", "zscore"]);
+  const types = new Set(["var95", "kelly", "prospect", "graham", "zscore", "icir"]);
   function run(form) {
     let result = NaN, unit = "", note = "输入不在此教学模型的有效范围内。";
     const finite = (...keys) => keys.every(k => Number.isFinite(n(form, k)));
     switch (form.dataset.calc) {
+      case "icir": {
+        if (!finite("mean", "sd")) break;
+        const mean = n(form, "mean"), sd = n(form, "sd");
+        if (sd <= 0) { note = "IC 标准差须为正数。"; break; }
+        result = mean / sd;
+        note = "ICIR = IC均值 / IC标准差 = " + fmt(mean, 4) + " / " + fmt(sd, 4) + " = " + fmt(result)
+          + "。它衡量预测的稳定性，与单期 IC 的大小不同；样本期与调仓频率变化时结果会变。";
+        break;
+      }
       case "zscore": {
         if (!finite("value", "mean", "std")) break;
         const value = n(form, "value"), mean = n(form, "mean"), std = n(form, "std");
