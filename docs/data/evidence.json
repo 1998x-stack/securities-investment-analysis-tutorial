@@ -994,7 +994,8 @@
         "The capstone code combines PIT filtering, sentiment, FX, covariance, ranking, caps, turnover, cost and drawdown primitives; it is an educational skeleton, not a complete production backtester.",
         "Risk-budget sizing and greedy sector caps are synthetic rule examples, not a validated optimizer or expected-return model.",
         "AI and financial-market governance require testing, monitoring, accountability and model-risk controls.",
-        "China's securities program-trading rules and exchange implementation rules must be checked for the applicable market and current effective version."
+        "China's securities program-trading rules and exchange implementation rules must be checked for the applicable market and current effective version.",
+        "Single-period arithmetic Brinson–Fachler attribution decomposes active return into allocation, selection and interaction effects; with portfolio and benchmark weights summing to one, the effects reconcile to active return."
       ],
       "sources": [
         [
@@ -1028,6 +1029,10 @@
         [
           "中国证监会：《证券市场程序化交易管理规定（试行）》",
           "https://www.csrc.gov.cn/c100028/c7480577/content.shtml"
+        ],
+        [
+          "CFA Institute Research Foundation (2019), Performance Attribution",
+          "https://www.cfainstitute.org/sites/default/files/-/media/documents/book/rf-lit-review/2019/rflr-performance-attribution.pdf"
         ]
       ],
       "claim_evidence": [
@@ -1105,6 +1110,15 @@
           "locator": "Linked original paper, official documentation or regulator source; see lesson section.",
           "status": "verified",
           "notes": "CSRC rule is the national-level program-trading reference; applicable exchange implementation notices and current amendments must be checked separately."
+        },
+        {
+          "id": "batch6-28-09",
+          "claim": "Single-period arithmetic Brinson–Fachler attribution decomposes active return into allocation, selection and interaction effects; with portfolio and benchmark weights summing to one, the effects reconcile to active return.",
+          "kind": "CFA Institute Research Foundation literature review",
+          "source_url": "https://www.cfainstitute.org/sites/default/files/-/media/documents/book/rf-lit-review/2019/rflr-performance-attribution.pdf",
+          "status": "verified",
+          "locator": "Attribution Formulas section; formulas (10)–(12).",
+          "notes": "Single-period arithmetic attribution; multi-period effects require appropriate linking adjustments and should not be naively summed."
         }
       ]
     },
