@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" role="img" aria-labelledby="title desc"><title id="title">AI辅助投资研究的证据闭环</title><desc id="desc">从有权限的原始披露到可追溯证据、模型提取、确定性计算和研究人员复核；AI输出不能直接成为交易命令。</desc><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0 L0 6 L9 3 z" fill="#147f80"/></marker><marker id="coral" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0 L0 6 L9 3 z" fill="#d06d4d"/></marker></defs><rect width="960" height="440" rx="18" fill="#fffdf9"/>
+<text x="44" y="46" font-size="15" fill="#53676d">研究任务：回答一个明确问题，而不是让模型自由生成买卖结论</text>
+<rect x="35" y="100" width="140" height="105" rx="13" fill="#e8f2ef" stroke="#53676d" stroke-opacity=".35"/><text x="105" y="134" text-anchor="middle" font-size="20" font-weight="700" fill="#203035">原始资料</text><text x="105" y="161" text-anchor="middle" font-size="15" fill="#53676d">公告 / 财报 / 研报</text>
+<path d="M175 152 L205 152" fill="none" stroke="#147f80" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="205" y="100" width="145" height="105" rx="13" fill="#e8f2ef" stroke="#53676d" stroke-opacity=".35"/><text x="277.5" y="134" text-anchor="middle" font-size="20" font-weight="700" fill="#203035">检索与定位</text><text x="277.5" y="161" text-anchor="middle" font-size="15" fill="#53676d">来源 / 页码 / 时点</text>
+<path d="M350 152 L380 152" fill="none" stroke="#147f80" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="380" y="100" width="145" height="105" rx="13" fill="#f9e9e2" stroke="#53676d" stroke-opacity=".35"/><text x="452.5" y="134" text-anchor="middle" font-size="20" font-weight="700" fill="#203035">模型提取</text><text x="452.5" y="161" text-anchor="middle" font-size="15" fill="#53676d">分类 / 摘要 / 假设</text>
+<path d="M525 152 L555 152" fill="none" stroke="#147f80" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="555" y="100" width="145" height="105" rx="13" fill="#eeeaf7" stroke="#53676d" stroke-opacity=".35"/><text x="627.5" y="134" text-anchor="middle" font-size="20" font-weight="700" fill="#203035">独立计算</text><text x="627.5" y="161" text-anchor="middle" font-size="15" fill="#53676d">XBRL / 公式 / 单位</text>
+<path d="M700 152 L730 152" fill="none" stroke="#147f80" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="730" y="100" width="195" height="105" rx="13" fill="#e8f2ef" stroke="#53676d" stroke-opacity=".35"/><text x="827.5" y="134" text-anchor="middle" font-size="20" font-weight="700" fill="#203035">人工复核</text><text x="827.5" y="161" text-anchor="middle" font-size="15" fill="#53676d">证据 / 反例 / 签核</text>
+<path d="M825 205 V270 H480 V230" fill="none" stroke="#d06d4d" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#coral)"/>
+<rect x="250" y="270" width="460" height="84" rx="12" fill="#f7f3e9" stroke="#916c22" stroke-opacity=".5"/>
+<text x="480" y="302" text-anchor="middle" font-size="19" font-weight="700" fill="#203035">可审计研究结论</text>
+<text x="480" y="329" text-anchor="middle" font-size="15" fill="#53676d">每条结论都能回到原始证据、数据版本与计算过程</text>
+<text x="45" y="405" font-size="15" fill="#d06d4d">禁止捷径：模型生成 → 自动下单；检索到来源 ≠ 来源支持结论</text></svg>
