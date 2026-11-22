@@ -152,7 +152,7 @@
         ],
         [
           "Basel MAR33 Expected Shortfall",
-          "https://www.bis.org/committees/bcbs/basel-framework/standard/mar/33.htm"
+          "https://www.bis.org/committees/bcbs/basel-framework/standard/mar?allChapters=true"
         ],
         [
           "Basel MAR10 terminology",
@@ -254,8 +254,8 @@
       ],
       "sources": [
         [
-          "Fama and French (1997) Interaction of Value and Momentum",
-          "https://www.aqr.com/insights/research/journal-article/the-interaction-of-value-and-momentum-strategies?aqrPDF=1"
+          "Asness (1997) The Interaction of Value and Momentum Strategies",
+          "https://www.aqr.com/insights/research/journal-article/the-interaction-of-value-and-momentum-strategies"
         ],
         [
           "Daniel and Moskowitz (2016) Momentum Crashes",
@@ -273,9 +273,9 @@
       "claim_evidence": [
         {
           "id": "strategy-01",
-          "claim": "Value and momentum strategy interaction",
+          "claim": "Asness (1997) studies the interaction between value and momentum strategies; it is not authored by Fama and French.",
           "kind": "research paper",
-          "source_url": "https://www.aqr.com/insights/research/journal-article/the-interaction-of-value-and-momentum-strategies?aqrPDF=1",
+          "source_url": "https://www.aqr.com/insights/research/journal-article/the-interaction-of-value-and-momentum-strategies",
           "locator": "Asness, Moskowitz and Pedersen-related strategy research context",
           "status": "verified"
         },
@@ -310,7 +310,8 @@
         "Point-in-time backtests must respect when data became public and tradable; fiscal period-end is not necessarily the public availability date.",
         "Backtests need explicit portfolio formation, execution, corporate-action, delisting, liquidity and transaction-cost rules.",
         "Bailey et al. propose PBO/CSCV to diagnose selection bias among tested strategy configurations; PBO is not the probability of future investor loss.",
-        "The Sharpe calculator is an arithmetic annualization approximation with explicit one-way turnover and cost assumptions."
+        "The Sharpe calculator is an arithmetic annualization approximation with explicit one-way turnover and cost assumptions.",
+        "Alpha is the intercept conditional on the chosen factor model and benchmark; omitted exposures can be absorbed into alpha."
       ],
       "sources": [
         [
@@ -328,6 +329,10 @@
         [
           "Investor.gov How to Read a 10-K",
           "https://www.investor.gov/introduction-investing/getting-started/researching-investments/how-read-10-k"
+        ],
+        [
+          "CFA Institute 2026 Portfolio Risk and Return Part II",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-risk-return-part-2"
         ]
       ],
       "claim_evidence": [
@@ -353,6 +358,14 @@
           "kind": "CFA curriculum reading",
           "source_url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/backtesting-and-simulation",
           "locator": "CFA Institute 2026",
+          "status": "verified"
+        },
+        {
+          "id": "quant-04",
+          "claim": "Alpha and beta are model-conditional risk decomposition terms.",
+          "kind": "professional curriculum reference",
+          "source_url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-risk-return-part-2",
+          "locator": "Portfolio risk and return; factor exposure and performance attribution",
           "status": "verified"
         }
       ]
