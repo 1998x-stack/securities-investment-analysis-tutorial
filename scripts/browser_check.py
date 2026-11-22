@@ -63,6 +63,16 @@ def main():
                                 if Path(name).name=="08.html":badform.locator("[name=growth]").fill("3")
                                 elif Path(name).name=="09.html":badform.locator("[name=growth]").fill("3")
                                 else:badform.locator("[name=growth]").fill("3")
+                    if w==1440 and name=="lessons/09.html":
+                        stable=page.locator('form[data-calc="pb"]')
+                        stable.locator('[name="roe"]').fill("1")
+                        if "参数不满足" not in stable.locator('output').inner_text():
+                            errors.append("09: ROE below sustainable growth must be rejected")
+                    if w==1440 and name=="lessons/10.html":
+                        evform=page.locator('form[data-calc="ev"]')
+                        evform.locator('[name="cash"]').fill("1500")
+                        if "参数不满足" not in evform.locator('output').inner_text():
+                            errors.append("10: non-positive enterprise value must be rejected")
                     if name=="index.html" and w==1440:
                         inp=page.locator("[data-course-search]")
                         inp.fill("财务比率分析")

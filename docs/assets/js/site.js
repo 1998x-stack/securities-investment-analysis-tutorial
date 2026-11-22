@@ -90,7 +90,7 @@
       }
       case "dcf": {
         const wacc = get("wacc") / 100, growth = get("growth") / 100;
-        invalid = !valid(wacc, growth) || wacc <= growth || wacc <= -1 || growth <= -1;
+        invalid = !valid(wacc, growth) || wacc <= growth || wacc <= 0 || growth <= -1;
         if (!invalid) {
           const fcf = [100, 110, 120, 130, 140]; // 百万元；固定虚构现金流
           let explicitPV = 0;
@@ -105,7 +105,7 @@
       }
       case "pb": {
         const roe = get("roe") / 100, ke = get("ke") / 100, growth = get("growth") / 100;
-        invalid = !valid(roe, ke, growth) || ke <= growth || ke <= -1;
+        invalid = !valid(roe, ke, growth) || ke <= growth || ke <= 0 || roe < growth;
         if (!invalid) {
           const priceBook = (roe - growth) / (ke - growth);
           result = fmt(priceBook) + "×";
@@ -124,7 +124,7 @@
       }
       case "ev": {
         const equity = get("equity"), debt = get("debt"), cash = get("cash"), ebitda = get("ebitda");
-        invalid = !valid(equity, debt, cash, ebitda) || equity < 0 || debt < 0 || cash < 0 || ebitda <= 0;
+        invalid = !valid(equity, debt, cash, ebitda) || equity < 0 || debt < 0 || cash < 0 || ebitda <= 0 || equity + debt <= cash;
         if (!invalid) {
           const enterprise = equity + debt - cash;
           result = fmt(enterprise / ebitda) + "×";
@@ -134,7 +134,7 @@
       }
       case "ddm": {
         const dividend = get("dividend"), ke = get("ke") / 100, growth = get("growth") / 100;
-        invalid = !valid(dividend, ke, growth) || dividend < 0 || ke <= growth || ke <= -1;
+        invalid = !valid(dividend, ke, growth) || dividend < 0 || ke <= growth || ke <= 0;
         if (!invalid) {
           result = fmt(dividend / (ke - growth)) + " 元/股";
           explanation = "稳定分红Gordon模型：下一年D1/(Ke−g)；须验证股利可持续性且Ke>g。";
