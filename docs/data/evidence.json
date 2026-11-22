@@ -2,6 +2,32 @@
   "as_of": "2026-11-22",
   "scope": "Official primary references; all worked financial numbers and graphs are synthetic illustrations, not market data.",
   "chapters": {
+    "10": {
+      "claims": [
+        "EV/EBITDA uses enterprise-value numerator and matching enterprise operating profit denominator; EBITDA is not FCFF.",
+        "P/S = P/E × profit margin with positive net earnings and matching periods.",
+        "Gordon DDM P0 = D1/(Ke-g) requires Ke>g; synthetic D1 2, Ke 8%, g 3% yields 40.",
+        "Exit terminal multiple requires comparable firm and valuation date; fifth-year EBITDA 150 at 8x gives TV 1200 discounted at WACC10% to 745.11."
+      ],
+      "sources": [
+        [
+          "CFA market based multiples 2026",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/market-based-valuation-price-enterprise-value-multiples"
+        ],
+        [
+          "CFA Dividend Discount Valuation 2026",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/discounted-dividend-valuation"
+        ],
+        [
+          "CFA Free Cash Flow Valuation 2026",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/free-cash-flow-valuation"
+        ],
+        [
+          "Damodaran valuation",
+          "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/lectures/val.html"
+        ]
+      ]
+    },
     "01": {
       "claims": [
         "持有期收益取决于价格与分配，风险与分散投资有边界",
@@ -114,11 +140,103 @@
           "https://www.investor.gov/additional-resources/information/youth/teachers-classroom-resources/risk-and-return"
         ]
       ]
+    },
+    "06": {
+      "claims": [
+        "NBS PMI is monthly diffusion index with expansion-contraction threshold 50; not GDP growth.",
+        "Monetary transmission can affect safe yields, risk premia and expected cash flow differently.",
+        "Exact Fisher real rate formula for nominal 5%, inflation 2% yields 2.94%."
+      ],
+      "sources": [
+        [
+          "NBS PMI definition",
+          "https://www.stats.gov.cn/zs/tjws/tjzb/202301/t20230101_1903972.html"
+        ],
+        [
+          "NBS GDP explanation",
+          "https://www.stats.gov.cn/sj/ndsj/2020/html/zbe03.htm"
+        ],
+        [
+          "PBC monetary policy report Q4 2024",
+          "https://www.pbc.gov.cn/zhengcehuobisi/125207/125227/125957/5347949/ad0bc3efe0234fed8cc6260a134a6e95/2025022618190099812.pdf"
+        ],
+        [
+          "BIS Annual Economic Report 2025",
+          "https://www.bis.org/publications/aer-2025/financial-conditions-changing-global-financial-system"
+        ],
+        [
+          "Federal Reserve policy transmission",
+          "https://www.federalreserve.gov/newsevents/speech/kugler20250422a.htm"
+        ]
+      ]
+    },
+    "07": {
+      "claims": [
+        "GICS is a taxonomy with 11 broad sectors, classification evolves over time.",
+        "Porter five forces explain profit competition between suppliers, buyers, entrants, substitutes and incumbents.",
+        "Unit-economics math assumes price 100, variable cost 65, fixed cost 20000, volume 1000; synthetic. "
+      ],
+      "sources": [
+        [
+          "S&P/MSCI GICS methodology",
+          "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-gics.pdf"
+        ],
+        [
+          "HBS Porter Five Forces",
+          "https://www.isc.hbs.edu/strategy/business-strategy/Pages/the-five-forces.aspx?community_post=true"
+        ],
+        [
+          "CFA Equity Valuation applications",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/equity-valuation-applications-and-processes"
+        ]
+      ]
+    },
+    "08": {
+      "claims": [
+        "FCFF/WACC corresponds to firm value; FCFE/cost of equity corresponds to equity value.",
+        "Synthetic 5-year FCFF [100,110,120,130,140], WACC 10%, stable g 3% yields EV about 1726.79 and TV PV share about 74.07%.",
+        "Gordon terminal value requires WACC>g and reinvestment and growth assumptions must be consistent."
+      ],
+      "sources": [
+        [
+          "CFA Free Cash Flow Valuation 2026",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/free-cash-flow-valuation"
+        ],
+        [
+          "Damodaran FCFF vs FCFE",
+          "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/lectures/fcff.html"
+        ],
+        [
+          "Damodaran terminal value derivations",
+          "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/AppldCF/derivn/ch12deriv.html"
+        ]
+      ]
+    },
+    "09": {
+      "claims": [
+        "P/E, P/B, PEG require positive and consistent denominators; a negative P/E lacks standard cheapness meaning.",
+        "Steady-state justified P/B formula (ROE-g)/(Ke-g) assumes clean surplus and sustainable reinvestment.",
+        "PB = PE × ROE only with exactly matched book denominator and equity/earnings scope."
+      ],
+      "sources": [
+        [
+          "CFA Market Based Valuation 2026",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/market-based-valuation-price-enterprise-value-multiples"
+        ],
+        [
+          "CFA Equity Valuation Concepts 2026",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/equity-valuation-concepts-basic-tools"
+        ],
+        [
+          "Damodaran valuation lectures",
+          "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/lectures/val.html"
+        ]
+      ]
     }
   },
   "limitations": [
-    "Figures and calculators are deterministic teaching cases.",
-    "Static checks are automated; a separate 1440/390/360 pixel browser QA is needed.",
-    "Regulatory rules should be reverified when content is edited."
+    "All figures and calculations are original synthetic illustrations, not market price or forecasts.",
+    "Automated static structural and browser QA checks do not replace external link freshness and factual review.",
+    "Financial reporting and market-specific trading rules must be reverified as they evolve."
   ]
 }

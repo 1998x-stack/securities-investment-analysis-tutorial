@@ -6,7 +6,7 @@ Make independently readable, evidence-grounded Chinese long-form lessons. Each a
 ## Canonical paths
 - `docs/index.html` landing; `docs/lessons/NN.html` chapters; `docs/assets/css/site.css` common styles; `docs/assets/js/site.js` interactive enhancements; `docs/assets/svg/` standalone diagrams; `docs/data/evidence.json` evidence ledger.
 - Root `index.html`, `NN.html` only redirect old links; never edit as the canonical source.
-- Chapters 06–28 are presently legacy HTML, with `docs/lessons/theme.css`, and must be modernized one-by-one without breaking URLs.
+- Chapters 11–28 are presently legacy HTML, with `docs/lessons/theme.css`, and must be modernized one-by-one without breaking URLs.
 - Frontend static, no NPM/CDN required. Do not commit built caches.
 
 ## Narrative contract (Olah-style-posts)
@@ -35,3 +35,11 @@ Refer to https://github.com/1998x-stack/Olah-style-posts/tree/main/skills/olah-s
 Audit existing HTML; record source URL/date/relevance in evidence ledger; write claim map and diagram storyboard; draft full article; independently verify formula and diagram; add one executable deterministic example; perform link, SVG XML and structural validation with `python3 scripts/validate_site.py`.
 Browser-gate: inspect 1440, 390 and 360px, horizontal overflow, JS errors, focus, contrast, reduced motion, print and figures; run calculator smoke tests. Mark unrun browser checks as NOT VERIFIED, never as passed.
 Prefer branch/PR, verify CI diff, deploy and then verify live URL. Every batch lists changed chapters and factual exceptions.
+
+## Valuation contract (Chapters 06–10 and successors)
+- Do not infer stock direction from one macro release. Distinguish real GDP growth, CPI inflation, and the PMI 50 diffusion boundary; policy-rate, long-term-yield, risk-premium, and earnings channels can diverge.
+- Segment industry research into customer demand, bargaining power, unit economics, capex, invested capital returns, and free cash flow. Never sum different-stage profit margins into a chain profit rate.
+- FCFF discounts at WACC to firm value; FCFE and dividends discount at cost of equity to equity value. Bridge EV to equity only once, accounting for debt, cash, minority claims, options and dilution.
+- Validate all Gordon stable-growth formulas require discount rate strictly larger than g. Test both the nominal numerator period and terminal discount year. Compute terminal-value share as a sensitivity warning, not a quality signal.
+- Never treat EBITDA as free cash flow, a negative P/E as a bargain, PEG as an intrinsic-value identity, or P/B less than one as a safety guarantee.
+- Browser QA for refactored chapters must verify at least one deterministic calculation, offline SVG loads, MathML visibility, 360/390/1440 viewports and an invalid-input guard. Update evidence.json for each refactored batch.
