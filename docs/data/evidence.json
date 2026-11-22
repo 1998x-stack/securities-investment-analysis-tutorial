@@ -342,6 +342,120 @@
           "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/lectures/val.html"
         ]
       ]
+    },
+    "16": {
+      "claims": [
+        "VaR is a loss-distribution quantile for a given confidence level and horizon, not a maximum loss; parameter method VaR = mu - z*sigma.",
+        "CVaR (expected shortfall) is the average loss beyond VaR and is subadditive; the Basel market-risk framework uses expected shortfall rather than VaR for internal models.",
+        "Recovery gain after a drawdown d is 1/(1-d)-1, so -20% needs +25%, -50% needs +100%, -80% needs +400%.",
+        "Kelly fraction f*=(bp-q)/b; with p=0.60 and b=2 it is 0.40, and half-Kelly is 0.20.",
+        "Synthetic teaching example (construct, not data): 95% VaR 3.1% with conditional tail average 4.8%."
+      ],
+      "sources": [
+        [
+          "BIS Basel framework",
+          "https://www.bis.org/basel_framework/index.htm"
+        ],
+        [
+          "DeMiguel, Garlappi & Uppal 2009, RFS",
+          "https://doi.org/10.1093/rfs/hhm075"
+        ],
+        [
+          "Kelly 1956, Bell System Technical Journal",
+          "https://doi.org/10.1002/j.1538-7305.1956.tb03809.x"
+        ]
+      ]
+    },
+    "17": {
+      "claims": [
+        "Prospect theory values outcomes relative to a reference point with a steeper loss side; Kahneman and Tversky (1979) median estimates are alpha=beta~0.88 and lambda~2.25.",
+        "Constructed example (teaching): x=1000 gives v(+)=~436.5 and v(-)=~982.2; the ratio is the lambda parameter, not a measured psychological constant.",
+        "Disposition effect (selling winners and holding losers) is documented empirically by Odean (1998).",
+        "Barber and Odean (2001) report higher trading frequency among men and an association between over-trading and lower net returns.",
+        "Sentiment indicators (margin balance, turnover, futures basis, volatility index) are descriptive and do not imply reversal timing."
+      ],
+      "sources": [
+        [
+          "Kahneman & Tversky 1979, Econometrica",
+          "https://doi.org/10.2307/1914185"
+        ],
+        [
+          "Barber & Odean 2001, QJE",
+          "https://doi.org/10.1162/003355301556400"
+        ],
+        [
+          "Odean 1998, Journal of Finance",
+          "https://doi.org/10.1111/0022-1082.00072"
+        ]
+      ]
+    },
+    "18": {
+      "claims": [
+        "Graham number = sqrt(22.5*EPS*BVPS); with EPS=3 and BVPS=20 it is ~36.74 and the two-thirds buy limit is ~24.49. It is a screening rule, not intrinsic value.",
+        "Buffett's shift from Graham cigar-butts to quality businesses at fair prices adds a moat, and with it the risk of a simultaneous earnings and multiple decline.",
+        "Jegadeesh and Titman (1993) documented momentum returns in the US; multiple studies report stronger short-horizon reversal in China's A-share market, and these results are sample dependent.",
+        "Reflexivity (Soros) is an interpretive framework, not a directly testable formula; it must be reduced to observable funding conditions to be tested."
+      ],
+      "sources": [
+        [
+          "Jegadeesh & Titman 1993, Journal of Finance",
+          "https://doi.org/10.1111/j.1540-6261.1993.tb04702.x"
+        ],
+        [
+          "Graham & Dodd, Security Analysis; Graham, The Intelligent Investor",
+          "book (no DOI)"
+        ],
+        [
+          "Fisher, Common Stocks and Uncommon Profits",
+          "book (no DOI)"
+        ],
+        [
+          "Soros, The Alchemy of Finance",
+          "book (no DOI)"
+        ]
+      ]
+    },
+    "19": {
+      "claims": [
+        "Factor decomposition: r_i = alpha_i + beta_i*r_mkt + sum_k beta_ik*f_k + epsilon_i.",
+        "Backtest pitfalls: survivorship bias, look-ahead bias, data snooping and parameter overfitting.",
+        "Standardization z=(x-mean)/std; with value=15, mean=20, std=5 it is -1.00.",
+        "Synthetic overfitting illustration: in-sample error falls monotonically while out-of-sample error is U-shaped in model complexity.",
+        "Real-world gaps: commissions, taxes, slippage, liquidity limits and capacity; the 'discount the Sharpe ratio' rule is not sourced and is not asserted."
+      ],
+      "sources": [
+        [
+          "Fama & French 1993, JFE",
+          "https://doi.org/10.1016/0304-405X(93)90023-5"
+        ],
+        [
+          "Bailey, Borwein, Lopez de Prado & Zhu 2014, Notices of the AMS",
+          "https://doi.org/10.1090/noti1105"
+        ]
+      ]
+    },
+    "20": {
+      "claims": [
+        "Factor construction workflow: winsorize, neutralize (industry and size), standardize, then combine.",
+        "ICIR = mean(IC)/std(IC); a synthetic 12-month IC series gives mean~0.0208, sd~0.0287 and ICIR~0.73 (construct, not measured).",
+        "Factor crowding can produce factor crashes when many strategies hold the same names; crowding measures are descriptive.",
+        "Factor timing is contested in the literature; this chapter does not claim any timing method is proven effective.",
+        "IC thresholds such as 0.03 are sample dependent and are not presented as standards."
+      ],
+      "sources": [
+        [
+          "Fama & French 1993, JFE",
+          "https://doi.org/10.1016/0304-405X(93)90023-5"
+        ],
+        [
+          "Carhart 1997, Journal of Finance",
+          "https://doi.org/10.1111/j.1540-6261.1997.tb03808.x"
+        ],
+        [
+          "Asness, Moskowitz & Pedersen 2013, Journal of Finance",
+          "https://doi.org/10.1111/jofi.12021"
+        ]
+      ]
     }
   },
   "limitations": [
