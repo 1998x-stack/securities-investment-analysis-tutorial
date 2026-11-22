@@ -10,7 +10,8 @@
         "A股市场全景",
         "注册制改革"
       ],
-      "file": "01.html"
+      "file": "01.html",
+      "status": "illustrated"
     },
     {
       "num": "02",
@@ -21,7 +22,8 @@
         "ETF与LOF",
         "期权期货入门"
       ],
-      "file": "02.html"
+      "file": "02.html",
+      "status": "illustrated"
     },
     {
       "num": "03",
@@ -32,7 +34,8 @@
         "涨跌停制度",
         "T+1与融资融券"
       ],
-      "file": "03.html"
+      "file": "03.html",
+      "status": "illustrated"
     },
     {
       "num": "04",
@@ -43,7 +46,8 @@
         "现金流量表",
         "三大报表勾稽关系"
       ],
-      "file": "04.html"
+      "file": "04.html",
+      "status": "illustrated"
     },
     {
       "num": "05",
@@ -54,62 +58,68 @@
         "营运能力/周转率",
         "成长能力/营收增速"
       ],
-      "file": "05.html"
+      "file": "05.html",
+      "status": "illustrated"
     },
     {
       "num": "06",
       "title": "宏观经济与市场",
       "topics": [
-        "GDP/CPI/PMI指标",
-        "货币政策工具",
-        "财政政策",
-        "利率与股市关系"
+        "PMI/GDP/CPI",
+        "政策传导",
+        "折现率",
+        "信贷周期"
       ],
-      "file": "06.html"
+      "file": "06.html",
+      "status": "illustrated"
     },
     {
       "num": "07",
       "title": "行业分析方法",
       "topics": [
-        "行业生命周期",
-        "波特五力模型",
-        "产业链分析",
-        "行业轮动规律"
+        "五力竞争",
+        "产业链利润",
+        "生命周期",
+        "行业轮动"
       ],
-      "file": "07.html"
+      "file": "07.html",
+      "status": "illustrated"
     },
     {
       "num": "08",
       "title": "绝对估值法",
       "topics": [
-        "DCF模型",
-        "自由现金流FCFF/FCFE",
-        "WACC加权资本成本",
-        "终值假设的陷阱"
+        "FCFF/FCFE",
+        "WACC",
+        "DCF终值",
+        "敏感性"
       ],
-      "file": "08.html"
+      "file": "08.html",
+      "status": "illustrated"
     },
     {
       "num": "09",
       "title": "相对估值法(上)",
       "topics": [
-        "PE市盈率",
-        "PEG指标",
-        "PB市净率",
-        "PE-G与PB-ROE框架"
+        "PE",
+        "PEG",
+        "PB-ROE",
+        "可比公司"
       ],
-      "file": "09.html"
+      "file": "09.html",
+      "status": "illustrated"
     },
     {
       "num": "10",
       "title": "相对估值法(下)",
       "topics": [
-        "PS市销率",
-        "EV/EBITDA倍数",
-        "DDM股利折现",
-        "退出倍数法EMM"
+        "PS与利润率",
+        "EV/EBITDA",
+        "DDM",
+        "退出倍数"
       ],
-      "file": "10.html"
+      "file": "10.html",
+      "status": "illustrated"
     },
     {
       "num": "11",
@@ -120,7 +130,8 @@
         "PEGRn/D/F三系数",
         "动态回收期"
       ],
-      "file": "11.html"
+      "file": "11.html",
+      "status": "legacy"
     },
     {
       "num": "12",
@@ -131,7 +142,8 @@
         "安全边际测算",
         "实地调研方法"
       ],
-      "file": "12.html"
+      "file": "12.html",
+      "status": "legacy"
     },
     {
       "num": "13",
@@ -142,7 +154,8 @@
         "支撑与阻力",
         "道氏理论与波浪理论"
       ],
-      "file": "13.html"
+      "file": "13.html",
+      "status": "legacy"
     },
     {
       "num": "14",
@@ -153,7 +166,8 @@
         "布林带",
         "均线系统与组合策略"
       ],
-      "file": "14.html"
+      "file": "14.html",
+      "status": "legacy"
     },
     {
       "num": "15",
@@ -164,7 +178,8 @@
         "CAPM与Beta",
         "多因子模型概述"
       ],
-      "file": "15.html"
+      "file": "15.html",
+      "status": "legacy"
     },
     {
       "num": "16",
@@ -175,7 +190,8 @@
         "压力测试",
         "仓位管理与凯利公式"
       ],
-      "file": "16.html"
+      "file": "16.html",
+      "status": "legacy"
     },
     {
       "num": "17",
@@ -186,7 +202,8 @@
         "羊群效应",
         "情绪指标实战"
       ],
-      "file": "17.html"
+      "file": "17.html",
+      "status": "legacy"
     },
     {
       "num": "18",
@@ -197,7 +214,8 @@
         "动量策略",
         "索罗斯反身性理论"
       ],
-      "file": "18.html"
+      "file": "18.html",
+      "status": "legacy"
     },
     {
       "num": "19",
@@ -208,7 +226,8 @@
         "回测框架",
         "过拟合陷阱"
       ],
-      "file": "19.html"
+      "file": "19.html",
+      "status": "legacy"
     },
     {
       "num": "20",
@@ -219,7 +238,8 @@
         "IC/IR评价体系",
         "因子拥挤度监控"
       ],
-      "file": "20.html"
+      "file": "20.html",
+      "status": "legacy"
     },
     {
       "num": "21",
@@ -230,7 +250,8 @@
         "资金流因子",
         "行业轮动因子化"
       ],
-      "file": "21.html"
+      "file": "21.html",
+      "status": "legacy"
     },
     {
       "num": "22",
@@ -241,7 +262,8 @@
         "行业轮动策略",
         "拥挤度预警"
       ],
-      "file": "22.html"
+      "file": "22.html",
+      "status": "legacy"
     },
     {
       "num": "23",
@@ -252,7 +274,8 @@
         "复权处理",
         "API调用实战"
       ],
-      "file": "23.html"
+      "file": "23.html",
+      "status": "legacy"
     },
     {
       "num": "24",
@@ -263,7 +286,8 @@
         "TA-Lib指标库",
         "回测框架搭建"
       ],
-      "file": "24.html"
+      "file": "24.html",
+      "status": "legacy"
     },
     {
       "num": "25",
@@ -274,7 +298,8 @@
         "程序化交易监管新规",
         "滑点与冲击成本"
       ],
-      "file": "25.html"
+      "file": "25.html",
+      "status": "legacy"
     },
     {
       "num": "26",
@@ -285,7 +310,8 @@
         "Verbal Technical Analysis",
         "FinBERT情绪分析"
       ],
-      "file": "26.html"
+      "file": "26.html",
+      "status": "legacy"
     },
     {
       "num": "27",
@@ -296,7 +322,8 @@
         "跨境投资/QDII/QFII",
         "全天候策略"
       ],
-      "file": "27.html"
+      "file": "27.html",
+      "status": "legacy"
     },
     {
       "num": "28",
@@ -307,7 +334,8 @@
         "回测评估报告",
         "投资哲学形成"
       ],
-      "file": "28.html"
+      "file": "28.html",
+      "status": "legacy"
     }
   ]
 }

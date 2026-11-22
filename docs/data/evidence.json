@@ -2,6 +2,27 @@
   "as_of": "2026-11-22",
   "scope": "Official primary references; all worked financial numbers and graphs are synthetic illustrations, not market data.",
   "chapters": {
+    "10": {
+      "claims": [
+        "P/S must account for margins, EV/EBITDA differs from free cash flow",
+        "DDM uses D1 and Ke>g; terminal exit multiple and perpetuity are alternatives"
+      ],
+      "sources": [
+        [
+          "Damodaran Financial Definitions",
+          "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/definitions.html"
+        ],
+        [
+          "Damodaran P/S",
+          "https://pages.stern.nyu.edu/adamodar/New_Home_Page/lectures/ps.html"
+        ],
+        [
+          "Damodaran DDM",
+          "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/lectures/val.html"
+        ]
+      ],
+      "examples": "All numerical figures are original synthetic data."
+    },
     "01": {
       "claims": [
         "持有期收益取决于价格与分配，风险与分散投资有边界",
@@ -114,11 +135,82 @@
           "https://www.investor.gov/additional-resources/information/youth/teachers-classroom-resources/risk-and-return"
         ]
       ]
+    },
+    "06": {
+      "claims": [
+        "PMI is a diffusion index with 50 as expansion threshold, not output level",
+        "Policy impacts earnings, discount rates and risk through multiple channels"
+      ],
+      "sources": [
+        [
+          "国家统计局 PMI",
+          "https://www.stats.gov.cn/zs/tjws/tjzb/202301/t20230101_1903972.html"
+        ],
+        [
+          "IMF 货币政策",
+          "https://www.imf.org/en/publications/fandd/issues/series/back-to-basics/monetary-policy"
+        ]
+      ],
+      "examples": "All numerical figures are original synthetic data."
+    },
+    "07": {
+      "claims": [
+        "Porter five forces and industry profit pool are distinct from revenue growth",
+        "Industry lifecycle is not a deterministic investment return clock"
+      ],
+      "sources": [
+        [
+          "CFA 2026 Industry and Competitive Analysis",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/industry-and-competitive-analysis"
+        ]
+      ],
+      "examples": "All numerical figures are original synthetic data."
+    },
+    "08": {
+      "claims": [
+        "FCFF is discounted at WACC, FCFE at cost of equity",
+        "Perpetual terminal growth requires WACC>g and consistency with reinvestment"
+      ],
+      "sources": [
+        [
+          "CFA 2026 Free Cash Flow Valuation",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/free-cash-flow-valuation"
+        ],
+        [
+          "Damodaran FCFF FCFE",
+          "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/lectures/fcff.html"
+        ]
+      ],
+      "examples": "All numerical figures are original synthetic data."
+    },
+    "09": {
+      "claims": [
+        "P/E uses consistent EPS horizon, and negative earnings challenge interpretation",
+        "PEG uses percentage point convention and stable P/B depends on ROE/Ke/g"
+      ],
+      "sources": [
+        [
+          "SEC P/E Guide",
+          "https://www.sec.gov/about/reports-publications/investorpubsbegfinstmtguide"
+        ],
+        [
+          "Damodaran PB",
+          "https://pages.stern.nyu.edu/adamodar/New_Home_Page/lectures/pbv.html"
+        ],
+        [
+          "Damodaran PEG",
+          "https://pages.stern.nyu.edu/adamodar/New_Home_Page/lectures/peg.htm"
+        ]
+      ],
+      "examples": "All numerical figures are original synthetic data."
     }
   },
   "limitations": [
     "Figures and calculators are deterministic teaching cases.",
     "Static checks are automated; a separate 1440/390/360 pixel browser QA is needed.",
     "Regulatory rules should be reverified when content is edited."
+  ],
+  "notes": [
+    "Batch 02 (06–10): documented formula scope, market assumptions, and synthetic examples."
   ]
 }
