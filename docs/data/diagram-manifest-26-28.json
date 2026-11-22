@@ -1,0 +1,11 @@
+{
+  "26-ai-research-pipeline.svg": "Licensed source documents → evidence retrieval → model extraction → deterministic calculation → human review",
+  "26-financial-sentiment.svg": "Financial-language encoder → class probabilities → sentiment score → time-aware aggregation",
+  "26-evidence-graph.svg": "Research claim connected to source locator, availability time, independent calculation and reviewer",
+  "27-growth-inflation.svg": "Four descriptive growth/inflation scenarios; not a predictive allocation clock",
+  "27-risk-contribution.svg": "Weights and covariance → portfolio volatility → Euler risk contributions",
+  "27-currency-translation.svg": "Foreign asset return and FX return → home-currency result → hedge overlay and costs",
+  "28-data-contract.svg": "Security master, financial facts, market data and external records → point-in-time feature table",
+  "28-portfolio-loop.svg": "Point-in-time features → score → constrained weights → next tradable execution → net return attribution",
+  "28-monitoring-gates.svg": "Data/model/risk/execution monitoring → normal, warning or pause state"
+}
