@@ -5,7 +5,7 @@ from capstone_lab import (
     point_in_time, aggregate_sentiment, currency_adjusted_return,
     portfolio_risk_contributions, cross_sectional_ranks, composite_scores,
     allocate_capped, limit_one_way_turnover, net_return, max_drawdown,
-    risk_budget_weight,
+    risk_budget_weight, brinson_fachler_attribution,
 )
 
 class CapstoneTests(unittest.TestCase):
