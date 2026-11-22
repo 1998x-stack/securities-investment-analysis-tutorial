@@ -176,3 +176,98 @@
     });
   }
 })();
+
+
+/* Chapters 11–15: self-contained deterministic teaching labs; no market data. */
+(() => {
+  "use strict";
+  const n = (form, key) => Number(form.querySelector('[name="' + key + '"]').value);
+  const fmt = (v, d = 2) => Number.isFinite(v) ? v.toLocaleString("zh-CN", {
+    minimumFractionDigits: d, maximumFractionDigits: d
+  }) : "不可计算";
+  const types = new Set(["grow3", "ohlc", "rsi14", "tworisk"]);
+  function run(form) {
+    let result = NaN, unit = "", note = "输入不在此教学模型的有效范围内。";
+    const allFinite = (...keys) => keys.every(k => Number.isFinite(n(form, k)));
+    switch (form.dataset.calc) {
+      case "grow3": {
+        const revenue = n(form, "revenue"), g = n(form, "growth") / 100,
+          margin = n(form, "margin") / 100, tax = n(form, "tax") / 100,
+          reinvest = n(form, "reinvest") / 100, wacc = n(form, "wacc") / 100,
+          stable = n(form, "terminal") / 100, cashRatio = margin * (1 - tax) - reinvest;
+        if (!allFinite("revenue", "growth", "margin", "tax", "reinvest", "wacc", "terminal")
+          || revenue < 0 || g <= -1 || margin < 0 || margin > 1 || tax < 0 || tax > 1
+          || reinvest < 0 || cashRatio <= 0 || wacc <= 0 || wacc <= stable || stable <= -1) {
+          note = "要求收入非负、增长率大于−100%、税率及营业利润率在0–100%、净投资非负且FCFF率为正、WACC>稳态增长率且WACC>0。";
+          break;
+        }
+        let explicit = 0;
+        for (let year = 1; year <= 3; year++) {
+          explicit += revenue * Math.pow(1 + g, year) * cashRatio / Math.pow(1 + wacc, year);
+        }
+        const fcf3 = revenue * Math.pow(1 + g, 3) * cashRatio;
+        const terminalPV = fcf3 * (1 + stable) / (wacc - stable) / Math.pow(1 + wacc, 3);
+        result = explicit + terminalPV;
+        unit = " 百万元";
+        note = "显式期现值 " + fmt(explicit) + "；终值现值 " + fmt(terminalPV)
+          + "；折现终值占比 " + fmt(result > 0 ? terminalPV / result * 100 : 0, 1)
+          + "%。稳态仍采用同一FCFF/收入比率，此假设须独立验证。";
+        break;
+      }
+      case "ohlc": {
+        if (!allFinite("open", "high", "low", "close")) break;
+        const o = n(form, "open"), h = n(form, "high"),
+          l = n(form, "low"), c = n(form, "close");
+        if (o <= 0 || l <= 0 || c <= 0 || h < Math.max(o, c) || l > Math.min(o, c) || h < l) {
+          note = "OHLC必须为正，且最高价≥开盘和收盘，最低价≤开盘和收盘。";
+          break;
+        }
+        result = (c - o) / o * 100;
+        unit = "%";
+        note = "区间振幅 " + fmt((h - l) / o * 100)
+          + "%；上影 " + fmt(h - Math.max(o, c))
+          + "，下影 " + fmt(Math.min(o, c) - l)
+          + "。这是开收到收盘的变化，不是持有期总回报。";
+        break;
+      }
+      case "rsi14": {
+        if (!allFinite("gain", "loss")) break;
+        const gain = n(form, "gain"), loss = n(form, "loss");
+        if (gain < 0 || loss < 0) {
+          note = "平滑平均上涨与下跌均为绝对非负数。";
+          break;
+        }
+        result = gain === 0 && loss === 0 ? 50 : loss === 0 ? 100 : 100 * gain / (gain + loss);
+        unit = "";
+        note = "输入是已按Wilder方法得到的平均上涨/下跌；二者同时为零时本演示约定RSI=50。";
+        break;
+      }
+      case "tworisk": {
+        if (!allFinite("weight", "returnA", "returnB", "sigmaA", "sigmaB", "rho")) break;
+        const w = n(form, "weight") / 100, a = n(form, "sigmaA"),
+          b = n(form, "sigmaB"), rho = n(form, "rho");
+        if (w < 0 || w > 1 || a < 0 || b < 0 || rho < -1 || rho > 1) {
+          note = "不卖空等权框架要求A权重0–100%、波动率非负、相关系数介于−1与1。";
+          break;
+        }
+        const variance = Math.pow(w * a, 2) + Math.pow((1 - w) * b, 2) + 2 * w * (1 - w) * a * b * rho;
+        result = Math.sqrt(Math.max(0, variance));
+        unit = "%";
+        note = "组合期望收益 " + fmt(w * n(form, "returnA") + (1 - w) * n(form, "returnB"))
+          + "%；组合标准差 " + fmt(result)
+          + "%。单位均为同频率收益的百分数，且模型不包含尾部损失。";
+        break;
+      }
+    }
+    const output = form.querySelector("output");
+    if (output) output.textContent = Number.isFinite(result) ? fmt(result) + unit : "参数不满足模型条件";
+    const explain = form.querySelector("[data-explain]");
+    if (explain) explain.textContent = note;
+  }
+  document.querySelectorAll("form[data-calc]").forEach(form => {
+    if (!types.has(form.dataset.calc)) return;
+    form.addEventListener("submit", event => event.preventDefault());
+    form.addEventListener("input", () => run(form));
+    run(form);
+  });
+})();

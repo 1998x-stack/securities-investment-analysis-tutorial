@@ -135,56 +135,66 @@
       "num": "11",
       "title": "成长股估值",
       "topics": [
-        "PEGR四维框架",
-        "科技股估值难题",
-        "PEGRn/D/F三系数",
-        "动态回收期"
+        "多阶段FCFF",
+        "成长减速",
+        "股权稀释",
+        "PEGR证据边界"
       ],
-      "file": "11.html"
+      "file": "11.html",
+      "refactored": true,
+      "level": "Deep illustrated article + model lab"
     },
     {
       "num": "12",
       "title": "基本面分析实战",
       "topics": [
-        "护城河分析/4M框架",
-        "管理层评估",
-        "安全边际测算",
-        "实地调研方法"
+        "商业模式",
+        "单位经济性",
+        "盈利质量",
+        "可证伪研究"
       ],
-      "file": "12.html"
+      "file": "12.html",
+      "refactored": true,
+      "level": "Deep illustrated article + model lab"
     },
     {
       "num": "13",
       "title": "技术分析基础",
       "topics": [
-        "K线形态与组合",
-        "趋势线与通道",
-        "支撑与阻力",
-        "道氏理论与波浪理论"
+        "OHLC K线",
+        "价格复权",
+        "假突破",
+        "前视偏差"
       ],
-      "file": "13.html"
+      "file": "13.html",
+      "refactored": true,
+      "level": "Deep illustrated article + model lab"
     },
     {
       "num": "14",
       "title": "技术指标精讲",
       "topics": [
-        "MACD指标",
-        "RSI强弱指标",
-        "布林带",
-        "均线系统与组合策略"
+        "SMA/EMA",
+        "MACD",
+        "Wilder RSI",
+        "布林带与回测"
       ],
-      "file": "14.html"
+      "file": "14.html",
+      "refactored": true,
+      "level": "Deep illustrated article + model lab"
     },
     {
       "num": "15",
       "title": "现代投资组合理论",
       "topics": [
-        "马科维茨均值-方差",
+        "协方差与相关性",
         "有效前沿",
-        "CAPM与Beta",
-        "多因子模型概述"
+        "CAPM Beta",
+        "多因子风险"
       ],
-      "file": "15.html"
+      "file": "15.html",
+      "refactored": true,
+      "level": "Deep illustrated article + model lab"
     },
     {
       "num": "16",

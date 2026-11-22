@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Browser QA for the course's first ten canonical chapters and landing page.
+"""Browser QA for the course's first fifteen canonical chapters and landing page.
 Needs: pip install playwright; python -m playwright install chromium.
 """
 from pathlib import Path
@@ -8,9 +8,9 @@ import json, sys
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"qa"/"browser"
 OUT.mkdir(parents=True,exist_ok=True)
-FILES=["index.html"]+[f"lessons/{i:02d}.html" for i in range(1,11)]
+FILES=["index.html"]+[f"lessons/{i:02d}.html" for i in range(1,16)]
 SIZES=[(1440,900),(390,844),(360,780)]
-EXPECTED={"01.html":"16,288.95","02.html":"972.77","03.html":"3,000.00","04.html":"30.00","05.html":"17.28","06.html":"2.94","07.html":"15,000.00","08.html":"1,726.79","09.html":"1.00","10.html":"8.00"}
+EXPECTED={"01.html":"16,288.95","02.html":"972.77","03.html":"3,000.00","04.html":"30.00","05.html":"17.28","06.html":"2.94","07.html":"15,000.00","08.html":"1,726.79","09.html":"1.00","10.html":"8.00","11.html":"249.51","12.html":"15,000.00","13.html":"6.00","14.html":"75.00","15.html":"14.14"}
 def main():
     errors=[];results=[]
     with sync_playwright() as pw:
@@ -73,6 +73,26 @@ def main():
                         evform.locator('[name="cash"]').fill("1500")
                         if "参数不满足" not in evform.locator('output').inner_text():
                             errors.append("10: non-positive enterprise value must be rejected")
+                    if w==1440 and name=="lessons/11.html":
+                        f=page.locator('form[data-calc="grow3"]')
+                        f.locator('[name="terminal"]').fill("10")
+                        if "参数不满足" not in f.locator("output").inner_text():
+                            errors.append("11 invalid WACC<=g not rejected")
+                    if w==1440 and name=="lessons/13.html":
+                        f=page.locator('form[data-calc="ohlc"]')
+                        f.locator('[name="high"]').fill("90")
+                        if "参数不满足" not in f.locator("output").inner_text():
+                            errors.append("13 OHLC invalid high not rejected")
+                    if w==1440 and name=="lessons/14.html":
+                        f=page.locator('form[data-calc="rsi14"]')
+                        f.locator('[name="loss"]').fill("-1")
+                        if "参数不满足" not in f.locator("output").inner_text():
+                            errors.append("14 RSI negative loss not rejected")
+                    if w==1440 and name=="lessons/15.html":
+                        f=page.locator('form[data-calc="tworisk"]')
+                        f.locator('[name="rho"]').fill("1.5")
+                        if "参数不满足" not in f.locator("output").inner_text():
+                            errors.append("15 correlation >1 not rejected")
                     if name=="index.html" and w==1440:
                         inp=page.locator("[data-course-search]")
                         inp.fill("财务比率分析")

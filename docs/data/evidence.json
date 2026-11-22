@@ -28,6 +28,116 @@
         ]
       ]
     },
+    "11": {
+      "claims": [
+        "High revenue growth is not the same as free cash flow growth; reinvestment and dilution matter.",
+        "Three-stage fictional model revenue0=100, growth20%, margin20%, tax25%, reinvest4% of revenue, WACC10%, terminal growth3%, EV=249.51 and discounted terminal share=84.2%.",
+        "PEGR and R-IRR intersection framework is a particular published research proposal, not a theorem invalidating general DCF."
+      ],
+      "sources": [
+        [
+          "CFA 2026 Multistage FCF Valuation",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/free-cash-flow-valuation"
+        ],
+        [
+          "CFA 2026 Equity Valuation Concepts",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/equity-valuation-concepts-basic-tools"
+        ],
+        [
+          "ShIFD specific PEGR proposal",
+          "https://shifd.net/yanjiu/detail/10357.html"
+        ]
+      ]
+    },
+    "12": {
+      "claims": [
+        "Unit economics example (50-20)*1000-15000=15000 with break-even 500 units.",
+        "Indirect cash-flow bridge 120+20-35-25+15=95 before capital expenditures.",
+        "Research requires audit-traceable evidence, falsification criteria, and evidence-quality differentiation."
+      ],
+      "sources": [
+        [
+          "CFA 2026 Company Analysis",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/company-analysis-past-and-present"
+        ],
+        [
+          "CFA 2026 Financial Report Quality",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/evaluating-quality-financial-reports"
+        ],
+        [
+          "Investor.gov 10-K research",
+          "https://www.investor.gov/introduction-investing/getting-started/researching-investments/how-read-10-k"
+        ]
+      ]
+    },
+    "13": {
+      "claims": [
+        "OHLC must satisfy high >= open and close and low <= open and close.",
+        "Two-for-one stock splits do not automatically imply a 50% holding loss.",
+        "Signals must be formed only after all necessary price data are available; false breakouts and data snooping matter."
+      ],
+      "sources": [
+        [
+          "SEBI investor technical analysis",
+          "https://investor.sebi.gov.in/tech_fund_analysis.html"
+        ],
+        [
+          "CFA 2026 backtesting and simulation",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/backtesting-and-simulation"
+        ],
+        [
+          "Schwab technical indicator limits",
+          "https://www.schwab.com/learn/story/choosing-technical-indicators-to-analyze-stocks"
+        ]
+      ]
+    },
+    "14": {
+      "claims": [
+        "SMA is trailing average, EMA uses alpha=2/(N+1).",
+        "MACD(12,26,9) line is EMA12 minus EMA26, signal EMA9(DIF), histogram DIF minus signal; some platforms multiply histogram by 2.",
+        "Wilder RSI uses gains and losses initialized over 14 intervals then recursively smoothed; average gain1.5 and loss0.5 imply RSI75."
+      ],
+      "sources": [
+        [
+          "StockCharts MACD calculations",
+          "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/macd-histogram"
+        ],
+        [
+          "StockCharts Wilder RSI",
+          "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/relative-strength-index-rsi"
+        ],
+        [
+          "CFA 2026 backtesting",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/backtesting-and-simulation"
+        ]
+      ]
+    },
+    "15": {
+      "claims": [
+        "Two-asset volatility equals sqrt(wA²sigmaA²+wB²sigmaB²+2wAwB rho sigmaA sigmaB).",
+        "Two equal 20%-sigma assets at equal weights and rho0 produce 14.14% volatility, rho1=20%, rho-1=0% idealized.",
+        "CAPM is a conditional equilibrium pricing model; with Rf3%, market premium6%, beta1.2 implies expected 10.2%.",
+        "Efficient frontier relies on estimated means, covariances and constraints; empirical alpha is model-specific."
+      ],
+      "sources": [
+        [
+          "CFA 2026 Portfolio Mathematics",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-mathematics"
+        ],
+        [
+          "CFA 2026 Portfolio Risk and Return I",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-risk-return-part-1"
+        ],
+        [
+          "CFA 2026 Portfolio Risk and Return II",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-risk-return-part-2"
+        ],
+        [
+          "Fama French 2015 Five Factor Model",
+          "https://www.sciencedirect.com/science/article/pii/S0304405X14002323/pdf"
+        ]
+      ]
+    },
     "01": {
       "claims": [
         "持有期收益取决于价格与分配，风险与分散投资有边界",
@@ -237,6 +347,7 @@
   "limitations": [
     "All figures and calculations are original synthetic illustrations, not market price or forecasts.",
     "Automated static structural and browser QA checks do not replace external link freshness and factual review.",
-    "Financial reporting and market-specific trading rules must be reverified as they evolve."
+    "Financial reporting and market-specific trading rules must be reverified as they evolve.",
+    "Chapters 11–15: derived indicators are features, not tested forecasts; constructed valuation and covariance matrices are hypothetical."
   ]
 }
