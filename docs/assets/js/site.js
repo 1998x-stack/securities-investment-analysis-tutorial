@@ -279,11 +279,23 @@
   const fmt = (v, d = 2) => Number.isFinite(v) ? v.toLocaleString("zh-CN", {
     minimumFractionDigits: d, maximumFractionDigits: d
   }) : "不可计算";
-  const types = new Set(["var95", "kelly", "prospect"]);
+  const types = new Set(["var95", "kelly", "prospect", "graham"]);
   function run(form) {
     let result = NaN, unit = "", note = "输入不在此教学模型的有效范围内。";
     const finite = (...keys) => keys.every(k => Number.isFinite(n(form, k)));
     switch (form.dataset.calc) {
+      case "graham": {
+        if (!finite("eps", "bvps", "price")) break;
+        const eps = n(form, "eps"), bvps = n(form, "bvps"), price = n(form, "price");
+        if (eps <= 0 || bvps <= 0 || price <= 0) { note = "每股收益、每股净资产与股价均须为正数。"; break; }
+        result = Math.sqrt(22.5 * eps * bvps);
+        unit = " 元";
+        const ratio = price / result;
+        note = "格雷厄姆数 = √(22.5 × EPS × BVPS) = " + fmt(result) + " 元。当前股价/格雷厄姆数 = "
+          + fmt(ratio) + "；按“买入价不高于 2/3”的规则，上界约为 " + fmt(result * 2 / 3)
+          + " 元。这是格雷厄姆的筛选规则，不是内在价值本身。";
+        break;
+      }
       case "prospect": {
         if (!finite("gain", "alpha", "lambda")) break;
         const g = n(form, "gain"), a = n(form, "alpha"), lam = n(form, "lambda");
