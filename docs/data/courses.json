@@ -200,56 +200,71 @@
       "num": "16",
       "title": "风险管理体系",
       "topics": [
-        "VaR在险价值",
+        "VaR与ES",
         "最大回撤",
-        "压力测试",
-        "仓位管理与凯利公式"
+        "风险预算与Kelly",
+        "压力测试与止损执行"
       ],
-      "file": "16.html"
+      "file": "16.html",
+      "refactored": true,
+      "review_date": "2026-11-22",
+      "article_style": "independent narrative + original SVG + MathML + deterministic calculator"
     },
     {
       "num": "17",
       "title": "行为金融学",
       "topics": [
         "前景理论",
-        "过度自信/损失厌恶",
-        "羊群效应",
-        "情绪指标实战"
+        "损失厌恶与处置效应",
+        "羊群与反身性",
+        "行为决策流程"
       ],
-      "file": "17.html"
+      "file": "17.html",
+      "refactored": true,
+      "review_date": "2026-11-22",
+      "article_style": "independent narrative + original SVG + MathML + deterministic calculator"
     },
     {
       "num": "18",
       "title": "投资策略流派",
       "topics": [
-        "价值投资",
-        "成长投资",
-        "动量策略",
-        "索罗斯反身性理论"
+        "价值与成长",
+        "动量与崩跌风险",
+        "反身性与套利限制",
+        "策略组合与实施"
       ],
-      "file": "18.html"
+      "file": "18.html",
+      "refactored": true,
+      "review_date": "2026-11-22",
+      "article_style": "independent narrative + original SVG + MathML + deterministic calculator"
     },
     {
       "num": "19",
       "title": "量化选股入门",
       "topics": [
-        "因子投资基础",
-        "Alpha与Beta分离",
-        "回测框架",
-        "过拟合陷阱"
+        "Point-in-time数据",
+        "因子与Alpha/Beta",
+        "回测与交易成本",
+        "过拟合与样本外检验"
       ],
-      "file": "19.html"
+      "file": "19.html",
+      "refactored": true,
+      "review_date": "2026-11-22",
+      "article_style": "independent narrative + original SVG + MathML + deterministic calculator"
     },
     {
       "num": "20",
       "title": "多因子模型实战",
       "topics": [
-        "五大经典因子",
-        "因子构建与标准化",
-        "IC/IR评价体系",
-        "因子拥挤度监控"
+        "Fama–French五因子",
+        "因子标准化与中性化",
+        "IC/Rank IC/ICIR",
+        "拥挤度与动态权重"
       ],
-      "file": "20.html"
+      "file": "20.html",
+      "refactored": true,
+      "review_date": "2026-11-22",
+      "article_style": "independent narrative + original SVG + MathML + deterministic calculator"
     },
     {
       "num": "21",

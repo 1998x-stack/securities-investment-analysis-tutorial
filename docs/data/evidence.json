@@ -138,6 +138,302 @@
         ]
       ]
     },
+    "16": {
+      "claims": [
+        "VaR is a loss quantile at a specified confidence level and horizon, not a worst-case loss; ES is the conditional average loss beyond the VaR threshold.",
+        "Basel MAR33 requires 97.5% one-tailed ES in the internal models market-risk capital framework; this is a bank regulatory rule, not a universal personal-investor setting.",
+        "The normal VaR/ES lab assumes zero-mean normal returns and square-root-of-time scaling; values are derived from standard normal z and density.",
+        "A stop order becomes a market order after trigger; stop price does not guarantee execution price, while stop-limit may not execute."
+      ],
+      "sources": [
+        [
+          "CFA Institute 2026 Market Risk",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/measuring-managing-market-risk"
+        ],
+        [
+          "Basel MAR33 Expected Shortfall",
+          "https://www.bis.org/committees/bcbs/basel-framework/standard/mar?allChapters=true"
+        ],
+        [
+          "Basel MAR10 terminology",
+          "https://www.bis.org/committees/bcbs/basel-framework/standard/mar/10/inforce/2022-01-01/published/2019-12-15"
+        ],
+        [
+          "SEC Investor Bulletin: Stop Orders (updated 2026-08)",
+          "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins-15"
+        ]
+      ],
+      "claim_evidence": [
+        {
+          "id": "risk-01",
+          "claim": "VaR/ES definitions and caveats",
+          "kind": "primary educational reference",
+          "source_url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/measuring-managing-market-risk",
+          "locator": "Definitions and model limitations",
+          "status": "verified"
+        },
+        {
+          "id": "risk-02",
+          "claim": "97.5% one-tailed ES in Basel IMA",
+          "kind": "regulatory rule",
+          "source_url": "https://www.bis.org/committees/bcbs/basel-framework/standard/mar/33.htm",
+          "locator": "MAR33.3",
+          "status": "verified"
+        },
+        {
+          "id": "risk-03",
+          "claim": "Stop-order execution-price risk",
+          "kind": "regulatory investor bulletin",
+          "source_url": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins-15",
+          "locator": "Stop Order section; updated 2026-08-18",
+          "status": "verified"
+        },
+        {
+          "id": "risk-04",
+          "claim": "Normal VaR and ES example",
+          "kind": "derived calculation",
+          "source_url": "",
+          "locator": "Zero-mean normal one-day example: V=1,000,000; sigma=1.5%; alpha=.95; z=1.6448536; VaR=24,672.80; ES=30,940.69",
+          "status": "derived"
+        }
+      ]
+    },
+    "17": {
+      "claims": [
+        "Prospect Theory describes outcomes relative to a reference point and decision weights; the value function is typically steeper for losses than gains, but parameters are context-dependent.",
+        "Odean (1998) found disposition-effect behavior in a specific sample of 10,000 brokerage accounts; results should not be generalized as a universal coefficient.",
+        "Barber and Odean (2000) documented lower returns among the most active-trading households in their 1991–1996 sample; this is sample-specific empirical evidence."
+      ],
+      "sources": [
+        [
+          "Kahneman and Tversky (1979) Prospect Theory",
+          "https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Behavioral_Decision_Theory/Kahneman_Tversky_1979_Prospect_theory.pdf"
+        ],
+        [
+          "Odean (1998) Are Investors Reluctant to Realize Their Losses?",
+          "https://faculty.haas.berkeley.edu/odean/papers%20current%20versions/areinvestorsreluctant.pdf"
+        ],
+        [
+          "Barber and Odean (2000) Trading Is Hazardous to Your Wealth",
+          "https://faculty.haas.berkeley.edu/odean/papers/returns/Individual_Investor_Performance_Final.pdf?v=1713656625503"
+        ]
+      ],
+      "claim_evidence": [
+        {
+          "id": "behavior-01",
+          "claim": "Reference-dependent value and probability weighting",
+          "kind": "primary paper",
+          "source_url": "https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Behavioral_Decision_Theory/Kahneman_Tversky_1979_Prospect_theory.pdf",
+          "locator": "Kahneman & Tversky 1979",
+          "status": "verified"
+        },
+        {
+          "id": "behavior-02",
+          "claim": "Disposition effect in brokerage accounts",
+          "kind": "primary empirical paper",
+          "source_url": "https://faculty.haas.berkeley.edu/odean/papers%20current%20versions/areinvestorsreluctant.pdf",
+          "locator": "Odean 1998; sample of 10,000 accounts",
+          "status": "verified"
+        },
+        {
+          "id": "behavior-03",
+          "claim": "Active trading and household returns",
+          "kind": "primary empirical paper",
+          "source_url": "https://faculty.haas.berkeley.edu/odean/papers/returns/Individual_Investor_Performance_Final.pdf?v=1713656625503",
+          "locator": "Barber & Odean 2000; 1991–1996 broker sample",
+          "status": "verified"
+        }
+      ]
+    },
+    "18": {
+      "claims": [
+        "Value, growth and momentum are overlapping investment dimensions rather than mutually exclusive company categories.",
+        "Momentum strategies can experience severe crashes, including during panic states and sharp rebounds after market declines.",
+        "Shleifer and Vishny model limits to arbitrage through capital constraints and noise-trader risk; mispricing can persist despite rational arbitrageurs.",
+        "Soros's reflexivity is presented as an interpretive framework for price-fundamental feedback, not a universally validated law."
+      ],
+      "sources": [
+        [
+          "Asness (1997) The Interaction of Value and Momentum Strategies",
+          "https://www.aqr.com/insights/research/journal-article/the-interaction-of-value-and-momentum-strategies"
+        ],
+        [
+          "Daniel and Moskowitz (2016) Momentum Crashes",
+          "https://doi.org/10.1016/j.jfineco.2015.12.002"
+        ],
+        [
+          "Shleifer and Vishny (1997) Limits of Arbitrage",
+          "https://www.nber.org/papers/w5167"
+        ],
+        [
+          "Soros (2009) Financial Markets lecture",
+          "https://www.opensocietyfoundations.org/uploads/2b96bb8c-e2e1-4d88-9eea-badf16d0a2b8/george-soros-financial-markets-transcript.pdf"
+        ]
+      ],
+      "claim_evidence": [
+        {
+          "id": "strategy-01",
+          "claim": "Asness (1997) studies the interaction between value and momentum strategies; it is not authored by Fama and French.",
+          "kind": "research paper",
+          "source_url": "https://www.aqr.com/insights/research/journal-article/the-interaction-of-value-and-momentum-strategies",
+          "locator": "Asness, Moskowitz and Pedersen-related strategy research context",
+          "status": "verified"
+        },
+        {
+          "id": "strategy-02",
+          "claim": "Momentum crash states",
+          "kind": "research paper",
+          "source_url": "https://doi.org/10.1016/j.jfineco.2015.12.002",
+          "locator": "Daniel & Moskowitz 2016",
+          "status": "verified"
+        },
+        {
+          "id": "strategy-03",
+          "claim": "Capital constraints and noise-trader risk in arbitrage",
+          "kind": "primary paper",
+          "source_url": "https://www.nber.org/papers/w5167",
+          "locator": "Shleifer & Vishny 1995 NBER working paper / 1997 Journal of Finance",
+          "status": "verified"
+        },
+        {
+          "id": "strategy-04",
+          "claim": "Reflexivity as author-proposed framework",
+          "kind": "primary lecture transcript",
+          "source_url": "https://www.opensocietyfoundations.org/uploads/2b96bb8c-e2e1-4d88-9eea-badf16d0a2b8/george-soros-financial-markets-transcript.pdf",
+          "locator": "Soros 2009 lecture",
+          "status": "verified"
+        }
+      ]
+    },
+    "19": {
+      "claims": [
+        "Point-in-time backtests must respect when data became public and tradable; fiscal period-end is not necessarily the public availability date.",
+        "Backtests need explicit portfolio formation, execution, corporate-action, delisting, liquidity and transaction-cost rules.",
+        "Bailey et al. propose PBO/CSCV to diagnose selection bias among tested strategy configurations; PBO is not the probability of future investor loss.",
+        "The Sharpe calculator is an arithmetic annualization approximation with explicit one-way turnover and cost assumptions.",
+        "Alpha is the intercept conditional on the chosen factor model and benchmark; omitted exposures can be absorbed into alpha."
+      ],
+      "sources": [
+        [
+          "CFA Institute 2026 Backtesting and Simulation",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/backtesting-and-simulation"
+        ],
+        [
+          "Bailey et al. (2017) Probability of Backtest Overfitting",
+          "https://escholarship.org/uc/item/4w1110bb"
+        ],
+        [
+          "Bailey et al. (2014) Pseudo-Mathematics and Financial Charlatanism",
+          "https://scholarworks.wmich.edu/math_pubs/40"
+        ],
+        [
+          "Investor.gov How to Read a 10-K",
+          "https://www.investor.gov/introduction-investing/getting-started/researching-investments/how-read-10-k"
+        ],
+        [
+          "CFA Institute 2026 Portfolio Risk and Return Part II",
+          "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-risk-return-part-2"
+        ]
+      ],
+      "claim_evidence": [
+        {
+          "id": "quant-01",
+          "claim": "PBO and CSCV diagnostic",
+          "kind": "research paper",
+          "source_url": "https://escholarship.org/uc/item/4w1110bb",
+          "locator": "Bailey et al. 2017",
+          "status": "verified"
+        },
+        {
+          "id": "quant-02",
+          "claim": "Multiple trials and overfitting",
+          "kind": "research paper",
+          "source_url": "https://scholarworks.wmich.edu/math_pubs/40",
+          "locator": "Bailey et al. 2014",
+          "status": "verified"
+        },
+        {
+          "id": "quant-03",
+          "claim": "Backtesting methodology",
+          "kind": "CFA curriculum reading",
+          "source_url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/backtesting-and-simulation",
+          "locator": "CFA Institute 2026",
+          "status": "verified"
+        },
+        {
+          "id": "quant-04",
+          "claim": "Alpha and beta are model-conditional risk decomposition terms.",
+          "kind": "professional curriculum reference",
+          "source_url": "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-risk-return-part-2",
+          "locator": "Portfolio risk and return; factor exposure and performance attribution",
+          "status": "verified"
+        }
+      ]
+    },
+    "20": {
+      "claims": [
+        "The 2015 Fama–French five-factor model includes market, size, value, profitability and investment factors; momentum is an additional extension, not one of the five.",
+        "The French Data Library constructs factor portfolios using size and characteristic sorts; its historical US definitions should not be assumed to describe other markets.",
+        "Cross-sectional IC correlates factor scores with subsequent returns; ICIR summarizes mean IC relative to its time-series dispersion, with annualization convention stated explicitly.",
+        "Factor crowding proxies such as holding overlap, valuation spread, turnover and liquidity are diagnostics, not deterministic timing signals."
+      ],
+      "sources": [
+        [
+          "Fama and French (2015) A Five-Factor Asset Pricing Model",
+          "https://www.sciencedirect.com/science/article/pii/S0304405X14002323"
+        ],
+        [
+          "Kenneth French Data Library Five Factors 2x3",
+          "https://mba.tuck.dartmouth.edu/pages/faculty/Ken.French/Data_Library/f-f_5_factors_2x3.html"
+        ],
+        [
+          "Ding and Sun (2023) Statistics of Time-Varying Cross-Sectional ICs",
+          "https://link.springer.com/article/10.1057/s41260-022-00295-9"
+        ],
+        [
+          "AQR (2021) Factor Premia over a Century",
+          "https://www.aqr.com/insights/research/journal-article/how-do-factor-premia-vary-over-time-a-century-of-evidence"
+        ],
+        [
+          "Daniel and Moskowitz (2016) Momentum Crashes",
+          "https://doi.org/10.1016/j.jfineco.2015.12.002"
+        ]
+      ],
+      "claim_evidence": [
+        {
+          "id": "factor-01",
+          "claim": "Five-factor model definitions and empirical scope",
+          "kind": "primary paper",
+          "source_url": "https://www.sciencedirect.com/science/article/pii/S0304405X14002323",
+          "locator": "Fama & French 2015",
+          "status": "verified"
+        },
+        {
+          "id": "factor-02",
+          "claim": "Official factor portfolio construction",
+          "kind": "data documentation",
+          "source_url": "https://mba.tuck.dartmouth.edu/pages/faculty/Ken.French/Data_Library/f-f_5_factors_2x3.html",
+          "locator": "French Data Library 2x3 construction",
+          "status": "verified"
+        },
+        {
+          "id": "factor-03",
+          "claim": "Time-varying cross-sectional IC statistics",
+          "kind": "research paper",
+          "source_url": "https://link.springer.com/article/10.1057/s41260-022-00295-9",
+          "locator": "Ding & Sun 2023",
+          "status": "verified"
+        },
+        {
+          "id": "factor-04",
+          "claim": "Factor premia and out-of-sample variation",
+          "kind": "research paper",
+          "source_url": "https://www.aqr.com/insights/research/journal-article/how-do-factor-premia-vary-over-time-a-century-of-evidence",
+          "locator": "Ilmanen et al. 2021",
+          "status": "verified"
+        }
+      ]
+    },
     "01": {
       "claims": [
         "持有期收益取决于价格与分配，风险与分散投资有边界",
@@ -348,6 +644,7 @@
     "All figures and calculations are original synthetic illustrations, not market price or forecasts.",
     "Automated static structural and browser QA checks do not replace external link freshness and factual review.",
     "Financial reporting and market-specific trading rules must be reverified as they evolve.",
-    "Chapters 11–15: derived indicators are features, not tested forecasts; constructed valuation and covariance matrices are hypothetical."
+    "Chapters 11–15: derived indicators are features, not tested forecasts; constructed valuation and covariance matrices are hypothetical.",
+    "Chapters 16–20: all calculator inputs and diagrams are synthetic teaching examples; risk models, factor premia and behavioral findings have sample- and assumption-specific scope. No local-market return is asserted without a separate point-in-time test."
   ]
 }
