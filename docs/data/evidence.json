@@ -941,7 +941,7 @@
         {
           "id": "batch6-27-04",
           "claim": "Equal-risk-contribution portfolios use covariance-aware component risk contributions; they are not equivalent to inverse-volatility weights in general.",
-          "kind": "professional curriculum",
+          "kind": "Original research paper",
           "source_url": "https://doi.org/10.3905/jpm.2010.36.4.060",
           "locator": "Linked original paper, official documentation or regulator source; see lesson section.",
           "status": "verified",
@@ -1101,7 +1101,7 @@
           "id": "batch6-28-08",
           "claim": "China's securities program-trading rules and exchange implementation rules must be checked for the applicable market and current effective version.",
           "kind": "CSRC official regulation",
-          "source_url": "https://www.csrc.gov.cn/csrc/c100028/c7480577/content.shtml",
+          "source_url": "https://www.csrc.gov.cn/c100028/c7480577/content.shtml",
           "locator": "Linked original paper, official documentation or regulator source; see lesson section.",
           "status": "verified",
           "notes": "CSRC rule is the national-level program-trading reference; applicable exchange implementation notices and current amendments must be checked separately."

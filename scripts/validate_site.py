@@ -53,6 +53,28 @@ def main():
         key=f"{n:02d}"
         if not ledger["chapters"].get(key,{}).get("sources"):
             errors.append(f"evidence ledger has no sources for chapter {key}")
+    for n in (26,27,28):
+        key=f"{n:02d}"
+        chapter=ledger["chapters"].get(key,{})
+        claims=chapter.get("claims",[])
+        rows=chapter.get("claim_evidence",[])
+        source_urls={item[1] for item in chapter.get("sources",[]) if len(item)>1}
+        if len(rows)!=len(claims):
+            errors.append(f"evidence ledger {key}: claim_evidence count does not match claims")
+        html=(BASE/"lessons"/f"{key}.html").read_text(encoding="utf8")
+        for item in rows:
+            url=item.get("source_url","")
+            if url and url not in source_urls:
+                errors.append(f"evidence ledger {key}: source_url not present in sources: {url}")
+            if url and url not in html:
+                errors.append(f"lesson {key}: evidence source not linked in HTML: {url}")
+            for support in item.get("supporting_sources",[]):
+                if support not in source_urls or support not in html:
+                    errors.append(f"evidence ledger {key}: invalid supporting source: {support}")
+            if item.get("status")=="verified" and not url:
+                errors.append(f"evidence ledger {key}: verified claim has no primary source URL")
+    if not (ROOT/"examples"/"capstone_lab.py").read_text(encoding="utf8").count("def brinson_fachler_attribution"):
+        errors.append("capstone lab missing Brinson-Fachler attribution")
     for n in range(21,29):
         page=BASE/"lessons"/f"{n:02d}.html"
         content=page.read_text(encoding="utf8")
