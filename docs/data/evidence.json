@@ -556,6 +556,35 @@
           "https://www.szse.cn"
         ]
       ]
+    },
+    "26": {
+      "claims": [
+        "ML can fit history well; danger is fitting a specific regime, not insufficient accuracy. Three causes: overfitting/data-snooping, regime shift, label/feature leakage.",
+        "LLM factor-mining loop (generate-evaluate-evolve) is genetic programming; it amplifies multiple testing, so an independent out-of-sample + multiplicity gate is required.",
+        "No architecture dominates across regimes; financial data has low signal-to-noise, so deep learning overfits more easily than in vision/language.",
+        "Regime shift: train across full bull-bear cycles, use confidence thresholds to de-risk, keep human override.",
+        "Unstructured text: domain-fine-tuned sentiment models and text-as-representation (VTA) research direction; look-ahead, coverage/survivorship, and nonlinearity are traps.",
+        "Metrics: precision = TP/(TP+FP), recall = TP/(TP+FN), F1 harmonic mean; constructed example TP30/FP70/FN20 -> precision 30%, recall 60%, F1 ~40%.",
+        "No institutional AI stock-picking performance, accuracy or IC numbers are cited on this page."
+      ],
+      "sources": [
+        [
+          "Gu, Kelly & Xiu 2020, Review of Financial Studies",
+          "https://doi.org/10.1093/rfs/hhaa009"
+        ],
+        [
+          "Vaswani et al. 2017, NeurIPS (arXiv)",
+          "https://arxiv.org/abs/1706.03762"
+        ],
+        [
+          "Hochreiter & Schmidhuber 1997, Neural Computation",
+          "https://doi.org/10.1162/neco.1997.9.8.1735"
+        ],
+        [
+          "Harvey, Liu & Zhu 2016, Review of Financial Studies",
+          "https://doi.org/10.1093/rfs/hhv059"
+        ]
+      ]
     }
   },
   "limitations": [

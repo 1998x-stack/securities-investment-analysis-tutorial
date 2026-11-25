@@ -343,6 +343,17 @@
           + "%。印花税仅卖出时征收故只乘 1；未含冲击成本。费率会随政策与券商变化，请自行核对当前有效值。";
         break;
       }
+      case "mlmetrics": {
+        if (!finite("tp", "fp", "fn")) break;
+        const tp = n(form, "tp"), fp = n(form, "fp"), fn = n(form, "fn");
+        if (tp < 0 || fp < 0 || fn < 0) { note = "TP/FP/FN 不得为负。"; break; }
+        if (tp + fp <= 0 || tp + fn <= 0) { note = "需要至少一个正例与非零预测值。"; break; }
+        const prec = tp / (tp + fp), rec = tp / (tp + fn);
+        result = 2 * prec * rec / (prec + rec);
+        note = "精确率 = " + fmt(prec * 100) + "%，召回率 = " + fmt(rec * 100)
+          + "%，F1 = " + fmt(result * 100) + "%。模型指标不等于策略收益：还需扣除交易成本、滑点与不可成交样本。";
+        break;
+      }
       case "zscore": {
         if (!finite("value", "mean", "std")) break;
         const value = n(form, "value"), mean = n(form, "mean"), std = n(form, "std");

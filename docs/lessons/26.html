@@ -1,240 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>第26章 AI驱动的投资分析</title>
-    <link rel="stylesheet" href="theme.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="AI驱动的投资分析：LLM因子挖掘的生成-评估-进化闭环为什么放大数据窥探、深度学习选股模型的架构与边界、市场状态切换导致的模型失效，以及非结构化文本分析与可解释性的现实约束。">
+<title>AI驱动的投资分析：能力、陷阱与边界｜证券投资分析</title>
+<link rel="stylesheet" href="../assets/css/site.css">
 </head>
 <body>
-<div class="double-border">
-<div class="container">
-    <div class="sidebar">
-        <h3>📈 课程目录</h3>
-        <ul class="chapter-list">
-            <li><a href="01.html">第1章 证券投资导论</a></li>
-            <li><a href="02.html">第2章 主要证券品种</a></li>
-            <li><a href="03.html">第3章 交易机制与规则</a></li>
-            <li><a href="04.html">第4章 财务报表入门</a></li>
-            <li><a href="05.html">第5章 财务比率分析</a></li>
-            <li><a href="06.html">第6章 宏观经济与市场</a></li>
-            <li><a href="07.html">第7章 行业分析方法</a></li>
-            <li><a href="08.html">第8章 绝对估值法</a></li>
-            <li><a href="09.html">第9章 相对估值法(上)</a></li>
-            <li><a href="10.html">第10章 相对估值法(下)</a></li>
-            <li><a href="11.html">第11章 成长股估值</a></li>
-            <li><a href="12.html">第12章 基本面分析实战</a></li>
-            <li><a href="13.html">第13章 技术分析基础</a></li>
-            <li><a href="14.html">第14章 技术指标精讲</a></li>
-            <li><a href="15.html">第15章 现代投资组合理论</a></li>
-            <li><a href="16.html">第16章 风险管理体系</a></li>
-            <li><a href="17.html">第17章 行为金融学</a></li>
-            <li><a href="18.html">第18章 投资策略流派</a></li>
-            <li><a href="19.html">第19章 量化选股入门</a></li>
-            <li><a href="20.html">第20章 多因子模型实战</a></li>
-            <li><a href="21.html">第21章 前沿因子探索</a></li>
-            <li><a href="22.html">第22章 行业估值与轮动</a></li>
-            <li><a href="23.html">第23章 数据获取与处理</a></li>
-            <li><a href="24.html">第24章 Python量化工具链</a></li>
-            <li><a href="25.html">第25章 实盘交易系统</a></li>
-            <li><a href="26.html" class="active">第26章 AI驱动的投资分析</a></li>
-            <li><a href="27.html">第27章 宏观对冲与全球配置</a></li>
-            <li><a href="28.html">第28章 综合实战项目</a></li>
-        </ul>
-    </div>
-    <div class="main-content">
-
-        <h1>第26章 AI驱动的投资分析</h1>
-
-        <p>大家好，我是你们的讲师。如果你觉得前几章的内容已经让你对投资分析有了比较完整的认识，那么这一章可能会彻底刷新你的认知。</p>
-
-        <p>2022年底ChatGPT横空出世之后，AI在投资领域的渗透速度远超所有人的预期。到了2025-2026年，几乎所有的头部买方机构——无论是公募基金、私募量化还是保险资管——都已经把AI深度嵌入到了投研流程中。这不是"用AI写个研报摘要"那种浅层应用，而是从因子挖掘、选股模型、情绪分析到交易执行的全链条AI化。这一章我们就来系统性地看看，AI到底是怎么在重塑投资分析的每一个环节的。</p>
-
-        <h2>26.1 从因子挖掘到信号生成</h2>
-
-        <h3>传统因子挖掘的瓶颈</h3>
-
-        <p>往期的课程中我们讲过，多因子模型的核心是找到能够预测股票收益的因子。传统做法靠的是人的经验和直觉——价值因子（低PE/PB）、动量因子、质量因子、低波因子等等。这些经典因子确实管用，但是有一个致命的问题：<strong>所有人都知道这些因子，它们的超额收益正在被竞争抹平。</strong></p>
-
-        <p>一个例子：A股低波因子在2010-2018年间年化超额收益约5%，但到了2022-2025年，这个数字已经缩水到了不到1.5%。因子"内卷"的速度越来越快。要找到新的alpha信号，人力已经远远不够了——我们需要机器的帮助。</p>
-
-        <h3>LLM因子挖掘：机器发现了人看不到的信号</h3>
-
-        <p>2025-2026年，大语言模型（LLM）在因子挖掘领域取得了突破性进展。广发证券2026年发布的研究报告展示了使用DeepSeek-v4-pro和Qwen3-VL-235B进行全自动因子挖掘的成果，其核心思路是"生成-评估-进化"闭环：</p>
-
-        <ul>
-            <li><strong>生成</strong>：LLM基于已有的因子库和研报文本，自主构思新的因子表达式。模型被提示从"残差信号"（已有因子无法解释的部分）中寻找新的模式。</li>
-            <li><strong>评估</strong>：生成的因子在大规模历史数据上回测，计算IC（Information Coefficient，信息系数）、Rank IC、换手率、分组收益单调性等指标。</li>
-            <li><strong>进化</strong>：表现优秀的因子进入候选池，模型据此调整生成策略，尝试做变异和组合。这本质上是一个由LLM驱动的遗传编程（Genetic Programming）过程。</li>
-        </ul>
-
-        <p>据报告披露，Qwen3-VL-235B独立挖掘的因子在A股5000+股票池上平均IC值达到了2.95%，远超传统人工因子的0.8%-1.5%水平。更关键的是，这些因子中有超过40%是传统量化研究员"从未想到过"的信号——它们涉及供应链上下游的文本关联、专利文本中隐含的技术护城河、甚至地方政府的政策文本措辞变化。</p>
-
-        <p>下面是一个典型的LLM因子挖掘Prompt示例：</p>
-
-        <pre><code>你是一个专业的量化因子挖掘专家。请基于以下约束生成一个新的候选因子：
-
-        股票池：沪深300成分股
-        数据范围：日频数据，2018-01-01 至 2025-12-31
-        已有因子：EP_TTM, BP_LR, MOM_12M, VOL_20D, ROE_TTM
-
-        要求：
-        1. 新因子与已有因子的平均相关性&lt;0.3
-        2. 因子表达式必须是可计算的，使用标准运算符(+, -, *, /, sign, rank, sqrt, log, abs, ts_mean, ts_std, ts_corr, group_rank)
-        3. 生成后给出经济含义解释
-        4. 预测周期：未来20个交易日
-
-        请先生成3个候选因子，然后对每个因子说明：
-        - 因子表达式
-        - 预期IC方向（正/负）
-        - 经济直觉解释
-        - 可能的失效条件</code></pre>
-
-        <p>当然，LLM因子挖掘并非万能。一个常见的陷阱是<strong>过拟合无处不在</strong>——LLM可能"记住"了某些历史行情模式，生成出只在特定时间段有效的因子。所以评估环节的样本外测试和交叉验证变得极其重要。</p>
-
-        <h2>26.2 深度学习选股模型</h2>
-
-        <h3>LSTM与时间序列建模</h3>
-
-        <p>股票价格天然是时间序列数据，而LSTM（Long Short-Term Memory，长短期记忆网络）正是处理时序依赖的利器。LSTM通过引入遗忘门、输入门和输出门，解决了传统RNN的长期依赖梯度消失问题，能够"记住"数十个交易日甚至更久之前的模式。</p>
-
-        <p>在A股实战中，BiLSTM（双向LSTM）的使用更为广泛。它同时从正向和反向两个方向读取时间序列，能够同时捕捉到"过去对现在的影响"和"未来对现在的暗示"——虽然听起来有点玄学，但在技术分析的语境下，未来信息指的是"当前价格形态在历史上出现后通常如何演变"。</p>
-
-        <h3>Transformer与跨资产联动</h3>
-
-        <p>Transformer架构的Self-Attention机制天然适合捕捉"任意两个时间点之间"的依赖关系。在投资领域的应用场景包括：</p>
-
-        <ul>
-            <li><strong>跨资产注意力</strong>：A股某板块与港股权重股、人民币汇率、美债收益率、商品期货之间的复杂联动。</li>
-            <li><strong>长期依赖</strong>：某些宏观因子对市场的影响可能存在数月甚至数年的滞后。Transformer的注意力机制可以直接学习这种跨时间步的关联。</li>
-        </ul>
-
-        <p>2025年，中信建投团队发表了一篇基于CNN-Transformer混合架构的A股选股模型论文。该模型先使用CNN提取局部价格模式（类似于技术分析中的"形态识别"），再用Transformer建模全局时序依赖。在沪深300和创业板指两个测试集上，该模型的方向预测准确率达到了70%以上，多空组合年化超额收益约18%。</p>
-
-        <h3>主流AI模型的选股能力对比</h3>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>模型架构</th>
-                    <th>核心优势</th>
-                    <th>主要局限</th>
-                    <th>A股IC均值</th>
-                    <th>典型换手率</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>LSTM / BiLSTM</td>
-                    <td>时序依赖建模成熟，训练稳定</td>
-                    <td>长序列性能衰减，难以捕捉跨资产关系</td>
-                    <td>1.8%-2.5%</td>
-                    <td>周频换仓</td>
-                </tr>
-                <tr>
-                    <td>Transformer</td>
-                    <td>全局注意力，跨序列交互能力极强</td>
-                    <td>计算成本高，小样本易过拟合</td>
-                    <td>2.0%-3.0%</td>
-                    <td>日频/周频</td>
-                </tr>
-                <tr>
-                    <td>GNN（图神经网络）</td>
-                    <td>天然建模产业链上下游关系和资金流网络</td>
-                    <td>图构建方式敏感，泛化性待验证</td>
-                    <td>2.2%-3.5%</td>
-                    <td>月频</td>
-                </tr>
-                <tr>
-                    <td>Mamba（状态空间模型）</td>
-                    <td>线性复杂度下的长序列建模，2025年新兴方案</td>
-                    <td>生态尚不成熟，投资领域论文较少</td>
-                    <td>1.5%-2.0%（初步）</td>
-                    <td>月频</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p>需要强调的是：<strong>没有任何一个模型在所有市场环境中都表现得最好。</strong> 2023-2025年Transformer在成长股主导的行情中表现亮眼，但在2022年的大熊市中，几乎所有的深度学习模型都出现了全面失效——这就是接下来要讲到的踩坑故事。</p>
-
-        <h2>26.3 模型失效的惨痛教训</h2>
-
-        <p>讲一个真实的经历。2021年底我协助一个私募团队搭建了一套基于LSTM+Attention的选股模型，在2016-2021年的回测中表现堪称完美——年化超额收益22%，最大回撤只有12%，夏普比率2.1。团队信心满满，2022年初直接上线了实盘，分配了5000万的资金。</p>
-
-        <p>然后2022年来了。</p>
-
-        <p>A股全年经历了四轮大幅下跌——俄乌冲突、上海疫情封控、美联储暴力加息、地产链信用危机。我们的模型在上述任何一个场景中都没有"见过"类似的训练数据。结果怎样？全年超额收益-15%，最大回撤42%，模型净值曲线和基准几乎一模一样——这意味着，<strong>模型耗费了巨大的计算资源，最终做出来的决策和闭着眼睛买沪深300没有任何区别。</strong></p>
-
-        <p>问题出在哪里？回测的2016-2021年是中国A股一个相对平稳的"慢牛+结构性行情"阶段。模型学到的是"这种市场环境下哪些因子有效"，但从未见过系统性风险全面爆发的情况。说得直白一点——<strong>模型过拟合了那个特定的历史阶段，而不是学到了"投资"的本质。</strong></p>
-
-        <div class="warning">
-            <p><strong>教训</strong>：AI模型在投资中的最大风险不是模型精度不够，而是模型在"没见过"的市场环境下会产生你完全无法预料的错误。永远不要迷信回测数据。解决方案包括：①纳入多轮完整牛熊周期的训练数据（2008年、2015年、2022年）；②设置模型置信度阈值，当市场状态超出历史分布范围时自动降仓或暂停；③保持人工干预通道的畅通。</p>
-        </div>
-
-        <h2>26.4 非结构化数据的AI分析</h2>
-
-        <h3>Verbal Technical Analysis（VTA）</h3>
-
-        <p>这是一个很有意思的方向。ICLR 2026（国际学习表征大会）上有一篇来自高盛和MIT合作的论文提出了VTA的概念：<strong>将价格数据转化为文本描述，然后让LLM在自然语言空间中完成技术分析推理。</strong></p>
-
-        <p>举个例子，传统技术分析看到的是：</p>
-
-        <pre><code>Date    Open    High    Low     Close   Volume
-        2026-01-05  3,850   3,882   3,820   3,865   4.2亿
-        2026-01-06  3,868   3,905   3,856   3,892   5.1亿
-        2026-01-07  3,890   3,920   3,870   3,915   4.8亿
-        2026-01-08  3,912   3,928   3,885   3,902   4.5亿
-        2026-01-09  3,900   3,950   3,890   3,942   6.3亿</code></pre>
-
-        <p>而VTA将其转为文本标注：</p>
-
-        <pre><code>"2026年1月5日至9日这一周，上证指数呈现震荡上行走势。周初从3,850点开盘后温和上扬，
-        周三受PMI数据超预期提振出现跳空缺口，成交量从4.2亿手放大至6.3亿手。周五价格
-        突破3,920的短期阻力位，但收盘未能站稳3,950以上的心理关口。从均线系统看，5日
-        均线上穿10日均线形成金叉，MACD柱状线已经连续3日翻红，但RSI已进入65的超买区域。
-        整体偏多但短期存在回调风险。"</code></pre>
-
-        <p>研究者发现，当LLM在自然语言中"思考"价格形态时，其推理质量和可解释性显著优于直接在数值上做预测。业界专家验证认为，VTA的可解释性是传统"黑箱"深度学习模型的一个重大进步。<strong>你不光要知道"买还是卖"，还要知道"为什么这么判断"——而这个"为什么"，恰好是LLM最擅长表达的东西。</strong></p>
-
-        <h3>FinBERT与情绪分析</h3>
-
-        <p>市场上充斥着各种信息——新闻、公告、股吧帖子、雪球评论、微信公众号文章。传统量化模型很难处理这些非结构化数据，但NLP模型可以。</p>
-
-        <p>FinBERT是在BERT基础上专门针对金融领域进行微调的情绪分析模型。相比于通用NLP模型，FinBERT的优势在于：</p>
-
-        <ul>
-            <li><strong>金融领域词汇的理解</strong>：比如"降息"在通用语境是中性偏负面，但在股票语境中几乎是明确利好。</li>
-            <li><strong>复杂句式</strong>：研报中常见的转折句——"虽然短期存在压力，但我们看好长期逻辑"——通用模型容易遗漏后半句的情绪。</li>
-            <li><strong>中英文双语</strong>：A股的很多情绪信号既在中文渠道也在英文渠道（如外资报告、Bloomberg新闻）传播。</li>
-        </ul>
-
-        <p>Refinitiv MarketPsych提供了一套17维度的情绪特征，包括乐观/悲观、恐惧/贪婪、紧迫感、不确定性、争议度、创新提及频率等。这些特征被大量对冲基金纳入因子库，作为传统量价因子的补充。</p>
-
-        <div class="tip">
-            <p><strong>实战技巧</strong>：不要把情绪分数当作独立的买卖信号，而是把它作为"风控门"——当整体市场情绪指数低于-0.70（极度悲观）时，暂停所有开仓操作；当情绪指数高于+0.70（极度乐观）时，启动止盈和减仓程序。情绪在极端位置的反转预测能力远远强于中间区域。</p>
-        </div>
-
-        <p>除了整体市场情绪，个股层面的情绪分析也很有效。比如有研究显示，上市公司在互动平台（上交所e互动、深交所互动易）上对投资者提问的回复措辞变化，可以提前3-5个交易日预测财报暴雷——当管理层回复明显变得含糊、回避具体数字时，负面事件发生的概率显著上升。</p>
-
-        <h2>26.5 AI投资的未来方向</h2>
-
-        <p>回顾这一章，我们看到AI已经渗透到投资分析的几乎所有环节：因子挖掘（LLM + 遗传编程）、选股模型（LSTM / Transformer / GNN）、非结构化分析（VTA / FinBERT）。但坦率地说，<strong>AI在投资领域的应用还处于"上半场"</strong>。有几个趋势值得重点关注：</p>
-
-        <ul>
-            <li><strong>多模态因子</strong>：分析师路演视频的微表情分析、卫星图像的车流量监测、供应链的物流卫星追踪——这些非传统数据源正在被纳入因子体系。</li>
-            <li><strong>Agentic Trading</strong>：不再是单一的预测模型，而是由多个AI Agent协作完成投研-决策-执行的全流程，每个Agent负责一个子任务。</li>
-            <li><strong>可解释AI投资</strong>：监管机构对"黑箱交易"的关注度在上升，能够清晰解释每个交易决策逻辑的模型将获得更多合规优势。</li>
-        </ul>
-
-        <p>下一章我们将从微观的AI选股视角拉升到全球宏观层面，聊聊宏观对冲和全球资产配置——当你的视野不再局限于A股，而是放眼全球市场时，投资的格局会有怎样的变化。</p>
-
-        <div class="footer-nav">
-            <a href="25.html">← 上一章</a>
-            <a href="index.html">📖 返回目录</a>
-            <a href="27.html">下一章 →</a>
-        </div>
-    </div>
+<a class="skip-link" href="#content">跳转至正文</a>
+<header class="site-header"><div class="header-inner"><a class="brand" href="../index.html">证券投资分析 · 研究手册</a><nav class="header-links" aria-label="全站导航"><a href="../index.html">课程地图</a><a href="https://github.com/1998x-stack/securities-investment-analysis-tutorial">GitHub</a></nav></div></header>
+<div class="article-layout">
+<nav class="toc" aria-label="本章目录"><strong>CHAPTER 26</strong><details open><summary>跳转小节</summary><ol>
+<li><a href="#puzzle">回测完美、实盘失效的原因</a></li>
+<li><a href="#factor">用LLM挖因子：闭环与风险</a></li>
+<li><a href="#models">深度学习选股：架构与边界</a></li>
+<li><a href="#failure">市场状态切换与模型失效</a></li>
+<li><a href="#unstructured">非结构化数据与文本分析</a></li>
+<li><a href="#metrics">模型指标不等于策略收益</a></li>
+<li><a href="#practice">自我检验</a></li>
+<li><a href="#references">资料来源与适用范围</a></li>
+</ol></details></nav>
+<main id="content"><article class="article-content">
+<header class="article-header"><p class="overline">CHAPTER 26 · AI IN INVESTMENT ANALYSIS</p><h1>AI驱动的投资分析：能力、陷阱与边界</h1><p class="dek">机器学习可以把历史规律拟合得极好——这既是它的能力，也是它最大的危险。市场状态一旦切换，训练时“没见过”的样本会让模型给出你无法预料的结果。</p><p class="article-meta">资料核对：2026-11-22 · 本页不引用任何机构的模型业绩或准确率数字；出现的指标均为构造的教学数据</p></header>
+<section id="puzzle" aria-labelledby="h-puzzle"><h2 id="h-puzzle">回测完美、实盘失效的原因</h2><p>一个常见的失败模式：机器学习模型在历史回测中表现极好，上线后却急剧变差，甚至与基准无异。它不是因为“模型精度不够”，而是因为<strong>模型学到的恰好是那段特定历史阶段内部的规律</strong>，而这段阶段在市场史上并不具有代表性。</p><p>这类失败可以拆成三个可检查的原因：</p><ol><li><strong>过拟合与数据窥探</strong>：在大量候选模型/因子中挑出样本内最优的，本质上与“试几百个因子再挑最好的”是同一件事。</li><li><strong>市场状态切换</strong>：训练样本未包含系统性风险情景（极端下跌、流动性干涸、政策转向）。</li><li><strong>标签与特征泄漏</strong>：用到了未来信息，或特征构建时未能严格按时点对齐。</li></ol><p>本章按“能力—陷阱—边界”的顺序展开：先讲 LLM 与深度学习能做什么，再重点讲它们为什么会失效，最后讲模型指标与策略收益为何不能画等号。</p></section>
+<section id="factor" aria-labelledby="h-factor"><h2 id="h-factor">用LLM挖因子：闭环与风险</h2><p>LLM 在因子挖掘上的一个常见用法是搭一个 <strong>“生成—评估—进化”</strong> 闭环：</p><ul><li><strong>生成</strong>：模型根据已有因子库与文本材料，自主构思新的因子表达式（可计算的公式，而非自然语言描述）。</li><li><strong>评估</strong>：新因子在历史数据上回测，计算 IC、Rank IC、换手率、分组收益单调性等。</li><li><strong>进化</strong>：表现较好的候选进入候池，模型据此变异与组合，进入下一轮。</li></ul><p>这个闭环本质上是由 LLM 驱动的<strong>遗传编程</strong>。它的能力在于搜索空间远大于人力，但危险也在同一处：<strong>搜索的次数越多，随机噪声中出现“样本内显著”结果的概率就越高。</strong>如果没有把搜索次数计入显著性门槛，闭环只会越来越快地“生产”过拟合因子（参见 Harvey、Liu 与 Zhu 2016 对多重检验的讨论）。</p><figure class="figure"><div class="diagram-scroll"><svg data-export="26-factor-loop" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-labelledby="f26a-t f26a-d"><title id="f26a-t">LLM因子挖掘的生成-评估-进化闭环</title><desc id="f26a-d">生成、评估、进化三个环节构成闭环，候选因子必须在通过样本外与多重检验门槛后才能进入实盘，否则闭环会加速过拟合。</desc><rect width="760" height="260" rx="14" fill="#f3f7f5"/><text x="30" y="36" font-size="18" font-family="Arial,'Microsoft YaHei',sans-serif" font-weight="700" fill="#203035">闭环越快，越需要一道样本外的门</text><g font-family="Arial,'Microsoft YaHei',sans-serif"><rect x="60" y="80" width="140" height="70" rx="10" fill="#ffffff" stroke="#147f80" stroke-width="2"/><text x="130" y="120" font-size="14" text-anchor="middle" fill="#203035">生成候选因子</text><rect x="260" y="80" width="140" height="70" rx="10" fill="#ffffff" stroke="#147f80" stroke-width="2"/><text x="330" y="120" font-size="14" text-anchor="middle" fill="#203035">评估（IC 等）</text><rect x="460" y="80" width="140" height="70" rx="10" fill="#ffffff" stroke="#147f80" stroke-width="2"/><text x="530" y="120" font-size="14" text-anchor="middle" fill="#203035">变异与组合</text><path d="M200 115L258 115" stroke="#203035" stroke-width="2"/><path d="M400 115L458 115" stroke="#203035" stroke-width="2"/><path d="M530 155L530 200L130 200L130 152" stroke="#7461ba" stroke-width="2" fill="none"/><text x="330" y="194" font-size="12" fill="#7461ba">进化循环</text><rect x="620" y="80" width="120" height="70" rx="10" fill="#ffffff" stroke="#d06d4d" stroke-width="2"/><text x="680" y="112" font-size="12" text-anchor="middle" fill="#203035">样本外</text><text x="680" y="132" font-size="12" text-anchor="middle" fill="#203035">+ 多重检验</text><path d="M600 115L618 115" stroke="#203035" stroke-width="2"/><text x="30" y="244" font-size="12" fill="#53676d">教学示意：未过这道门的候选因子不得进入实盘；“样本内 IC 高”不是证据。</text></g></svg></div><figcaption>LLM 负责扩大搜索范围，但样本外与多重检验门槛必须独立于搜索过程——否则闭环只会更快地制造过拟合。</figcaption></figure><div class="insight"><p><strong>本章立场：</strong>我们介绍 LLM 因子挖掘的<em>方法结构</em>，但不引用任何具体模型、机构或“平均 IC”数字——这类业绩宣称对样本期、股票池与调仓频率极其敏感，未附可核验来源的不能当作事实。</p></div></section>
+<section id="models" aria-labelledby="h-models"><h2 id="h-models">深度学习选股：架构与边界</h2><p>不同架构适合建模不同类型的依赖关系，各自的边界也清楚：</p><table class="data-table"><thead><tr><th scope="col">架构</th><th scope="col">擅长</th><th scope="col">主要局限</th></tr></thead><tbody><tr><td>LSTM / BiLSTM</td><td>单序列的时序依赖，训练相对稳定</td><td>长序列性能衰减，难建模跨资产关系</td></tr><tr><td>Transformer</td><td>全局注意力与跨序列交互</td><td>计算成本高，小样本易过拟合</td></tr><tr><td>GNN（图神经网络）</td><td>产业链、供应链等关系网络</td><td>图构建方式敏感，泛化待验证</td></tr><tr><td>状态空间模型</td><td>长序列的线性复杂度建模</td><td>生态与投资应用尚不成熟</td></tr></tbody></table><p><strong>没有任何架构在所有市场环境下都最好。</strong>模型选择本身就是一种样本内优化，因此必须整条流程一起做样本外检验，而不能只检验最终指标。另需注意：金融数据的信噪比极低，观测样本量远小于图像或语言任务，因此深度学习在投资领域比在其他领域更容易过拟合。</p></section>
+<section id="failure" aria-labelledby="h-failure"><h2 id="h-failure">市场状态切换与模型失效</h2><p>金融数据是非平稳的：不同年代的波动率、利率环境、监管制度与投资者结构都不同。一个在“慢牛 + 结构性行情”阶段训练的模型，学的可能是<strong>那个阶段内部哪些因子有效</strong>，而不是“投资”本身的规律。当市场进入系统性风险情景时，模型自然失效。</p><figure class="figure"><div class="diagram-scroll"><svg data-export="26-regime-shift" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-labelledby="f26b-t f26b-d"><title id="f26b-t">状态切换前后的样本内外表现差异</title><desc id="f26b-d">同一模型在训练区间拟合很好，但当市场状态切换后，样本外表现急剧下降，说明模型学到的是特定阶段而非稳定规律。</desc><rect width="760" height="260" rx="14" fill="#f3f7f5"/><text x="30" y="36" font-size="18" font-family="Arial,'Microsoft YaHei',sans-serif" font-weight="700" fill="#203035">状态切换：样本内拟合好，不等于样本外可用</text><g font-family="Arial,'Microsoft YaHei',sans-serif"><path d="M70 60L70 200L710 200" stroke="#203035" stroke-width="1.6" fill="none"/><path d="M70 170L360 120" stroke="#147f80" stroke-width="2.5" fill="none"/><path d="M370 122L700 190" stroke="#d06d4d" stroke-width="2.5" fill="none"/><path d="M365 60L365 200" stroke="#7461ba" stroke-width="1.5" stroke-dasharray="6 5"/><text x="210" y="86" font-size="12" fill="#147f80">训练区间（拟合良好）</text><text x="500" y="150" font-size="12" fill="#d06d4d">状态切换后（样本外下降）</text><text x="365" y="220" font-size="12" text-anchor="middle" fill="#7461ba">训练/测试分割点</text><text x="70" y="244" font-size="12" fill="#53676d">教学示意：纵轴为模型表现的相对水平，不代表任何真实模型的结果。</text></g></svg></div><figcaption>训练区间内表现越好，越要警惕：那可能是对特定市场状态的记忆，而不是对稳定规律的捕捉。</figcaption></figure><h3>可操作的三个措施</h3><ol><li><strong>覆盖完整牛熊周期</strong>：训练数据应尽量包含极端下跌、流动性紧张与政策转向等情景，而不是只覆盖单一风格区间。</li><li><strong>置信度阈值与降仓</strong>：监测当前市场状态与训练分布的距离，超出范围时降仓或暂停，而不是硬把模型输出当成信号。</li><li><strong>保留人工干预通道</strong>：模型无法识别“从未见过”的事件；当发生极端事件时，人工判断应能覆盖模型。</li></ol></section>
+<section id="unstructured" aria-labelledby="h-unstructured"><h2 id="h-unstructured">非结构化数据与文本分析</h2><p>新闻、公告、研报、投资者社区文本是非结构化数据，NLP 可以把它们转成可用的特征。两条常见路线：</p><ul><li><strong>领域微调的情绪/事件抽取</strong>：在通用语言模型上针对金融文本微调，以捕捉“降息”“转句”等金融语境特有的含义。如 FinBERT 这类做法。</li><li><strong>把价格转成文本、让模型在语言空间中推理</strong>：即“语言化技术分析”（VTA）的思路——将 OHLC 序列描述成自然语言段落，再由语言模型做形态判断与解释。其目标是提高<em>可解释性</em>，但它是研究方向，不应当作已验证的收益来源。</li></ul><div class="insight"><p><strong>文本数据的三个陷阱：</strong></p><ul><li><strong>前视偏差</strong>：新闻发布时间戳可能被事后修正，或使用了当时的“完整文本”而实际当时只能看到节选。</li><li><strong>覆盖与存活偏差</strong>：小市值公司报道少，数据覆盖不均匀；退市公司的历史文本可能已被删除。</li><li><strong>情绪与收益的非线性</strong>：情绪在极端位置的信息含量通常高于中间区域，把它当线性因子并不合适。</li></ul></div><p>一个稳健的用法是把情绪当作“风控门”而非独立买卖信号：在情绪处于极端区间时调整仓位，而在中间区间不依赖它——前提是先用样本外数据验证这个规则确实成立。</p></section>
+<section id="metrics" aria-labelledby="h-metrics"><h2 id="h-metrics">模型指标不等于策略收益</h2><p>机器学习常用准确率、精确率（precision）、召回率（recall）与 F1 评估分类模型。它们是模型层面的度量，<strong>不是策略层面的收益</strong>。在投资里，A 类错误（把会涨的判成不会涨，错过机会）与 B 类错误（把不会涨的判成会涨，造成亏损）的代价并不对称，单一的准确率会掩盖这一点。</p><p>三个指标的定义：</p><div class="math-scroll" role="region" tabindex="0" aria-label="精确率与召回率公式"><math display="block" aria-label="精确率等于真正例除以真正例加假正例，召回率等于真正例除以真正例加假负例"><mrow><mtext>精确率</mtext><mo>=</mo><mfrac><mrow><mi>T</mi><mi>P</mi></mrow><mrow><mi>T</mi><mi>P</mi><mo>+</mo><mi>F</mi><mi>P</mi></mrow></mfrac><mo>,</mo><mspace width="0.6em"/><mtext>召回率</mtext><mo>=</mo><mfrac><mrow><mi>T</mi><mi>P</mi></mrow><mrow><mi>T</mi><mi>P</mi><mo>+</mo><mi>F</mi><mi>N</mi></mrow></mfrac></mrow></math></div><p>其中 TP 是真正例，FP 是假正例，FN 是假负例。F1 是精确率与召回率的调和平均。</p><form class="formula-lab" data-calc="mlmetrics"><h3>动手算一遍：精确率、召回率与 F1</h3><p>输入 TP、FP、FN，得到三个指标。</p><div class="controls"><label>TP（真正例）<input type="number" name="tp" value="30" step="1" min="0" required></label><label>FP（假正例）<input type="number" name="fp" value="70" step="1" min="0" required></label><label>FN（假负例）<input type="number" name="fn" value="20" step="1" min="0" required></label></div><output aria-live="polite">计算中</output><p data-explain>启用脚本后自动显示结果。</p></form><p><strong>构造算例：</strong>TP=30、FP=70、FN=20，则精确率=30÷100=30%，召回率=30÷50=60%，F1≈40%。这说明一个“看起来有 60% 召回”的模型，抛出的信号里只有 30% 是真的——<strong>而真实交易还要再扣掉成本、滑点与不可成交样本。</strong>模型指标好，远不等于策略能赚钱。</p></section>
+<section id="practice" aria-labelledby="h-practice"><h2 id="h-practice">自我检验</h2><div class="example"><h3>练习</h3><ol><li>用一句话解释为什么“LLM 自动挖因子”会把多重检验问题放大，以及如何设一道防线。</li><li>某分类模型 TP=40、FP=60、FN=10，求精确率、召回率与 F1。</li><li>举一个“模型在回测中很好、上线后失效”的具体原因，并说明如何缓解。</li><li>文本情绪因子可能引入哪两类偏差？各举一例。</li></ol></div><p>完成后应能独立回答：为什么样本内 IC 高不等于有用？为什么不同市场状态下同一模型会失效？为什么模型准确率不能直接换算成策略收益？为什么情绪因子适合当“门”而不是当“信号”？</p></section>
+<section id="references" aria-labelledby="h-references"><h2 id="h-references">资料来源与适用范围</h2><p>下列文献用于校对机器学习资产定价、序列建模与多重检验的学术讨论。本页<strong>不引用任何机构的 AI 选股业绩、准确率或 IC 数字</strong>；文中 TP/FP/FN 等均为构造的教学数据。</p><ol class="source-list"><li><a href="https://doi.org/10.1093/rfs/hhaa009" target="_blank" rel="noopener noreferrer">Gu, Kelly &amp; Xiu (2020)｜Empirical Asset Pricing via Machine Learning, Review of Financial Studies</a></li><li><a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener noreferrer">Vaswani et al. (2017)｜Attention Is All You Need, NeurIPS</a></li><li><a href="https://doi.org/10.1162/neco.1997.9.8.1735" target="_blank" rel="noopener noreferrer">Hochreiter &amp; Schmidhuber (1997)｜Long Short-Term Memory, Neural Computation</a></li><li><a href="https://doi.org/10.1093/rfs/hhv059" target="_blank" rel="noopener noreferrer">Harvey, Liu &amp; Zhu (2016)｜…and the Cross-Section of Expected Returns, Review of Financial Studies</a></li></ol><p class="muted">说明：FinBERT、VTA 等为领域内的研究方向名称，具体论文与效果应以正式发表版本为准，本页不对其效果作定量承诺。</p></section>
+<nav class="chapter-nav" aria-label="前后篇"><a href="25.html">← 第25章</a><a href="../index.html">课程总目录</a><a href="27.html">第27章 →</a></nav>
+</article></main>
 </div>
-</div>
+<footer class="site-footer">仅用于证券投资教育，不构成个性化投资建议。</footer>
+<script defer src="../assets/js/site.js"></script>
 </body>
 </html>
