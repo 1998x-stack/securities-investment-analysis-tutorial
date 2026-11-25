@@ -532,6 +532,30 @@
         "Cost estimate: annual cost ~ turnover x 2 x one-way cost; constructed example 50 x 2 x 0.1% = 10%/yr."
       ],
       "sources": []
+    },
+    "25": {
+      "claims": [
+        "Backtest vs live gap comes from unmodeled frictions: latency, rejected orders, limit-up/down and suspension, quote delay, fee changes, ex-rights cash.",
+        "The gap is not signed: live can be better or worse depending on whether frictions are costs or benefits; list them instead of applying a blanket haircut.",
+        "Program-trading regulation (China) covers high-frequency monitoring, a reporting regime and possible traffic fees; the page states the framework direction, not the exact text, and requires checking current CSRC/exchange rules.",
+        "Stamp duty and commission rates must be checked for their current effective value; the historical rate is not presented as current.",
+        "Round-trip cost ~ 2 x commission + stamp duty + 2 x slippage; constructed example 0.025/0.05/0.05 -> 0.20%; no impact cost included.",
+        "Live risk control has three layers: hard real-time limits, alerting, and post-close review; risk control protects you, it does not predict."
+      ],
+      "sources": [
+        [
+          "CSRC official site (laws and normative documents)",
+          "https://www.csrc.gov.cn"
+        ],
+        [
+          "Shanghai Stock Exchange official site (trading rules)",
+          "https://www.sse.com.cn"
+        ],
+        [
+          "Shenzhen Stock Exchange official site (trading rules)",
+          "https://www.szse.cn"
+        ]
+      ]
     }
   },
   "limitations": [

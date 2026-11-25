@@ -334,6 +334,15 @@
           + "%。一次完整进出含买入与卖出，故乘 2。未含冲击成本与滑点随规模变化的部分，因此为下限估算。";
         break;
       }
+      case "roundtrip": {
+        if (!finite("comm", "stamp", "slip")) break;
+        const comm = n(form, "comm"), stamp = n(form, "stamp"), slip = n(form, "slip");
+        if (comm < 0 || stamp < 0 || slip < 0) { note = "各项费率不得为负。"; break; }
+        result = 2 * comm + stamp + 2 * slip;
+        note = "往返成本率 ≈ 2×佣金 + 印花税 + 2×滑点 = " + fmt(result)
+          + "%。印花税仅卖出时征收故只乘 1；未含冲击成本。费率会随政策与券商变化，请自行核对当前有效值。";
+        break;
+      }
       case "zscore": {
         if (!finite("value", "mean", "std")) break;
         const value = n(form, "value"), mean = n(form, "mean"), std = n(form, "std");
