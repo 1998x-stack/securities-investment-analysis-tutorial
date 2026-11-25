@@ -304,6 +304,16 @@
           + "。参考：单因子阈值 t≈2，多重检验下 Harvey-Liu-Zhu 建议 t≈3。该式假设 IC 序列近似独立同分布。";
         break;
       }
+      case "impliedpe": {
+        if (!finite("pb", "roe")) break;
+        const pbv = n(form, "pb"), roe = n(form, "roe");
+        if (pbv <= 0) { note = "市净率 PB 须为正数。"; break; }
+        if (roe <= 0) { note = "ROE 须为正数，否则隐含 PE 无意义。"; break; }
+        result = pbv / (roe / 100);
+        note = "隐含市盈率 PE = PB ÷ (ROE/100) = " + fmt(result)
+          + " 倍。等价于 PB = PE × ROE；E/B 与 P/E 必须同口径、同期间。盈利为负或接近零时该式不适用。";
+        break;
+      }
       case "zscore": {
         if (!finite("value", "mean", "std")) break;
         const value = n(form, "value"), mean = n(form, "mean"), std = n(form, "std");

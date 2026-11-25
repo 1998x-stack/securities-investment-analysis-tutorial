@@ -485,6 +485,30 @@
           "https://doi.org/10.1016/j.jfineco.2014.10.010"
         ]
       ]
+    },
+    "22": {
+      "claims": [
+        "Cross-industry PE comparison is misleading; PB-ROE matrix places each industry on profitability and valuation axes.",
+        "Identity PB = PE x ROE (same period/definition) gives implied PE = PB / ROE. Constructed examples: bank PB0.6/ROE10% -> PE6; semiconductor PB8/ROE15% -> PE ~53.",
+        "The definition of '景气' evolves (high ROE -> high G -> delta-g); presented as an interpretive framework, not a fact list.",
+        "Multi-signal sector scoring reduces single-signal noise; weights must be validated out of sample. No brokerage framework or backtest numbers cited.",
+        "Rotation methods (momentum, reversal, fundamental) each fit specific regimes; no performance figures are given.",
+        "Crowding filter: trigger at top decile, action below benchmark, release below 70th percentile; risk management not reversal prediction."
+      ],
+      "sources": [
+        [
+          "Carhart 1997, Journal of Finance",
+          "https://doi.org/10.1111/j.1540-6261.1997.tb03808.x"
+        ],
+        [
+          "Asness, Moskowitz & Pedersen 2013, Journal of Finance",
+          "https://doi.org/10.1111/jofi.12021"
+        ],
+        [
+          "Fama & French 2015, Journal of Financial Economics",
+          "https://doi.org/10.1016/j.jfineco.2014.10.010"
+        ]
+      ]
     }
   },
   "limitations": [
