@@ -509,6 +509,18 @@
           "https://doi.org/10.1016/j.jfineco.2014.10.010"
         ]
       ]
+    },
+    "23": {
+      "claims": [
+        "Data sources fall into three tiers (professional terminals, open Python endpoints, overseas); no product prices are given.",
+        "Price adjustment: forward-adjusted for backtests, backward-adjusted for long-run cumulative return, unadjusted only for very short horizons.",
+        "Ex-rights reference price = (prev close - cash dividend + rights price x rights ratio) / (1 + stock-dividend ratio + rights ratio); constructed example 20, div0.5, 10-for-5 -> 13.0.",
+        "Look-ahead bias arises when financial data is matched to reporting period instead of disclosure date; align by disclosure date.",
+        "Consolidated vs parent-only statements and CAS vs IFRS differences must be reconciled before cross-market comparison.",
+        "Cleaning: remove ST/delisted and newly listed samples, forward-fill low-missing series, align frequencies to a common timestamp.",
+        "Local database should store data version and update timestamps because adjusted history can be revised."
+      ],
+      "sources": []
     }
   },
   "limitations": [

@@ -314,6 +314,17 @@
           + " 倍。等价于 PB = PE × ROE；E/B 与 P/E 必须同口径、同期间。盈利为负或接近零时该式不适用。";
         break;
       }
+      case "exrights": {
+        if (!finite("prev", "div", "sg", "gp", "gpp")) break;
+        const prev = n(form, "prev"), div = n(form, "div"), sg = n(form, "sg"), gp = n(form, "gp"), gpp = n(form, "gpp");
+        const denom = 1 + sg + gp;
+        if (prev <= 0 || div < 0 || sg < 0 || gp < 0 || gpp < 0) { note = "价格须为正、比例与红利不得为负。"; break; }
+        if (denom <= 0) { note = "送股与配股比例之和不得小于 -1。"; break; }
+        result = (prev - div + gpp * gp) / denom;
+        note = "除权除息参考价 = (前收 − 现金红利 + 配股价×配股比例) ÷ (1 + 送股比例 + 配股比例) = " + fmt(result)
+          + " 元。交易所公式的简化形式，未含配股权等特殊处理；仅用于解释为何不复权价格会出现跳空。";
+        break;
+      }
       case "zscore": {
         if (!finite("value", "mean", "std")) break;
         const value = n(form, "value"), mean = n(form, "mean"), std = n(form, "std");

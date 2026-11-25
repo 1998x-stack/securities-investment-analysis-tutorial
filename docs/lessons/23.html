@@ -1,274 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>第23章 数据获取与处理</title>
-    <link rel="stylesheet" href="theme.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="数据获取与处理：数据源的分层、复权的三种方式、财务数据的合并口径与发布延迟造成的前视偏差、数据清洗与本地数据库的增量更新。">
+<title>数据获取与处理：把原始数据变成可用因子｜证券投资分析</title>
+<link rel="stylesheet" href="../assets/css/site.css">
 </head>
 <body>
-<div class="double-border">
-<div class="container">
-    <div class="sidebar">
-        <h3>📈 课程目录</h3>
-        <ul class="chapter-list">
-            <li><a href="01.html">第1章 证券投资导论</a></li>
-            <li><a href="02.html">第2章 主要证券品种</a></li>
-            <li><a href="03.html">第3章 交易机制与规则</a></li>
-            <li><a href="04.html">第4章 财务报表入门</a></li>
-            <li><a href="05.html">第5章 财务比率分析</a></li>
-            <li><a href="06.html">第6章 宏观经济与市场</a></li>
-            <li><a href="07.html">第7章 行业分析方法</a></li>
-            <li><a href="08.html">第8章 绝对估值法</a></li>
-            <li><a href="09.html">第9章 相对估值法(上)</a></li>
-            <li><a href="10.html">第10章 相对估值法(下)</a></li>
-            <li><a href="11.html">第11章 成长股估值</a></li>
-            <li><a href="12.html">第12章 基本面分析实战</a></li>
-            <li><a href="13.html">第13章 技术分析基础</a></li>
-            <li><a href="14.html">第14章 技术指标精讲</a></li>
-            <li><a href="15.html">第15章 现代投资组合理论</a></li>
-            <li><a href="16.html">第16章 风险管理体系</a></li>
-            <li><a href="17.html">第17章 行为金融学</a></li>
-            <li><a href="18.html">第18章 投资策略流派</a></li>
-            <li><a href="19.html">第19章 量化选股入门</a></li>
-            <li><a href="20.html">第20章 多因子模型实战</a></li>
-            <li><a href="21.html">第21章 前沿因子探索</a></li>
-            <li><a href="22.html">第22章 行业估值与轮动</a></li>
-            <li><a href="23.html" class="active">第23章 数据获取与处理</a></li>
-            <li><a href="24.html">第24章 Python量化工具链</a></li>
-            <li><a href="25.html">第25章 实盘交易系统</a></li>
-            <li><a href="26.html">第26章 AI驱动的投资分析</a></li>
-            <li><a href="27.html">第27章 宏观对冲与全球配置</a></li>
-            <li><a href="28.html">第28章 综合实战项目</a></li>
-        </ul>
-    </div>
-    <div class="main-content">
-
-        <h1>第23章 数据获取与处理</h1>
-
-        <p>大家好，我是你们的讲师。从这一章开始，我们正式进入量化分析的核心环节。前面几章我们讲了多因子模型、行业轮动——这些策略听起来都很美，但有一个前提：<strong>你得有高质量的数据。</strong> 没有数据，量化分析就是空中楼阁。回测做得再漂亮，数据如果错了，结果就是 garbage in, garbage out。</p>
-
-        <p>我自己刚开始做量化的时候，犯过一个特别低级的错误：从Tushare拉了日线数据就直接跑回测，跑了几年发现年化收益高达40%，兴奋得以为发现了圣杯。结果后来仔细一查——<strong>数据没有复权。</strong> 分红送股导致的价格跳空，让回测收益凭空多了十几个点。这个故事我们后面展开讲。先来说说数据从哪里来。</p>
-
-        <h2>23.1 金融数据生态概览</h2>
-
-        <p>想做量化，第一步是找到可靠的数据源。中国的金融数据市场大致可以分为三个梯队：</p>
-
-        <p><strong>专业终端</strong>——Wind（万得）、Choice（东方财富）、iFinD（同花顺）。这类工具功能强大，数据质量高，但价格不菲。Wind一个终端年费在3-5万元，个人投资者很难承受。不过很多券商的机构业务部会向客户提供Wind权限，如果你有渠道可以利用一下。</p>
-
-        <p><strong>开源Python工具</strong>——Tushare、BaoStock、AkShare。这三个是个人量化投资者最常用的数据源，完全免费或部分免费。其中Tushare需要注册获取token，BaoStock无需注册开箱即用但不支持分钟线，AkShare覆盖范围最广（股票、期货、外汇、宏观全都有）。</p>
-
-        <p><strong>国外数据源</strong>——Yahoo Finance（通过yfinance库调用）、Quandl（已被Nasdaq收购）。如果你研究美股或全球市场，这些是标准选项。不过Yahoo Finance的数据质量参差不齐，Quandl的优质数据需要付费。</p>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>数据源</th>
-                    <th>覆盖范围</th>
-                    <th>费用</th>
-                    <th>数据质量</th>
-                    <th>API易用性</th>
-                    <th>适合人群</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Wind (万得)</td>
-                    <td>全品种全市场</td>
-                    <td>3-5万/年</td>
-                    <td>极高</td>
-                    <td>中等（Excel/Python接口）</td>
-                    <td>机构/专业投资者</td>
-                </tr>
-                <tr>
-                    <td>Choice (东方财富)</td>
-                    <td>A股为主，覆盖较全</td>
-                    <td>约5000-1万/年</td>
-                    <td>高</td>
-                    <td>中等</td>
-                    <td>高净值个人/小型机构</td>
-                </tr>
-                <tr>
-                    <td>Tushare Pro</td>
-                    <td>A股/基金/期货/宏观</td>
-                    <td>基础免费，高级付费</td>
-                    <td>较高</td>
-                    <td>好（Python SDK）</td>
-                    <td>个人量化投资者</td>
-                </tr>
-                <tr>
-                    <td>BaoStock</td>
-                    <td>A股日线/分钟线</td>
-                    <td>免费</td>
-                    <td>高（证券行业标准数据）</td>
-                    <td>极好（无需注册）</td>
-                    <td>入门/教育用途</td>
-                </tr>
-                <tr>
-                    <td>AkShare</td>
-                    <td>全品种+宏观+另类数据</td>
-                    <td>免费</td>
-                    <td>中等（接口较多，需甄别）</td>
-                    <td>好</td>
-                    <td>需要多维度数据的量化研究者</td>
-                </tr>
-                <tr>
-                    <td>Yahoo Finance</td>
-                    <td>全球市场</td>
-                    <td>免费</td>
-                    <td>中等（偶有数据错误）</td>
-                    <td>极好（yfinance库）</td>
-                    <td>研究美股的投资者</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class="tip">
-            <p><strong>建议</strong>：新手从BaoStock入门（零门槛、高质量），进阶后用Tushare Pro获取更多维度的数据。想做全球策略就加上yfinance。不需要一上来就买Wind——等你跑通了完整的策略流程，再用Wind验证数据质量也不迟。</p>
-        </div>
-
-        <h2>23.2 行情数据获取与复权处理</h2>
-
-        <p>行情数据（日线、分钟线）是量化分析的基础。但有一个重要的细节很多人会忽略——<strong>复权</strong>。</p>
-
-        <h3>复权的三种方式</h3>
-
-        <p>股票的股价会因为分红、送股、配股等事件发生非交易性的跳空。如果不做处理，直接用原始价格做回测，结果会严重失真。</p>
-
-        <ul>
-            <li><strong>前复权</strong>：调整历史价格，使价格连续。当前时点的价格就是最新价，历史价格按比例下调。这是<strong>回测中最常用的方式</strong>，因为你看到的历史价格是"如果把分红再投资，历史上应该是什么价格"。</li>
-            <li><strong>后复权</strong>：调整当前价格，使历史价格不变。当前价格被上调。这种方式适合看长期涨幅——贵州茅台后复权价格早已过万，能真实反映持有期的总回报。</li>
-            <li><strong>不复权</strong>：原始价格，不做任何调整。如果你做超短线交易（持股不超过几天），复权与否影响不大。但做中长期回测，<strong>千万不要用不复权数据。</strong></li>
-        </ul>
-
-        <h3>用Tushare获取复权数据</h3>
-
-        <p>下面是一个用Tushare Pro获取A股日线数据的示例，我们直接请求前复权数据：</p>
-
-        <pre><code>import tushare as ts
-import pandas as pd
-
-# 设置token（需要在tushare.pro注册获取）
-ts.set_token('your_token_here')
-pro = ts.pro_api()
-
-# 获取贵州茅台(600519.SH)的日线数据，前复权
-df = pro.daily(
-    ts_code='600519.SH',
-    start_date='20200101',
-    end_date='20250630',
-    adj='qfq'  # 前复权
-)
-
-# 查看数据概览
-print(df.head())
-print(f"共 {len(df)} 个交易日")
-print(f"日期范围: {df['trade_date'].min()} 到 {df['trade_date'].max()}")
-
-# 如果需要同时获取复权因子，用于自定义计算
-adj_factor = pro.adj_factor(ts_code='600519.SH')
-print(adj_factor.head())</code></pre>
-
-        <div class="warning">
-            <p><strong>踩坑故事：忘复权的惨痛教训</strong></p>
-            <p>2020年我刚入门量化的时候，从Tushare拉了一批日线数据，兴冲冲地跑了一个"低市盈率选股"策略的回测。结果年化收益率高达45%，最大回撤只有10%，完美得不像真的。我当时觉得"我的策略太牛逼了"。</p>
-            <p>后来在跟一个前辈交流的时候，他看了一眼我的代码，问我："你复权了吗？"我愣住了。回去一查——我拉的是<strong>不复权</strong>数据。分红送股导致的价格跳空，被系统当成了"大幅下跌"，然后"低市盈率"策略自动抄底，产生了大量虚假的低买高卖收益。</p>
-            <p>修正复权后，年化收益率从45%掉到了18%。虽然18%也不算差，但45%和18%之间差了<strong>一整个复权的认知差距</strong>。从那以后，我每次拉数据第一件事就是确认：复权方式对不对？这个习惯救了我不止一次。</p>
-        </div>
-
-        <h2>23.3 财务数据的坑</h2>
-
-        <p>财务数据比行情数据更复杂。这里面的"坑"如果没踩过，很难想象它有多深。</p>
-
-        <h3>合并报表 vs 母公司报表</h3>
-
-        <p>同一家公司会发布两种财务报表：<strong>合并报表</strong>（Consolidated）和<strong>母公司报表</strong>（Parent）。合并报表包含了母公司和所有控股子公司的财务数据，母公司报表只反映母公司本身的财务状况。在做投资分析时，<strong>应该使用合并报表。</strong> 因为母公司的营收和利润可能大量来自于子公司——只看母公司报表会严重低估公司的实际经营规模。</p>
-
-        <p>但有一个例外：很多财务比率（比如ROE）的计算口径不同，结果差异很大。同一个指标，用合并报表算和用母公司报表算，数值可以差好几个百分点。在使用任何金融数据库时，务必搞清楚它提供的财务数据是基于哪张报表。</p>
-
-        <h3>会计准则差异</h3>
-
-        <p>A股上市公司执行的是<strong>中国企业会计准则（CAS）</strong>，与国际财务报告准则（IFRS）基本趋同但仍有差异。如果你同时研究A股和港股（尤其是AH两地上市公司），同一家公司按CAS和IFRS编制的财报数据可能会有明显差异——尤其是在资产减值、政府补助确认等项目上。</p>
-
-        <h3>数据发布延迟</h3>
-
-        <p>A股的财报披露有法定的时间要求：年报（年度报告）必须在次年4月底前披露；半年报（中期报告）在8月底前披露；季报（季度报告）在季度结束后1个月内披露。这意味着你看到的财务数据天然存在<strong>延迟</strong>——2025年4月30日你才能看到某公司2024年的年报，此时2025年已经过了三分之一。</p>
-
-        <p>在做回测时，必须考虑这个延迟。很多新手直接用历史财务数据做回测，但没考虑"数据发布的时间滞后"——实际上你在某个时间点根本拿不到这些数据。这会导致<strong>前视偏差（look-ahead bias）</strong>，让回测结果虚高。</p>
-
-        <div class="tip">
-            <p><strong>解决方法</strong>：做回测时，对财务数据做"滞后一期"（shift）处理。比如你在2025年5月1日回测选股，只能使用截至2024年年报及之前的数据。可以用Tushare的<code>disclosure_date</code>字段来精确匹配报表可用的时间点。</p>
-        </div>
-
-        <h2>23.4 数据清洗实战</h2>
-
-        <p>从API拉回来的原始数据，几乎从来不能直接用于策略开发。下面几个是最常见的问题：</p>
-
-        <p><strong>缺失值处理</strong>——停牌的股票没有交易数据，新上市的股票历史数据不够长。常见方法：直接删除（如果缺失比例低）、用前一个交易日数据填充（fillna/ffill）、或者用行业平均值替代。</p>
-
-        <p><strong>异常值检测</strong>——ST股票（特别处理）的价格行为异常，新股前几个交易日波动极大（注册制下前5天不设涨跌幅），涨跌停期间价格失真。这些都需要在数据预处理阶段剔除或标记。</p>
-
-        <p><strong>数据对齐</strong>——不同频率的数据需要对齐时间戳。日线数据和财务数据的频率不同，分钟线和日线需要对齐。pandas的<code>reindex()</code>和<code>align()</code>方法可以解决大部分对齐问题。</p>
-
-        <pre><code>import pandas as pd
-import numpy as np
-
-# 读取原始行情数据
-df = pd.read_csv('stock_data.csv', parse_dates=['trade_date'])
-
-# 1. 剔除ST股票（股票代码带ST标记）
-df = df[~df['stock_name'].str.contains('ST|退市', na=False)]
-
-# 2. 剔除新股上市前5天
-df = df[df['days_listed'] >= 5]
-
-# 3. 处理缺失值：向前填充
-df = df.sort_values(['ts_code', 'trade_date'])
-df['close'] = df.groupby('ts_code')['close'].ffill()
-
-# 4. 异常值处理：剔除涨跌停日（价格失真）
-df['pct_chg'] = df.groupby('ts_code')['close'].pct_change()
-df = df[df['pct_chg'].abs() < 0.098]  # 保留涨幅小于9.8%的交易日
-
-# 5. 时间戳对齐：对齐到月末（用于和财务数据合并）
-monthly = df.set_index('trade_date').groupby('ts_code').resample('M').last()
-monthly = monthly.reset_index()
-
-print(f"清洗前：{len(df)} 行")
-print(f"清洗后：{len(monthly)} 行")</code></pre>
-
-        <h2>23.5 构建自己的金融数据库</h2>
-
-        <p>每次跑策略都要重新拉数据、清洗、处理——既浪费时间又容易出错。一个更好的做法是：<strong>建立自己的本地数据库。</strong></p>
-
-        <p>推荐使用SQLite作为本地存储方案。SQLite是嵌入式数据库，不需要安装服务端，一个文件就是一个数据库，非常适合个人量化投资者。配合Python的<code>sqlite3</code>标准库，可以轻松实现数据的定期更新和查询。</p>
-
-        <p>数据更新的策略有两种：</p>
-
-        <ul>
-            <li><strong>全量刷新</strong>：每次重新拉取全部数据，覆盖原有数据。简单粗暴，适合数据量小（比如只有日线数据）的场景。</li>
-            <li><strong>增量更新</strong>：只拉取新产生的数据（比如最近一个交易日的数据），追加到数据库中。效率高，适合数据量大或者有分钟线/高频数据的场景。</li>
-        </ul>
-
-        <p>无论用哪种策略，都建议在数据入库后做一个自动化的<strong>数据质量检查</strong>：检查最近交易日的数据是否缺失、价格是否为负、成交量是否异常放大或缩小等。这些检查可以写成脚本每天运行一次，发现问题自动发送告警。</p>
-
-        <div class="highlight">
-            <p><strong>核心原则</strong>：数据是量化投资的原材料。原材料质量决定了最终产品的质量。花30%的时间在数据获取和清洗上，是一个量化研究员最值得的时间投入。别急着跑策略——先确保你的数据是对的。</p>
-        </div>
-
-        <h2>小结与预习</h2>
-
-        <p>这一章我们系统梳理了金融数据的生态体系——从专业终端到开源工具、从行情数据到财务数据。我们重点讨论了复权处理这个最容易忽视的坑、财务数据的各种陷阱，以及如何通过数据清洗和本地数据库建设来提高工作效率。</p>
-
-        <p>下一章，我们终于要拿起Python这把"瑞士军刀"，看看如何用pandas处理金融面板数据、用TA-Lib计算技术指标、用Matplotlib画出专业的可视化报告，以及如何搭建一个自己的回测框架。数据的准备工作已经完成，是时候开始真正的量化编程了。</p>
-
-        <div class="footer-nav">
-            <a href="22.html">← 上一章</a>
-            <a href="index.html">📖 返回目录</a>
-            <a href="24.html">下一章 →</a>
-        </div>
-    </div>
+<a class="skip-link" href="#content">跳转至正文</a>
+<header class="site-header"><div class="header-inner"><a class="brand" href="../index.html">证券投资分析 · 研究手册</a><nav class="header-links" aria-label="全站导航"><a href="../index.html">课程地图</a><a href="https://github.com/1998x-stack/securities-investment-analysis-tutorial">GitHub</a></nav></div></header>
+<div class="article-layout">
+<nav class="toc" aria-label="本章目录"><strong>CHAPTER 23</strong><details open><summary>跳转小节</summary><ol>
+<li><a href="#puzzle">为什么“干净”的数据会让回测虚高</a></li>
+<li><a href="#sources">数据源的三层结构</a></li>
+<li><a href="#adjust">复权：让价格连续</a></li>
+<li><a href="#financial">财务数据的三个坑</a></li>
+<li><a href="#clean">数据清洗：缺失、异常与对齐</a></li>
+<li><a href="#database">搭建本地数据库</a></li>
+<li><a href="#practice">自我检验</a></li>
+<li><a href="#references">资料来源与适用范围</a></li>
+</ol></details></nav>
+<main id="content"><article class="article-content">
+<header class="article-header"><p class="overline">CHAPTER 23 · DATA ACQUISITION &amp; PROCESSING</p><h1>数据获取与处理：把原始数据变成可用因子</h1><p class="dek">从接口拉回来的数据，几乎从来不能直接跑回测。未复权的价格跳空、未考虑发布延迟的财报、没对齐的时间戳，都会让回测结果看起来很美，却无法复现。</p><p class="article-meta">资料核对：2026-11-22 · 本页示例数值均为构造的教学数据；交易规则与披露时限请以交易所和监管机构现行规定为准</p></header>
+<section id="puzzle" aria-labelledby="h-puzzle"><h2 id="h-puzzle">为什么“干净”的数据会让回测虚高</h2><p>一个常见的情形：从数据接口拉来一组日线数据，跑一个低估值选股回测，结果收益异常高、回撤异常小。数据表面上没有报错、没有空缺，却让回测结果完全不可信。原因通常藏在三个地方：<strong>价格未复权</strong>、<strong>财报发布时间未对齐</strong>、<strong>股票池未排除不可交易样本</strong>。</p><p>本章按“数据从哪里来 → 怎么处理才干净 → 怎么存起来”的顺序展开。每一节都会指出一个容易被忽略、但会直接污染回测结果的具体陷阱。</p></section>
+<section id="sources" aria-labelledby="h-sources"><h2 id="h-sources">数据源的三层结构</h2><p>国内可用的金融数据源大致分为三类，各自对应不同的预算与需求：</p><table class="data-table"><thead><tr><th scope="col">层级</th><th scope="col">典型代表</th><th scope="col">特点</th><th scope="col">适合谁</th></tr></thead><tbody><tr><td>专业终端</td><td>Wind、Choice、iFinD</td><td>覆盖全、质量高、年费高昂</td><td>机构与专业投资者</td></tr><tr><td>开源 Python 接口</td><td>Tushare、BaoStock、AkShare</td><td>免费或部分免费，需自行核验质量</td><td>个人与教学研究</td></tr><tr><td>海外数据源</td><td>Yahoo Finance、Nasdaq Data Link</td><td>覆盖全球市场，质量参差不齐</td><td>研究美股与全球资产</td></tr></tbody></table><div class="insight"><p><strong>选源原则：</strong>先用一个免费接口跑通完整流程，再逐步用更权威的数据交叉验证。单看一个数据源的数字就下结论，很容易把接口的缺失值或口径差异误当成市场事实。具体产品价格与授权条款随市场变化，本章不给出具体金额。</p></div></section>
+<section id="adjust" aria-labelledby="h-adjust"><h2 id="h-adjust">复权：让价格连续</h2><p>分红、送股、配股等公司行为会让股价发生<strong>非交易性跳空</strong>。如果不做处理，前一天的 20 元第二天突然变成 13 元，会被策略当成“暴跌”，继而触发错误的买入或卖出信号。复权就是把这种非交易性变动从价格序列中剔除。</p><ul><li><strong>前复权</strong>：以当前价为基准，历史价按比例下调，价格连续，回测中最常用。</li><li><strong>后复权</strong>：以历史价为基准，当前价按比例上调，适合观察长期累计涨幅。</li><li><strong>不复权</strong>：原始价格，仅适合极短周期或特定场景，中长期回测绝不应用。</li></ul><p>除权除息日的参考价由交易所公式确定（简化版，未含配股权等特殊处理）：</p><div class="math-scroll" role="region" tabindex="0" aria-label="除权除息参考价公式"><math display="block" aria-label="除权参考价等于前收盘价减每股现金红利加配股价乘配股比例，除以一加送股比例加配股比例"><mrow><msub><mi>P</mi><mtext>ref</mtext></msub><mo>=</mo><mfrac><mrow><msub><mi>P</mi><mtext>prev</mtext></msub><mo>−</mo><mi>D</mi><mo>+</mo><msub><mi>P</mi><mtext>gp</mtext></msub><mo>×</mo><msub><mi>r</mi><mtext>gp</mtext></msub></mrow><mrow><mn>1</mn><mo>+</mo><msub><mi>r</mi><mtext>sg</mtext></msub><mo>+</mo><msub><mi>r</mi><mtext>gp</mtext></msub></mrow></mfrac></mrow></math></div><p>其中 <math aria-label="P prev"><msub><mi>P</mi><mtext>prev</mtext></msub></math> 为前收盘价，<math aria-label="D"><mi>D</mi></math> 为每股现金红利，<math aria-label="r sg"><msub><mi>r</mi><mtext>sg</mtext></msub></math> 为送股（含转增）比例，<math aria-label="P gp"><msub><mi>P</mi><mtext>gp</mtext></msub></math> 与 <math aria-label="r gp"><msub><mi>r</mi><mtext>gp</mtext></msub></math> 为配股价与配股比例。构造算例：前收 20 元，每股现金红利 0.5 元，每 10 股送 5 股（送股比例 0.5），无配股，则参考价 =(20−0.5)/(1+0.5)=19.5/1.5=13.0 元。显然，若把 20→13 当作下跌 35%，完全错了——这就是不复权数据污染回测的根源。</p><figure class="figure"><div class="diagram-scroll"><svg data-export="23-adjust-price" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-labelledby="f23b-t f23b-d"><title id="f23b-t">除权日前后原始价格与前复权价格对比</title><desc id="f23b-d">除权日当天原始价格出现向下跳空，而前复权价格保持连续，跳空是非交易性的公司行为所致。</desc><rect width="760" height="260" rx="14" fill="#f3f7f5"/><text x="30" y="38" font-size="18" font-family="Arial,'Microsoft YaHei',sans-serif" font-weight="700" fill="#203035">同一个除权日：原始价跳空，前复权价连续</text><g font-family="Arial,'Microsoft YaHei',sans-serif"><path d="M90 60L90 210L700 210" stroke="#203035" stroke-width="1.6" fill="none"/><path d="M120 90L300 82L420 120L560 108L680 100" stroke="#d06d4d" stroke-width="2.5" fill="none"/><path d="M120 92L300 85L420 90L560 80L680 72" stroke="#147f80" stroke-width="2.5" fill="none"/><path d="M400 60L400 210" stroke="#7461ba" stroke-width="1.5" stroke-dasharray="6 5"/><text x="400" y="228" font-size="12" text-anchor="middle" fill="#7461ba">除权日</text><text x="610" y="126" font-size="12" fill="#d06d4d">原始价</text><text x="610" y="70" font-size="12" fill="#147f80">前复权价</text><text x="90" y="246" font-size="12" fill="#53676d">教学示意：跳空来自分红送股，不是市场下跌；不复权回测会把跳空误读为亏损。</text></g></svg></div><figcaption>除权日的向下跳空来自公司行为而非市场下跌。前复权把这段跳空拉平，回测才能反映真实收益。</figcaption></figure><form class="formula-lab" data-calc="exrights"><h3>动手算一遍：除权参考价</h3><p>输入前收盘价、每股现金红利、送股比例与配股信息，得到除权除息参考价。</p><div class="controls"><label>前收盘价（元）<input type="number" name="prev" value="20" step="0.01" min="0.01" required></label><label>每股现金红利（元）<input type="number" name="div" value="0.5" step="0.01" min="0" required></label><label>送股（转增）比例<input type="number" name="sg" value="0.5" step="0.1" min="0" required></label><label>配股比例<input type="number" name="gp" value="0" step="0.1" min="0" required></label><label>配股价（元）<input type="number" name="gpp" value="0" step="0.01" min="0" required></label></div><output aria-live="polite">计算中</output><p data-explain>启用脚本后自动显示结果。</p></form></section>
+<section id="financial" aria-labelledby="h-financial"><h2 id="h-financial">财务数据的三个坑</h2><h3>合并报表 vs 母公司报表</h3><p>同一家公司会同时披露<strong>合并报表</strong>与<strong>母公司报表</strong>。合并报表包含母公司与控股子公司，母公司报表只反映母公司本身。做投资分析应使用合并报表，因为母公司的营收和利润可能大量来自子公司；只看母公司会严重低估实际经营规模。使用任何数据库时，都要先确认它提供的财务数据基于哪张报表、哪个口径。</p><h3>会计准则差异</h3><p>A 股上市公司执行中国企业会计准则（CAS），与 IFRS 大体趋同但不完全相同。对 AH 两地上市公司，同一家公司按 CAS 与 IFRS 编制的数据可能在资产减值、政府补助确认等项目上有差异。跨市场比较前应先统一口径。</p><h3>发布延迟与前视偏差</h3><p>财报是<strong>事后披露</strong>的：年度报告、中期报告、季度报告都有法定披露时限，因此某个时点上你未必拿得到当期的财务数据。如果回测在报告期结束时就直接使用它，就产生了<strong>前视偏差（look-ahead bias）</strong>，收益会被系统性地高估。</p><figure class="figure"><div class="diagram-scroll"><svg data-export="23-pit-timeline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 240" role="img" aria-labelledby="f23a-t f23a-d"><title id="f23a-t">报告期、披露日与可用日的时点关系</title><desc id="f23a-d">财报在报告期结束后一段时间才披露，回测只能在披露日之后使用该数据，否则造成前视偏差。</desc><rect width="760" height="240" rx="14" fill="#f3f7f5"/><text x="30" y="38" font-size="18" font-family="Arial,'Microsoft YaHei',sans-serif" font-weight="700" fill="#203035">从报告期到可用数据：中间隔着一段披露延迟</text><g font-family="Arial,'Microsoft YaHei',sans-serif"><path d="M50 150L720 150" stroke="#203035" stroke-width="2"/><circle cx="150" cy="150" r="7" fill="#147f80"/><circle cx="430" cy="150" r="7" fill="#d06d4d"/><circle cx="640" cy="150" r="7" fill="#7461ba"/><text x="150" y="185" font-size="13" text-anchor="middle" fill="#203035">报告期结束</text><text x="430" y="185" font-size="13" text-anchor="middle" fill="#203035">法定披露日</text><text x="640" y="185" font-size="13" text-anchor="middle" fill="#203035">策略可用</text><path d="M150 120L430 120" stroke="#d06d4d" stroke-width="2" stroke-dasharray="6 5"/><text x="290" y="110" font-size="12" text-anchor="middle" fill="#d06d4d">提前使用 = 前视偏差</text><path d="M430 120L640 120" stroke="#7461ba" stroke-width="2"/><text x="535" y="110" font-size="12" text-anchor="middle" fill="#7461ba">披露后才可用</text><text x="50" y="222" font-size="12" fill="#53676d">教学示意：具体时限以交易所与监管机构现行规定为准；回测应按披露日而非报告期匹配。</text></g></svg></div><figcaption>同一个财务数字，按“报告期”对齐和按“披露日”对齐，得到的回测结果可以完全不同。</figcaption></figure><div class="tip"><p><strong>做法：</strong>用每份报告的<strong>披露日期</strong>（而非报告期）来匹配可用时点，并在披露日之后才开始使用该数据。若数据库提供 <code>disclosure_date</code> 类字段，应优先用它做时点对齐。</p></div></section>
+<section id="clean" aria-labelledby="h-clean"><h2 id="h-clean">数据清洗：缺失、异常与对齐</h2><p>从接口拉回的原始数据几乎总要先清理。常见问题与处理方向：</p><ul><li><strong>缺失值</strong>：停牌股无交易、新股历史不足。缺失比例低时可删除，否则应考虑向前填充（ffill）或用量可比的行业值代替，并记录处理方式。</li><li><strong>异常值</strong>：ST／退市股价格行为异常，新股上市初期波动极大，涨跌停期间价格失真。这些样本应剔除或单独标记，而不是混入普通样本。</li><li><strong>时间对齐</strong>：日线与财务数据频率不同，需先对齐到同一时点再合并。用月末最后一个交易日对齐是常见做法。</li></ul><p><strong>构造算例：</strong>假设清洗前有 1000 行日度记录，其中 40 行属于 ST／退市样本，20 行属于上市不足 5 日的新股。剔除后剩 940 行；再按股票代码与月份取月末最后一个交易日，若涉及 30 只股票、6 个月，则月末面板最多 30×6=180 个观测。每一步都应写成可复现的脚本，而不是手工调整。</p></section>
+<section id="database" aria-labelledby="h-database"><h2 id="h-database">搭建本地数据库</h2><p>每次跑策略都重新拉取、清洗数据，既慢又容易因接口变化而产生不一致的结果。更稳的做法是建立本地数据库。对个人研究者，SQLite 是一个合适的起点：它是嵌入式数据库，一个文件即一个数据库，无需独立服务进程。</p><p>更新方式主要有两种：</p><ul><li><strong>全量刷新</strong>：每次覆盖全部历史。简单，但数据量大时耗时。</li><li><strong>增量更新</strong>：只追新产生的那部分数据（例如最近一个交易日），效率高。</li></ul><p>无论哪种方式，都应保留<strong>数据版本与更新时间戳</strong>，因为同一只股票的历史数据可能因复权方式或数据源修正而变化。如果不记录版本，同一个回测在两个时间点跑出不同结果时，将无法回溯原因。</p></section>
+<section id="practice" aria-labelledby="h-practice"><h2 id="h-practice">自我检验</h2><div class="example"><h3>练习</h3><ol><li>前收盘价 15 元，每股现金红利 0.3 元，每 10 股转增 3 股，无配股，求除权参考价。</li><li>用一句话解释前视偏差，并举出一个会造成它的具体做法。</li><li>为什么“合并报表”和“母公司报表”不能混用？对 ROE 会有什么影响？</li><li>列出至少两种数据清洗步骤，并说明每种各自剔除的是哪类样本。</li></ol></div><p>完成后应能独立回答：为什么未复权数据会污染回测？前复权与后复权分别适合什么场景？财报发布延迟为什么会造成前视偏差？为什么本地数据库需要记录版本？</p></section>
+<section id="references" aria-labelledby="h-references"><h2 id="h-references">资料来源与适用范围</h2><p>本页涉及交易规则与披露时限的陈述，应以交易所与监管机构现行有效的规定为准；不同交易所、不同板块的细节可能不同。除权参考价公式为交易所公式的简化形式，本页未含配股权、派息与转增混合等特殊处理。</p><p>下列文献用于校对前视偏差、复权与回测偏差的学术讨论。本页出现的价格、行数、参考价均为构造的教学数据，没有任何真实产品的报价或业绩。</p><ol class="source-list"><li>Ball &amp; Brown (1968)｜An Empirical Evaluation of Accounting Income Numbers, Journal of Accounting Research（财报信息与价格反应）</li><li>Lo &amp; MacKinlay (1990)｜Data-Snooping Biases in Tests of Financial Asset Pricing Models, Review of Financial Studies（数据窥探偏差）</li><li>White (2000)｜A Reality Check for Data Snooping, Econometrica（多重检验与数据窥探）</li></ol><p class="muted">说明：第二节的数据源分类为行业常见的功能性划分，不构成对任何产品的推荐或背书；具体授权与报价请以官方页面为准。</p></section>
+<nav class="chapter-nav" aria-label="前后篇"><a href="22.html">← 第22章</a><a href="../index.html">课程总目录</a><a href="24.html">第24章 →</a></nav>
+</article></main>
 </div>
-</div>
+<footer class="site-footer">仅用于证券投资教育，不构成个性化投资建议。</footer>
+<script defer src="../assets/js/site.js"></script>
 </body>
 </html>
