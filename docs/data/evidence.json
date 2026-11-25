@@ -585,6 +585,27 @@
           "https://doi.org/10.1093/rfs/hhv059"
         ]
       ]
+    },
+    "27": {
+      "claims": [
+        "Holding a single market concentrates all risk in one macro regime; allocation's purpose is to offset different risk sources.",
+        "Correlations are unstable: the textbook negative stock-bond correlation can fail in inflation/liquidity stress.",
+        "Brinson-Hood-Beebower (1986) is about the sources of a portfolio's return variability over time, commonly misquoted as 'allocation determines 90% of returns'.",
+        "Investment clock (Merrill Lynch 2004) maps growth/inflation directions to asset tilts; it is a framework, not a forecast of turning points. A 'policy' stage is an interpretive extension, not a validated quantitative model.",
+        "Risk parity (ignore correlations): w_i proportional to 1/sigma_i; constructed example sigma 20/5/15 -> weights ~15.8/63.2/21.0%, equal risk contributions ~3.16%. With correlations a risk-budget solver is required.",
+        "Cross-border: QDII, Stock Connect, QDLP/QDIE, depositary receipts; local-currency return ~ r_asset + r_fx + r_asset*r_fx. Constructed example: +30% asset, -25% fx -> -2.5%.",
+        "Carry trades look stable then gap; macro fund cases (Tiger, Quantum 1992) are survivorship-biased narratives, and reflexivity is an interpretive framework."
+      ],
+      "sources": [
+        [
+          "Brinson, Hood & Beebower 1986, Financial Analysts Journal",
+          "https://doi.org/10.2469/faj.v42.n4.39"
+        ],
+        [
+          "Asness, Moskowitz & Pedersen 2013, Journal of Finance",
+          "https://doi.org/10.1111/jofi.12021"
+        ]
+      ]
     }
   },
   "limitations": [

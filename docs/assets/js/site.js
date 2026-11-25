@@ -279,7 +279,7 @@
   const fmt = (v, d = 2) => Number.isFinite(v) ? v.toLocaleString("zh-CN", {
     minimumFractionDigits: d, maximumFractionDigits: d
   }) : "不可计算";
-  const types = new Set(["var95", "kelly", "prospect", "graham", "zscore", "icir"]);
+  const types = new Set(["var95", "kelly", "prospect", "graham", "zscore", "icir", "ictest", "impliedpe", "exrights", "costdrag", "roundtrip", "mlmetrics", "riskparity"]);
   function run(form) {
     let result = NaN, unit = "", note = "输入不在此教学模型的有效范围内。";
     const finite = (...keys) => keys.every(k => Number.isFinite(n(form, k)));
@@ -310,6 +310,7 @@
         if (pbv <= 0) { note = "市净率 PB 须为正数。"; break; }
         if (roe <= 0) { note = "ROE 须为正数，否则隐含 PE 无意义。"; break; }
         result = pbv / (roe / 100);
+        unit = " 倍";
         note = "隐含市盈率 PE = PB ÷ (ROE/100) = " + fmt(result)
           + " 倍。等价于 PB = PE × ROE；E/B 与 P/E 必须同口径、同期间。盈利为负或接近零时该式不适用。";
         break;
@@ -321,6 +322,7 @@
         if (prev <= 0 || div < 0 || sg < 0 || gp < 0 || gpp < 0) { note = "价格须为正、比例与红利不得为负。"; break; }
         if (denom <= 0) { note = "送股与配股比例之和不得小于 -1。"; break; }
         result = (prev - div + gpp * gp) / denom;
+        unit = " 元";
         note = "除权除息参考价 = (前收 − 现金红利 + 配股价×配股比例) ÷ (1 + 送股比例 + 配股比例) = " + fmt(result)
           + " 元。交易所公式的简化形式，未含配股权等特殊处理；仅用于解释为何不复权价格会出现跳空。";
         break;
@@ -330,6 +332,7 @@
         const turn = n(form, "turn"), cost = n(form, "cost");
         if (turn < 0 || cost < 0) { note = "换手次数与成本率不得为负。"; break; }
         result = turn * 2 * cost;
+        unit = "%";
         note = "年化成本率 ≈ 单边换手次数×2×单边成本率 = " + fmt(result)
           + "%。一次完整进出含买入与卖出，故乘 2。未含冲击成本与滑点随规模变化的部分，因此为下限估算。";
         break;
@@ -339,6 +342,7 @@
         const comm = n(form, "comm"), stamp = n(form, "stamp"), slip = n(form, "slip");
         if (comm < 0 || stamp < 0 || slip < 0) { note = "各项费率不得为负。"; break; }
         result = 2 * comm + stamp + 2 * slip;
+        unit = "%";
         note = "往返成本率 ≈ 2×佣金 + 印花税 + 2×滑点 = " + fmt(result)
           + "%。印花税仅卖出时征收故只乘 1；未含冲击成本。费率会随政策与券商变化，请自行核对当前有效值。";
         break;
@@ -349,9 +353,23 @@
         if (tp < 0 || fp < 0 || fn < 0) { note = "TP/FP/FN 不得为负。"; break; }
         if (tp + fp <= 0 || tp + fn <= 0) { note = "需要至少一个正例与非零预测值。"; break; }
         const prec = tp / (tp + fp), rec = tp / (tp + fn);
-        result = 2 * prec * rec / (prec + rec);
+        const f1 = 2 * prec * rec / (prec + rec);
+        result = f1 * 100;
+        unit = "%";
         note = "精确率 = " + fmt(prec * 100) + "%，召回率 = " + fmt(rec * 100)
           + "%，F1 = " + fmt(result * 100) + "%。模型指标不等于策略收益：还需扣除交易成本、滑点与不可成交样本。";
+        break;
+      }
+      case "riskparity": {
+        if (!finite("v1", "v2", "v3")) break;
+        const v1 = n(form, "v1"), v2 = n(form, "v2"), v3 = n(form, "v3");
+        if (v1 <= 0 || v2 <= 0 || v3 <= 0) { note = "波动率须为正数。"; break; }
+        const i1 = 1 / v1, i2 = 1 / v2, i3 = 1 / v3, sum = i1 + i2 + i3;
+        const w1 = i1 / sum, w2 = i2 / sum, w3 = i3 / sum;
+        result = w3 * 100;
+        unit = "%";
+        note = "逆波动率权重：资产一 " + fmt(w1 * 100) + "%，资产二 " + fmt(w2 * 100)
+          + "%，资产三 " + fmt(w3 * 100) + "%。各资产风险贡献 w×σ 相等。这是忽略相关性的简化解；含相关性时需用风险预算求解。";
         break;
       }
       case "zscore": {
