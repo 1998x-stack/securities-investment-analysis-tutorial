@@ -293,6 +293,17 @@
           + "。它衡量预测的稳定性，与单期 IC 的大小不同；样本期与调仓频率变化时结果会变。";
         break;
       }
+      case "ictest": {
+        if (!finite("mean", "sd", "n")) break;
+        const mean = n(form, "mean"), sd = n(form, "sd"), periods = n(form, "n");
+        if (sd <= 0) { note = "IC 标准差须为正数。"; break; }
+        if (periods < 2) { note = "期数至少为 2。"; break; }
+        const icir = mean / sd;
+        result = icir * Math.sqrt(periods);
+        note = "ICIR = " + fmt(icir, 4) + "；t = ICIR × √N = " + fmt(result)
+          + "。参考：单因子阈值 t≈2，多重检验下 Harvey-Liu-Zhu 建议 t≈3。该式假设 IC 序列近似独立同分布。";
+        break;
+      }
       case "zscore": {
         if (!finite("value", "mean", "std")) break;
         const value = n(form, "value"), mean = n(form, "mean"), std = n(form, "std");

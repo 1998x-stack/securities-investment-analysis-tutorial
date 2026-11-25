@@ -456,6 +456,35 @@
           "https://doi.org/10.1111/jofi.12021"
         ]
       ]
+    },
+    "21": {
+      "claims": [
+        "Frontier factors are treated as hypotheses: with hundreds of tested candidates, a t threshold near 2 is too weak; Harvey-Liu-Zhu suggest roughly 3.",
+        "R&D factor RD/MV or RD/Sales quantifies expensed investment; comparisons require consistent capitalization and disclosure coverage; input is not output (Hirshleifer-Hsu-Li use innovation efficiency).",
+        "Performance-persistence (reverse-valuation) construction: industry mean PE +/- k standard deviations defines a fair price band; loses meaning for loss-making firms.",
+        "Fund-flow factors come from transaction data and decay quickly; turnover and trading costs can consume the gross alpha (Novy-Marx & Velikov).",
+        "Analyst factors: revisions matter more than levels; coverage and optimism biases must be removed.",
+        "Industry-rotation factorization moves industry bets into a stock-level score and distributes concentration risk.",
+        "Teaching numbers on this page are constructed (RD/Sales example, fair PE band, t~2.51); no real factor performance is cited."
+      ],
+      "sources": [
+        [
+          "Harvey, Liu & Zhu 2016, Review of Financial Studies",
+          "https://doi.org/10.1093/rfs/hhv059"
+        ],
+        [
+          "McLean & Pontiff 2016, Journal of Finance",
+          "https://doi.org/10.1111/jofi.12365"
+        ],
+        [
+          "Hou, Xue & Zhang 2015, Review of Financial Studies",
+          "https://doi.org/10.1093/rfs/hhv043"
+        ],
+        [
+          "Fama & French 2015, Journal of Financial Economics",
+          "https://doi.org/10.1016/j.jfineco.2014.10.010"
+        ]
+      ]
     }
   },
   "limitations": [
