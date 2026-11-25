@@ -325,6 +325,15 @@
           + " 元。交易所公式的简化形式，未含配股权等特殊处理；仅用于解释为何不复权价格会出现跳空。";
         break;
       }
+      case "costdrag": {
+        if (!finite("turn", "cost")) break;
+        const turn = n(form, "turn"), cost = n(form, "cost");
+        if (turn < 0 || cost < 0) { note = "换手次数与成本率不得为负。"; break; }
+        result = turn * 2 * cost;
+        note = "年化成本率 ≈ 单边换手次数×2×单边成本率 = " + fmt(result)
+          + "%。一次完整进出含买入与卖出，故乘 2。未含冲击成本与滑点随规模变化的部分，因此为下限估算。";
+        break;
+      }
       case "zscore": {
         if (!finite("value", "mean", "std")) break;
         const value = n(form, "value"), mean = n(form, "mean"), std = n(form, "std");

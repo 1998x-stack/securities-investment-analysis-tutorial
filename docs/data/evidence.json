@@ -521,6 +521,17 @@
         "Local database should store data version and update timestamps because adjusted history can be revised."
       ],
       "sources": []
+    },
+    "24": {
+      "claims": [
+        "Python is a low-cost starting point for personal/teaching quant; claims about 'market share' or package counts are avoided as they are unsourced and time-varying.",
+        "Panel operations: groupby before shift/rolling/pct_change; shifting before grouping leaks across instruments.",
+        "TA-Lib expects NumPy arrays and has indicator warm-up (e.g., 14-day RSI has 13 missing leading values).",
+        "Backtest skeleton: signal generation -> portfolio construction -> evaluation; signal lagged by shift(1) to avoid look-ahead.",
+        "Vectorized vs event-driven backtests; credibility depends on modeling cost, tradability and timing, not on the framework.",
+        "Cost estimate: annual cost ~ turnover x 2 x one-way cost; constructed example 50 x 2 x 0.1% = 10%/yr."
+      ],
+      "sources": []
     }
   },
   "limitations": [
