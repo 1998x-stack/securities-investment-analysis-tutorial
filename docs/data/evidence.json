@@ -606,6 +606,31 @@
           "https://doi.org/10.1111/jofi.12021"
         ]
       ]
+    },
+    "28": {
+      "claims": [
+        "Pipeline consistency is the hard part: assumptions (data time-point, execution time, cost model, turnover) must agree across layers.",
+        "Layered architecture: data, analysis, signal, portfolio, risk, evaluation; each layer checkable/replaceable independently.",
+        "Three-layer funnel: fundamental hard screen (exclude, not select), technical timing confirmation, multi-factor scoring/ranking.",
+        "Specific thresholds such as ROE>15% are choices, not truths; industry differences make one-size cutoffs fragile.",
+        "Inverse-volatility weights w_i proportional to 1/sigma_i; constructed example sigma 30%/15% -> 33.3%/66.7%; must add concentration caps.",
+        "Sharpe = (Rp - Rf)/sigma_p; constructed example 12/2/10 -> 1.0; limited by penalizing upside, ignoring tails, sample dependence.",
+        "Stop-loss is a trade-off with no free solution; specify trigger, shock type, and recovery rule; no fabricated backtest results on this page."
+      ],
+      "sources": [
+        [
+          "Fama & French 2015, Journal of Financial Economics",
+          "https://doi.org/10.1016/j.jfineco.2014.10.010"
+        ],
+        [
+          "McLean & Pontiff 2016, Journal of Finance",
+          "https://doi.org/10.1111/jofi.12365"
+        ],
+        [
+          "Harvey, Liu & Zhu 2016, Review of Financial Studies",
+          "https://doi.org/10.1093/rfs/hhv059"
+        ]
+      ]
     }
   },
   "limitations": [

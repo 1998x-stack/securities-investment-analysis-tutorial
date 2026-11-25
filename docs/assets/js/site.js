@@ -279,7 +279,7 @@
   const fmt = (v, d = 2) => Number.isFinite(v) ? v.toLocaleString("zh-CN", {
     minimumFractionDigits: d, maximumFractionDigits: d
   }) : "不可计算";
-  const types = new Set(["var95", "kelly", "prospect", "graham", "zscore", "icir", "ictest", "impliedpe", "exrights", "costdrag", "roundtrip", "mlmetrics", "riskparity"]);
+  const types = new Set(["var95", "kelly", "prospect", "graham", "zscore", "icir", "ictest", "impliedpe", "exrights", "costdrag", "roundtrip", "mlmetrics", "riskparity", "sharpe"]);
   function run(form) {
     let result = NaN, unit = "", note = "输入不在此教学模型的有效范围内。";
     const finite = (...keys) => keys.every(k => Number.isFinite(n(form, k)));
@@ -370,6 +370,16 @@
         unit = "%";
         note = "逆波动率权重：资产一 " + fmt(w1 * 100) + "%，资产二 " + fmt(w2 * 100)
           + "%，资产三 " + fmt(w3 * 100) + "%。各资产风险贡献 w×σ 相等。这是忽略相关性的简化解；含相关性时需用风险预算求解。";
+        break;
+      }
+      case "sharpe": {
+        if (!finite("ret", "rf", "sigma")) break;
+        const ret = n(form, "ret"), rf = n(form, "rf"), sigma = n(form, "sigma");
+        if (sigma <= 0) { note = "年化波动率须为正数。"; break; }
+        result = (ret - rf) / sigma;
+        note = "Sharpe = (组合收益 − 无风险利率) / 波动率 = (" + fmt(ret) + "% − " + fmt(rf)
+          + "%) / " + fmt(sigma) + "% = " + fmt(result)
+          + "。分子分母须同频率；该指标惩罚上行波动、忽略尾部风险，且依赖样本期。";
         break;
       }
       case "zscore": {

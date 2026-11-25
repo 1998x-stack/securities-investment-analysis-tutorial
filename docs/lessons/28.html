@@ -1,274 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>第28章 综合实战项目</title>
-    <link rel="stylesheet" href="theme.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="综合实战项目：投资分析系统的分层架构、三层选股漏斗、波动率倒数权重、回测评估指标的正确读法与止损的两难，把前面各章的工具串成一条可复现的流程。">
+<title>综合实战项目：把全部工具串成一条流程｜证券投资分析</title>
+<link rel="stylesheet" href="../assets/css/site.css">
 </head>
 <body>
-<div class="double-border">
-<div class="container">
-    <div class="sidebar">
-        <h3>📈 课程目录</h3>
-        <ul class="chapter-list">
-            <li><a href="01.html">第1章 证券投资导论</a></li>
-            <li><a href="02.html">第2章 主要证券品种</a></li>
-            <li><a href="03.html">第3章 交易机制与规则</a></li>
-            <li><a href="04.html">第4章 财务报表入门</a></li>
-            <li><a href="05.html">第5章 财务比率分析</a></li>
-            <li><a href="06.html">第6章 宏观经济与市场</a></li>
-            <li><a href="07.html">第7章 行业分析方法</a></li>
-            <li><a href="08.html">第8章 绝对估值法</a></li>
-            <li><a href="09.html">第9章 相对估值法(上)</a></li>
-            <li><a href="10.html">第10章 相对估值法(下)</a></li>
-            <li><a href="11.html">第11章 成长股估值</a></li>
-            <li><a href="12.html">第12章 基本面分析实战</a></li>
-            <li><a href="13.html">第13章 技术分析基础</a></li>
-            <li><a href="14.html">第14章 技术指标精讲</a></li>
-            <li><a href="15.html">第15章 现代投资组合理论</a></li>
-            <li><a href="16.html">第16章 风险管理体系</a></li>
-            <li><a href="17.html">第17章 行为金融学</a></li>
-            <li><a href="18.html">第18章 投资策略流派</a></li>
-            <li><a href="19.html">第19章 量化选股入门</a></li>
-            <li><a href="20.html">第20章 多因子模型实战</a></li>
-            <li><a href="21.html">第21章 前沿因子探索</a></li>
-            <li><a href="22.html">第22章 行业估值与轮动</a></li>
-            <li><a href="23.html">第23章 数据获取与处理</a></li>
-            <li><a href="24.html">第24章 Python量化工具链</a></li>
-            <li><a href="25.html">第25章 实盘交易系统</a></li>
-            <li><a href="26.html">第26章 AI驱动的投资分析</a></li>
-            <li><a href="27.html">第27章 宏观对冲与全球配置</a></li>
-            <li><a href="28.html" class="active">第28章 综合实战项目</a></li>
-        </ul>
-    </div>
-    <div class="main-content">
-
-        <h1>第28章 综合实战项目</h1>
-
-        <p>大家好，我是你们的讲师。终于到了最后一章。</p>
-
-        <p>如果你是从第1章一路看到这里的，恭喜你——你已经系统地学习了证券投资分析的全部核心知识模块：从市场规则到财务报表，从估值方法到技术分析，从量化模型到AI驱动投资，从风险管理到全球宏观配置。但知识是知识，能力是能力。它们之间的距离，需要用一次完整的实战项目来弥合。</p>
-
-        <p>这一章，我们将搭建一个完整的投资分析系统——从数据获取到选股打分，从组合构建到回测评估，从风险监控到动态再平衡。这个系统虽然不能直接拿去管理一个百亿规模的基金（那不是一个人能做的事），但它会让你真正理解：一套专业的投资决策流程是什么样子的。</p>
-
-        <h2>28.1 项目总览：投资分析系统架构</h2>
-
-        <p>我们从架构设计开始。一个完整的投资分析系统需要涵盖以下几个模块：</p>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>序号</th>
-                    <th>模块</th>
-                    <th>功能</th>
-                    <th>关键技术</th>
-                    <th>状态</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>数据层</td>
-                    <td>行情获取、财务数据、宏观数据、另类数据</td>
-                    <td>AKShare / Tushare / Wind API</td>
-                    <td>已完成</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>分析层</td>
-                    <td>基本面筛选、技术面确认、量化因子打分</td>
-                    <td>Pandas / NumPy / SQL</td>
-                    <td>已完成</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>信号层</td>
-                    <td>多因子合成、AI预测信号、情绪信号</td>
-                    <td>Scikit-learn / PyTorch / FinBERT</td>
-                    <td>进行中</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>风控层</td>
-                    <td>集中度限制、波动率管理、止损止盈</td>
-                    <td>规则引擎 + 实时监控</td>
-                    <td>进行中</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>执行层</td>
-                    <td>订单生成、仓位调整、交易成本核算</td>
-                    <td>券商API / 算法交易</td>
-                    <td>待开发</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>监控层</td>
-                    <td>绩效归因、风险报告、预警通知</td>
-                    <td>Dashboard / 消息推送</td>
-                    <td>待开发</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>回测引擎</td>
-                    <td>历史回测、参数优化、稳定性检验</td>
-                    <td>Backtrader / 自定义回测</td>
-                    <td>已完成</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p>技术栈建议：Python作为核心语言，Pandas做数据处理，SQLite或者DuckDB做本地数据存储，Streamlit或Dash做可视化看板。整套系统可以跑在一台普通的云服务器（4核8G）上，月成本不到200元。</p>
-
-        <h2>28.2 第一步：多维度选股框架</h2>
-
-        <p>选股是投资分析的起点。我们的框架采用"三层漏斗"结构：</p>
-
-        <h3>第一层：基本面筛选（排除雷区）</h3>
-
-        <p>设定硬性门槛，将质地太差或风险过高的股票排除掉：</p>
-
-        <ul>
-            <li>ROE（净资产收益率）> 15%（连续3年）</li>
-            <li>资产负债率 < 60%（金融行业除外）</li>
-            <li>经营性现金流净额 > 净利润（利润有现金支撑）</li>
-            <li>排除ST、*ST、近期有监管处罚记录的股票</li>
-            <li>净利润同比增速 > 0（最近一期财报）</li>
-        </ul>
-
-        <h3>第二层：技术面确认（时机选择）</h3>
-
-        <p>基本面再好的股票，如果处于下行趋势，买入后短期大概率承受浮亏。技术面的作用是帮你找到相对有利的入场时点：</p>
-
-        <ul>
-            <li>均线系统：5日/20日/60日均线呈多头排列（短期 > 中期 > 长期）</li>
-            <li>MACD柱状线翻红</li>
-            <li>成交量温和放大（> 20日均量的1.2倍）</li>
-            <li>RSI在40-70区间（不过热也不过冷）</li>
-        </ul>
-
-        <h3>第三层：量化因子打分（综合评分）</h3>
-
-        <p>这是整套系统的核心——多因子评分框架。我们从成长、质量、低波三个维度对候选股票进行评分：</p>
-
-        <pre><code># 多维度选股评分框架（Python伪代码）
-
-        import pandas as pd
-        import numpy as np
-
-        def score_stocks(df):
-            """
-            输入：经过基本面和趋势筛选后的DataFrame
-            输出：每个股票的综合评分（0-100）
-            """
-
-            # === 维度1：成长因子（30分） ===
-            # 营收增速、净利润增速、预期增速
-            score_growth = 0
-            score_growth += rank_score(df['revenue_growth_qoq'], ascending=True)  * 10  # 营收环比增速
-            score_growth += rank_score(df['profit_growth_yoy'], ascending=True)   * 10  # 净利润同比增速
-            score_growth += rank_score(df['analyst_upgrade_ratio'], ascending=True) * 10  # 分析师上修比例
-
-            # === 维度2：质量因子（40分） ===
-            # ROE、毛利率、经营现金流
-            score_quality = 0
-            score_quality += rank_score(df['roe_ttm'], ascending=True)           * 15  # ROE_TTM
-            score_quality += rank_score(df['gross_margin'], ascending=True)      * 10  # 毛利率
-            score_quality += rank_score(df['ocf_to_profit'], ascending=True)     * 10  # 经营现金流/净利润
-            score_quality += rank_score(df['debt_to_equity'], ascending=False)   * 5   # 负债权益比（越低越好）
-
-            # === 维度3：低波因子（30分） ===
-            # 波动越低越稳定得分越高
-            score_lowvol = 0
-            score_lowvol += rank_score(1 / df['volatility_60d'], ascending=True) * 15  # 60日波动率倒数
-            score_lowvol += rank_score(1 / df['max_drawdown_120d'], ascending=True) * 10  # 120日最大回撤倒数
-            score_lowvol += rank_score(df['dividend_yield'], ascending=True)     * 5   # 股息率（高股息通常低波）
-
-            # === 综合评分 ===
-            df['total_score'] = score_growth + score_quality + score_lowvol
-
-            # 归一化到0-100
-            df['total_score'] = (df['total_score'] - df['total_score'].min()) / \
-                                (df['total_score'].max() - df['total_score'].min()) * 100
-
-            return df.sort_values('total_score', ascending=False)
-
-        def rank_score(series, ascending=True):
-            """将数值转为百分位排名分数（0-1）"""
-            if not ascending:
-                series = -series
-            return series.rank(pct=True).values</code></pre>
-
-        <p>这个框架的一个关键设计是：不追求"找到哪一只股票最好"，而是关注"哪些股票的综合得分更高"。选股是一个概率游戏，追求的是整体组合的胜率，而不是单只股票的暴涨。</p>
-
-        <h2>28.3 第二步：组合构建与回测</h2>
-
-        <h3>组合构建规则</h3>
-
-        <ul>
-            <li><strong>持仓数量</strong>：20-30只股票。太少分散不够，太多则管理不过来。</li>
-            <li><strong>加权方式</strong>：波动率倒数加权——低波动的股票分配更高权重。这比等权或市值加权更能控制组合波动。</li>
-            <li><strong>行业约束</strong>：单一行业占比不超过30%。避免组合"押注"单一行。</li>
-            <li><strong>调仓频率</strong>：月度再平衡（每月第一个交易日）。</li>
-        </ul>
-
-        <h3>回测结果（2019年1月 - 2025年12月）</h3>
-
-        <p>使用上述策略在A股全市场股票池做回测（扣除停牌、新股上市不足60个交易日的标的），对比两个基准：</p>
-
-        <ul>
-            <li><strong>策略组合年化收益</strong>：14.2%</li>
-            <li><strong>沪深300年化收益</strong>：7.8%</li>
-            <li><strong>中证500年化收益</strong>：6.5%</li>
-            <li><strong>策略最大回撤</strong>：18.5%（发生在2022年3-4月）</li>
-            <li><strong>策略夏普比率</strong>：1.05</li>
-            <li><strong>策略年化超额（vs 沪深300）</strong>：约6.4%</li>
-        </ul>
-
-        <p>更值得注意的是，策略在2019、2020、2021、2023、2024、2025六个收益为正的年份均跑赢了基准，而在2022年的熊市中虽然也亏损（-12%），但跌幅远小于沪深300的-21.6%。这说明了多因子分散策略在下跌市中的保护作用——不是不亏，但亏得更少。</p>
-
-        <h2>28.4 第三步：风险监控与动态再平衡</h2>
-
-        <p>系统上线之后，真正的挑战才刚刚开始。让我们讲一个踩坑故事。</p>
-
-        <p>2024年9月，我们的这套系统正式上线。第一周一切正常。到了周三，市场突然传出某头部地产公司债务展期的消息，整个地产板块单日暴跌7%。系统持有的一只地产产业链股票（防水材料龙头，评分很高，属于质量因子得分最高的股票之一）在组合中占比约4.5%。按道理说，4.5%的仓位也不算特别大。但问题出在哪里？</p>
-
-        <p>这只股票当天开盘直接低开6%，而我们的风控模块设置的止损线是"单票当日跌幅超过5%触发强制减仓至一半"。于是，系统在开盘后的第一分钟就自动卖出了一半仓位。但行情继续下挫，到10:30跌幅扩大至9%，系统触发"清仓"信号——卖出了剩余全部仓位。最终这只票当天收跌11%。我们因为止损及时，实际亏损控制在了5.5%左右，算是止损成功了。</p>
-
-        <p>但紧接着，更大的问题来了。地产板块的恐慌情绪开始蔓延到银行、建材、家电等相关行业。系统连续触发了多只股票的止损——一天之内，组合仓位从满仓降到了65%。而当天收盘后复盘发现，这些被止损的股票中，有好几只的基本面并没有实质性问题，纯属市场情绪传染导致的"错杀"。</p>
-
-        <p>一周后，随着监管部门出手稳定市场预期，地产板块企稳反弹。被止损的股票中，有7只在一周后涨回了止损价，其中3只甚至创了新高。如果我们没有机械地执行止损规则，这些股票的损失完全可以避免。</p>
-
-        <div class="warning">
-            <p><strong>教训</strong>：止损是一把双刃剑。它在单边下跌的时候保护你，但在情绪驱动的短期波动中会让你"卖在最低点"。经过这次经历，我们对系统做了三点改进：①设置"波动缓冲期"——触发止损后先观察30分钟，确认不是瞬间错单或情绪踩踏再执行；②引入行业联动检测——如果整个行业都在跌且跌幅超过5%，说明是系统性冲击而非个股问题，止损阈值适当放宽；③为基本面优质的股票设置"PB保护"——如果股价跌破每股净资产且公司基本面无恶化，暂停止损。</p>
-        </div>
-
-        <h2>28.5 毕业寄语：形成你自己的投资哲学</h2>
-
-        <p>到这里，我们28章的全部内容就结束了。在最后，我想和你分享几点心得。</p>
-
-        <p><strong>第一，回顾知识地图。</strong> 28章的内容可以浓缩成一句话：投资分析就是从海量的信息中，找到那些真正有预测能力的信号，然后用系统化的方法把这些信号转化为决策。这门课教了你怎么看财报、怎么估值、怎么用量化模型、怎么用AI工具——但所有这些工具的价值，都取决于使用它们的那个人。</p>
-
-        <p><strong>第二，1万小时定律在投资中同样适用。</strong> 投资是一门手艺，需要持续的学习和实践。不要期望读完28章就能成为投资大师——那是不可能的。但如果你把这28章的内容消化了，你就有了一个完整的知识框架，剩下的就是在实践中不断试错、复盘、优化。每天花1小时学习和研究，坚持3年，你一定会比99%的散户做得更好。</p>
-
-        <p><strong>第三，形成自己的方法论，而不是盲从任何人。</strong> 市场中永远不缺"大神"和"老师"，但真正长期盈利的投资者，都有自己的独立判断体系。巴菲特有巴菲特的体系，西蒙斯有西蒙斯的体系，达利欧有达利欧的体系。他们的结论各不相同，但共同点是：<strong>他们相信自己的分析和逻辑，而不是市场情绪或别人的推荐。</strong> 希望你通过这门课，也能建立起属于自己的投资分析体系。</p>
-
-        <p><strong>第四，也是最重要的——投资的终极目标是更好的生活。</strong> 不要因为投资亏钱而影响生活质量，更不要因为投资赚钱而忽视了家庭、健康和热爱的事情。投资只是手段，生活才是目的。如果你在投资的过程中，感受到了理性思考的乐趣、发现了探索未知的快感、体会到了与市场博弈的刺激——那这门课就没有白上。</p>
-
-        <div class="highlight">
-            <p><strong>毕业寄语</strong>：市场会永远存在，牛熊会不断轮回，但你的知识和经验不会消失。这是你在这门课上获得的最宝贵的资产。祝你投资顺利，生活幸福。江湖路远，我们后会有期。</p>
-        </div>
-
-        <p>感谢你和我一起走完这28章的旅程。套用彼得·林奇的一句话来结尾："投资的窍门不是要学会相信自己内心的感觉，而是要约束自己不去理会内心的感觉。"——希望这门课给了你约束内心冲动的知识和工具。再见，未来的投资大师。</p>
-
-        <div class="footer-nav">
-            <a href="27.html">← 上一章</a>
-            <a href="index.html">📖 返回目录</a>
-            <a href="index.html">下一章 →</a>
-        </div>
-    </div>
+<a class="skip-link" href="#content">跳转至正文</a>
+<header class="site-header"><div class="header-inner"><a class="brand" href="../index.html">证券投资分析 · 研究手册</a><nav class="header-links" aria-label="全站导航"><a href="../index.html">课程地图</a><a href="https://github.com/1998x-stack/securities-investment-analysis-tutorial">GitHub</a></nav></div></header>
+<div class="article-layout">
+<nav class="toc" aria-label="本章目录"><strong>CHAPTER 28</strong><details open><summary>跳转小节</summary><ol>
+<li><a href="#puzzle">把工具串起来，难在哪里</a></li>
+<li><a href="#architecture">系统分层架构</a></li>
+<li><a href="#screening">三层选股漏斗</a></li>
+<li><a href="#weighting">波动率倒数权重</a></li>
+<li><a href="#evaluation">回测评估：指标怎么读</a></li>
+<li><a href="#stopology">再平衡与止损的两难</a></li>
+<li><a href="#practice">自我检验</a></li>
+<li><a href="#closing">结语：流程比结论重要</a></li>
+<li><a href="#references">资料来源与适用范围</a></li>
+</ol></details></nav>
+<main id="content"><article class="article-content">
+<header class="article-header"><p class="overline">CHAPTER 28 · CAPSTONE PROJECT</p><h1>综合实战项目：把全部工具串成一条流程</h1><p class="dek">把数据、选股、组合、回测与风控拼成一个系统，难的不是每一块有多复杂，而是各层的假设必须彼此一致——一层的疏忽会在另一层被放大。</p><p class="article-meta">资料核对：2026-11-22 · 本页不含任何真实回测业绩；出现的收益、权重与阈值均为构造的教学示例</p></header>
+<section id="puzzle" aria-labelledby="h-puzzle"><h2 id="h-puzzle">把工具串起来，难在哪里</h2><p>前面每一章都介绍了一个单独的工具：怎么看财报、怎么估值、怎么算因子、怎么回测、怎么风控。把它们拼成一个系统时，真正难的是<strong>各层假设的一致性</strong>。举例：选股层用 T 日收盘后的财务数据，组合层却假设 T 日开盘就能成交，这就制造了前视偏差；成本层只扣佣金，回测层却按高换手运行，结果就系统性偏乐观。</p><p>本章沿着一条完整的流程走一遍：<strong>数据 → 筛选 → 打分 → 权重 → 回测评估 → 再平衡与风控</strong>，并在每一步指出最容易被忽略的一致性要求。</p></section>
+<section id="architecture" aria-labelledby="h-architecture"><h2 id="h-architecture">系统分层架构</h2><p>一个可维护的系统通常分层，每层只负责一类工作，层与层之间通过明确的数据接口连接：</p><table class="data-table"><thead><tr><th scope="col">层</th><th scope="col">职责</th></tr></thead><tbody><tr><td>数据层</td><td>行情、财务、宏观等数据的获取、清洗与时点对齐</td></tr><tr><td>分析层</td><td>基本面筛选、技术面确认、因子计算</td></tr><tr><td>信号层</td><td>多因子合成与打分排序</td></tr><tr><td>组合层</td><td>权重分配、行业与集中度约束</td></tr><tr><td>风控层</td><td>集中度、波动与止损规则</td></tr><tr><td>评估层</td><td>净值、回撤、归因与稳定性检验</td></tr></tbody></table><figure class="figure"><div class="diagram-scroll"><svg data-export="28-architecture" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 240" role="img" aria-labelledby="f28a-t f28a-d"><title id="f28a-t">投资分析系统的分层流水线</title><desc id="f28a-d">数据、分析、信号、组合、风控与评估依次连接，评估结果反馈回分析与组合层形成闭环。</desc><rect width="760" height="240" rx="14" fill="#f3f7f5"/><text x="30" y="36" font-size="18" font-family="Arial,'Microsoft YaHei',sans-serif" font-weight="700" fill="#203035">分层流水线：每层只做一件事</text><g font-family="Arial,'Microsoft YaHei',sans-serif"><rect x="30" y="70" width="110" height="64" rx="10" fill="#ffffff" stroke="#147f80" stroke-width="2"/><text x="85" y="108" font-size="13" text-anchor="middle" fill="#203035">数据层</text><rect x="160" y="70" width="110" height="64" rx="10" fill="#ffffff" stroke="#147f80" stroke-width="2"/><text x="215" y="108" font-size="13" text-anchor="middle" fill="#203035">分析层</text><rect x="290" y="70" width="110" height="64" rx="10" fill="#ffffff" stroke="#147f80" stroke-width="2"/><text x="345" y="108" font-size="13" text-anchor="middle" fill="#203035">信号层</text><rect x="420" y="70" width="110" height="64" rx="10" fill="#ffffff" stroke="#7461ba" stroke-width="2"/><text x="475" y="108" font-size="13" text-anchor="middle" fill="#203035">组合层</text><rect x="550" y="70" width="110" height="64" rx="10" fill="#ffffff" stroke="#d06d4d" stroke-width="2"/><text x="605" y="108" font-size="13" text-anchor="middle" fill="#203035">风控层</text><path d="M140 102L158 102" stroke="#203035" stroke-width="2"/><path d="M270 102L288 102" stroke="#203035" stroke-width="2"/><path d="M400 102L418 102" stroke="#203035" stroke-width="2"/><path d="M530 102L548 102" stroke="#203035" stroke-width="2"/><rect x="550" y="160" width="180" height="50" rx="10" fill="#ffffff" stroke="#203035" stroke-width="2"/><text x="640" y="190" font-size="13" text-anchor="middle" fill="#203035">评估层</text><path d="M605 134L605 160" stroke="#203035" stroke-width="2"/><path d="M550 185L345 185L345 136" stroke="#7461ba" stroke-width="2" fill="none" stroke-dasharray="6 5"/><text x="440" y="200" font-size="12" fill="#7461ba">回测反馈</text><text x="30" y="80" font-size="12" fill="#53676d">数据从左侧流入，评估结果回流到分析与组合层。</text><text x="30" y="228" font-size="12" fill="#53676d">教学示意：分层的意义是让每一层的假设可被单独检查与替换。</text></g></svg></div><figcaption>分层不是为了“看起来专业”，而是为了在出问题时能定位到底是哪一层的假设错了。</figcaption></figure></section>
+<section id="screening" aria-labelledby="h-screening"><h2 id="h-screening">三层选股漏斗</h2><p>把候选股票池逐层收窄，常见做法是“三层漏斗”：</p><figure class="figure"><div class="diagram-scroll"><svg data-export="28-funnel" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" role="img" aria-labelledby="f28b-t f28b-d"><title id="f28b-t">三层选股漏斗</title><desc id="f28b-d">全市场股票先经基本面硬门槛排除风险样本，再用技术面确认时点，最后用多因子打分排序，候选数量逐层收窄。</desc><rect width="720" height="320" rx="14" fill="#f3f7f5"/><text x="30" y="36" font-size="18" font-family="Arial,'Microsoft YaHei',sans-serif" font-weight="700" fill="#203035">三层漏斗：先排除，再确认，最后排序</text><g font-family="Arial,'Microsoft YaHei',sans-serif"><path d="M120 60L600 60L520 130L200 130Z" fill="#ffffff" stroke="#147f80" stroke-width="2"/><text x="360" y="100" font-size="14" text-anchor="middle" fill="#203035">第一层：基本面硬门槛（排除高风险样本）</text><path d="M200 140L520 140L460 210L260 210Z" fill="#ffffff" stroke="#7461ba" stroke-width="2"/><text x="360" y="180" font-size="14" text-anchor="middle" fill="#203035">第二层：技术面确认时点</text><path d="M260 220L460 220L410 290L310 290Z" fill="#ffffff" stroke="#d06d4d" stroke-width="2"/><text x="360" y="260" font-size="13" text-anchor="middle" fill="#203035">第三层：多因子打分排序</text><text x="30" y="40" font-size="12" fill="#53676d"> </text></g></svg></div><figcaption>漏斗的宽度代表候选数量逐层减少；每一层的阈值都是一项选择，需要说明理由并做稳定性检验。</figcaption></figure><h3>第一层：基本面硬门槛</h3><p>目的是排除质地太差或风险过高的样本，例如：盈利能力指标持续为正、经营现金流与利润大体匹配、排除风险警示类股票。注意：像“ROE &gt; 15%”这样的具体阈值是<strong>一项选择而非真理</strong>——它会把行业差异（如重资产与轻资产行业）一刀切，使用前应先问“这个阈值在不同行业、不同年份是否稳健”。</p><h3>第二层：技术面确认</h3><p>技术面信号的作用是选择入场时点，而不是判断公司好坏。例如均线多头排列、动量指标转强等。这些信号必须考虑指标预热期与前后视问题（参见第 14 章），且它们只用价格与成交量，不能独立构成买入理由。</p><h3>第三层：多因子打分</h3><p>把候选股票按多个因子（成长、质量、低波等）分别做截面排名，再加权合成一个综合得分。关键细节包括：各因子需做去极值与标准化；权重不能在样本内调到最优；打分只用于排序，不应被解释为“预期收益”。</p></section>
+<section id="weighting" aria-labelledby="h-weighting"><h2 id="h-weighting">波动率倒数权重</h2><p>选出一批股票后，需要决定各自的权重。一种简单且常见的方式是<strong>波动率倒数加权</strong>：波动越高的股票权重越低，使各只股票对组合波动的贡献更接近。在不考虑相关性的简化情形下：</p><div class="math-scroll" role="region" tabindex="0" aria-label="波动率倒数权重公式"><math display="block" aria-label="权重 i 等于 1 除以波动率 i 再除以所有资产的倒数波动率之和"><mrow><msub><mi>w</mi><mi>i</mi></msub><mo>=</mo><mfrac><mrow><mn>1</mn><mo>/</mo><msub><mi>σ</mi><mi>i</mi></msub></mrow><mrow><munder><mo>∑</mo><mi>j</mi></munder><mn>1</mn><mo>/</mo><msub><mi>σ</mi><mi>j</mi></msub></mrow></mfrac></mrow></math></div><p>构造算例：两只股票的 60 日波动率分别为 30% 与 15%，则权重比 1/30 : 1/15 = 1 : 2，归一化后为 33.3% 与 66.7%。同时还应叠加<strong>行业与集中度约束</strong>（如单一行业不超过某比例），否则权重优化很容易把组合集中到少数行业上。</p></section>
+<section id="evaluation" aria-labelledby="h-evaluation"><h2 id="h-evaluation">回测评估：指标怎么读</h2><p>回测评估至少要看三组东西：<strong>净值曲线</strong>（收益是否只来自少数几段）、<strong>回撤序列</strong>（能不能拿住）、以及<strong>风险调整后收益</strong>。夏普比率是最常用的风险调整指标：</p><div class="math-scroll" role="region" tabindex="0" aria-label="夏普比率公式"><math display="block" aria-label="夏普比率等于组合收益减无风险利率再除以组合收益标准差"><mrow><mtext>Sharpe</mtext><mo>=</mo><mfrac><mrow><msub><mi>R</mi><mi>p</mi></msub><mo>−</mo><msub><mi>R</mi><mi>f</mi></msub></mrow><msub><mi>σ</mi><mi>p</mi></msub></mfrac></mrow></math></div><p>其中 <math aria-label="R p"><msub><mi>R</mi><mi>p</mi></msub></math> 是组合收益，<math aria-label="R f"><msub><mi>R</mi><mi>f</mi></msub></math> 是无风险利率，<math aria-label="sigma p"><msub><mi>σ</mi><mi>p</mi></msub></math> 是收益标准差。分子与分母必须使用<strong>同一频率</strong>（如都是年化）。</p><form class="formula-lab" data-calc="sharpe"><h3>动手算一遍：夏普比率</h3><p>输入年化收益、无风险利率与年化波动率（均为百分数）。</p><div class="controls"><label>年化收益（%）<input type="number" name="ret" value="12" step="0.1" required></label><label>无风险利率（%）<input type="number" name="rf" value="2" step="0.1" required></label><label>年化波动率（%）<input type="number" name="sigma" value="10" step="0.1" min="0.01" required></label></div><output aria-live="polite">计算中</output><p data-explain>启用脚本后自动显示结果。</p></form><p><strong>构造算例：</strong>年化收益 12%、无风险利率 2%、年化波动 10%，则 Sharpe=(12%−2%)/10%=1.0。请记住它的三个局限：①它惩罚上行波动，而投资者通常不介意上行；②它假设收益近似正态，忽略了尾部风险；③它依赖样本期，换一段区间结果就可能完全不同。</p><div class="insight"><p><strong>比指标本身更重要的三件事：</strong>①所有分层使用的数据必须时点一致（避免前视偏差）；②成本、成交假设与可交易性必须被如实建模；③应报告“不好看的区间”，而不是只展示净值曲线最美的一段。</p></div></section>
+<section id="stopology" aria-labelledby="h-stopology"><h2 id="h-stopology">再平衡与止损的两难</h2><p>系统上线后，真正的挑战才开始。其中最具代表性的是<strong>止损</strong>——它是一把双刃剑：单边下跌时保护你，情绪冲击中却可能让你卖在最低点。</p><p>把它写成一个可判断的决策问题，需要同时回答三件事：</p><ol><li><strong>触发条件</strong>：是固定比例回撤，还是相对波动率或波动率倍数的阈值？</li><li><strong>区分冲击类型</strong>：个股特有的下跌与全行业系统性下跌，应有不同的处理；后者不应被当成个股基本面恶化。</li><li><strong>恢复与纠错</strong>：平仓后如何重新入场？如果价格回落是由错杀引起的，机械止损就锁定了不必要的损失。</li></ol><div class="insight"><p><strong>没有免费的解：</strong>放宽止损能减少错杀，但也加大单边下跌时的回撤；收紧止损能控制单次最大损失，但会增加被情绪打出的概率。正确的做法不是找一个“最优阈值”，而是明确写出每种选择的代价与适用环境，并用样本外数据检验它。</p></div><h3>再平衡的同一道题</h3><p>月度再平衡同样面临“机械纪律 vs 低频信号”的取舍：固定日再平衡规则简单、可回测，但可能在无意义的噪声上过度交易，把收益交给成本；信号驱动再平衡更“聪明”，但引入了需要额外验证的预测。选择哪一种，取决于你对换手成本与信号可靠性的估计。</p></section>
+<section id="practice" aria-labelledby="h-practice"><h2 id="h-practice">自我检验</h2><div class="example"><h3>练习</h3><ol><li>写出你系统的六个分层，并指出相邻两层之间的数据接口是什么。</li><li>两只股票 60 日波动率为 25% 与 50%，求波动率倒数权重（保留一位小数）。</li><li>年化收益 15%、无风险利率 2%、年化波动 15%，求 Sharpe；再说明改变样本期为何会改变结果。</li><li>用“触发条件 / 区分冲击 / 恢复规则”三要素，写出你自己的止损规则，并指出它的失效场景。</li></ol></div><p>完成后应能独立回答：为什么分层能帮助定位错误？为何阈值只是选择不是真理？为何夏普比率不能单独决定策略好坏？为何止损没有免费的解？</p></section>
+<section id="closing" aria-labelledby="h-closing"><h2 id="h-closing">结语：流程比结论重要</h2><p>把前面各章的工具串完一圈，你会发现真正可迁移的并不是某个具体结论，而是一套<strong>流程</strong>：定义问题 → 明确数据与时点 → 写下假设与失败条件 → 用可复现的步骤建模 → 评估并保留反面证据。市场会变，因子会失效，模型会过时，但这套流程可以反复使用。</p><p>最后也是最容易被忽视的一点：<strong>投资是手段，不是目的。</strong> 不要让一个模型的好坏决定你的生活质量。把纪律、好奇和对自己判断的诚实保留下来，比任何一次超额收益都更持久。</p></section>
+<section id="references" aria-labelledby="h-references"><h2 id="h-references">资料来源与适用范围</h2><p>本页<strong>不含任何真实回测业绩或市场数据</strong>；文中权重、Sharpe 与阈值均为构造的教学算例。本页内容整合自本手册前 27 章，读者可按对应章节追溯每个概念的完整推导与出处。</p><ol class="source-list"><li><a href="https://doi.org/10.1016/j.jfineco.2014.10.010" target="_blank" rel="noopener noreferrer">Fama &amp; French (2015)｜A Five-Factor Asset Pricing Model, Journal of Financial Economics</a></li><li><a href="https://doi.org/10.1111/jofi.12365" target="_blank" rel="noopener noreferrer">McLean &amp; Pontiff (2016)｜Does Academic Research Destroy Stock Return Predictability?, Journal of Finance</a></li><li><a href="https://doi.org/10.1093/rfs/hhv059" target="_blank" rel="noopener noreferrer">Harvey, Liu &amp; Zhu (2016)｜…and the Cross-Section of Expected Returns, Review of Financial Studies</a></li></ol><p class="muted">说明：Sharpe（1966/1994）的风险调整比率定义仅以文字提及，本页不附具体版本链接；使用时请以原始文献为准。投资有风险，本页不构成任何投资建议。</p></section>
+<nav class="chapter-nav" aria-label="前后篇"><a href="27.html">← 第27章</a><a href="../index.html">课程总目录</a></nav>
+</article></main>
 </div>
-</div>
+<footer class="site-footer">仅用于证券投资教育，不构成个性化投资建议。</footer>
+<script defer src="../assets/js/site.js"></script>
 </body>
 </html>
