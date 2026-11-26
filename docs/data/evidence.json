@@ -520,7 +520,11 @@
         "Cleaning: remove ST/delisted and newly listed samples, forward-fill low-missing series, align frequencies to a common timestamp.",
         "Local database should store data version and update timestamps because adjusted history can be revised."
       ],
-      "sources": []
+      "sources": [
+        ["Ball & Brown 1968, Journal of Accounting Research", "https://doi.org/10.2307/2490232"],
+        ["Lo & MacKinlay 1990, Review of Financial Studies", "https://doi.org/10.1093/rfs/3.3.431"],
+        ["White 2000, Econometrica", "https://doi.org/10.1111/1468-0262.00152"]
+      ]
     },
     "24": {
       "claims": [
@@ -531,7 +535,13 @@
         "Vectorized vs event-driven backtests; credibility depends on modeling cost, tradability and timing, not on the framework.",
         "Cost estimate: annual cost ~ turnover x 2 x one-way cost; constructed example 50 x 2 x 0.1% = 10%/yr."
       ],
-      "sources": []
+      "sources": [
+        ["pandas documentation", "https://pandas.pydata.org/docs/"],
+        ["TA-Lib Python documentation", "https://ta-lib.github.io/ta-lib-python/"],
+        ["QuantStats", "https://github.com/ranaroussi/quantstats"],
+        ["mplfinance", "https://github.com/matplotlib/mplfinance"],
+        ["McLean & Pontiff 2016, Journal of Finance", "https://doi.org/10.1111/jofi.12365"]
+      ]
     },
     "25": {
       "claims": [
