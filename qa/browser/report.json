@@ -1,0 +1,437 @@
+{
+  "results": [
+    {
+      "page": "index.html",
+      "width": 1440,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 0,
+      "screenshot": "qa/browser/index-1440.png"
+    },
+    {
+      "page": "lessons/01.html",
+      "width": 1440,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-01-1440.png"
+    },
+    {
+      "page": "lessons/02.html",
+      "width": 1440,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-02-1440.png"
+    },
+    {
+      "page": "lessons/03.html",
+      "width": 1440,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-03-1440.png"
+    },
+    {
+      "page": "lessons/04.html",
+      "width": 1440,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 2,
+      "screenshot": "qa/browser/lessons-04-1440.png"
+    },
+    {
+      "page": "lessons/05.html",
+      "width": 1440,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 2,
+      "screenshot": "qa/browser/lessons-05-1440.png"
+    },
+    {
+      "page": "lessons/06.html",
+      "width": 1440,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 2,
+      "screenshot": "qa/browser/lessons-06-1440.png"
+    },
+    {
+      "page": "lessons/07.html",
+      "width": 1440,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-07-1440.png"
+    },
+    {
+      "page": "lessons/08.html",
+      "width": 1440,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 3,
+      "screenshot": "qa/browser/lessons-08-1440.png"
+    },
+    {
+      "page": "lessons/09.html",
+      "width": 1440,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 4,
+      "screenshot": "qa/browser/lessons-09-1440.png"
+    },
+    {
+      "page": "lessons/10.html",
+      "width": 1440,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 4,
+      "screenshot": "qa/browser/lessons-10-1440.png"
+    },
+    {
+      "page": "lessons/11.html",
+      "width": 1440,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-11-1440.png"
+    },
+    {
+      "page": "lessons/12.html",
+      "width": 1440,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 2,
+      "screenshot": "qa/browser/lessons-12-1440.png"
+    },
+    {
+      "page": "lessons/13.html",
+      "width": 1440,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-13-1440.png"
+    },
+    {
+      "page": "lessons/14.html",
+      "width": 1440,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 3,
+      "screenshot": "qa/browser/lessons-14-1440.png"
+    },
+    {
+      "page": "lessons/15.html",
+      "width": 1440,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 2,
+      "screenshot": "qa/browser/lessons-15-1440.png"
+    },
+    {
+      "page": "index.html",
+      "width": 390,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 0,
+      "screenshot": "qa/browser/index-390.png"
+    },
+    {
+      "page": "lessons/01.html",
+      "width": 390,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-01-390.png"
+    },
+    {
+      "page": "lessons/02.html",
+      "width": 390,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-02-390.png"
+    },
+    {
+      "page": "lessons/03.html",
+      "width": 390,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-03-390.png"
+    },
+    {
+      "page": "lessons/04.html",
+      "width": 390,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 2,
+      "screenshot": "qa/browser/lessons-04-390.png"
+    },
+    {
+      "page": "lessons/05.html",
+      "width": 390,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 2,
+      "screenshot": "qa/browser/lessons-05-390.png"
+    },
+    {
+      "page": "lessons/06.html",
+      "width": 390,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 2,
+      "screenshot": "qa/browser/lessons-06-390.png"
+    },
+    {
+      "page": "lessons/07.html",
+      "width": 390,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-07-390.png"
+    },
+    {
+      "page": "lessons/08.html",
+      "width": 390,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 3,
+      "screenshot": "qa/browser/lessons-08-390.png"
+    },
+    {
+      "page": "lessons/09.html",
+      "width": 390,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 4,
+      "screenshot": "qa/browser/lessons-09-390.png"
+    },
+    {
+      "page": "lessons/10.html",
+      "width": 390,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 4,
+      "screenshot": "qa/browser/lessons-10-390.png"
+    },
+    {
+      "page": "lessons/11.html",
+      "width": 390,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-11-390.png"
+    },
+    {
+      "page": "lessons/12.html",
+      "width": 390,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 2,
+      "screenshot": "qa/browser/lessons-12-390.png"
+    },
+    {
+      "page": "lessons/13.html",
+      "width": 390,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-13-390.png"
+    },
+    {
+      "page": "lessons/14.html",
+      "width": 390,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 3,
+      "screenshot": "qa/browser/lessons-14-390.png"
+    },
+    {
+      "page": "lessons/15.html",
+      "width": 390,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 2,
+      "screenshot": "qa/browser/lessons-15-390.png"
+    },
+    {
+      "page": "index.html",
+      "width": 360,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 0,
+      "screenshot": "qa/browser/index-360.png"
+    },
+    {
+      "page": "lessons/01.html",
+      "width": 360,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-01-360.png"
+    },
+    {
+      "page": "lessons/02.html",
+      "width": 360,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-02-360.png"
+    },
+    {
+      "page": "lessons/03.html",
+      "width": 360,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-03-360.png"
+    },
+    {
+      "page": "lessons/04.html",
+      "width": 360,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 2,
+      "screenshot": "qa/browser/lessons-04-360.png"
+    },
+    {
+      "page": "lessons/05.html",
+      "width": 360,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 2,
+      "screenshot": "qa/browser/lessons-05-360.png"
+    },
+    {
+      "page": "lessons/06.html",
+      "width": 360,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 2,
+      "screenshot": "qa/browser/lessons-06-360.png"
+    },
+    {
+      "page": "lessons/07.html",
+      "width": 360,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-07-360.png"
+    },
+    {
+      "page": "lessons/08.html",
+      "width": 360,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 3,
+      "screenshot": "qa/browser/lessons-08-360.png"
+    },
+    {
+      "page": "lessons/09.html",
+      "width": 360,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 4,
+      "screenshot": "qa/browser/lessons-09-360.png"
+    },
+    {
+      "page": "lessons/10.html",
+      "width": 360,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 4,
+      "screenshot": "qa/browser/lessons-10-360.png"
+    },
+    {
+      "page": "lessons/11.html",
+      "width": 360,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-11-360.png"
+    },
+    {
+      "page": "lessons/12.html",
+      "width": 360,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 2,
+      "screenshot": "qa/browser/lessons-12-360.png"
+    },
+    {
+      "page": "lessons/13.html",
+      "width": 360,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 1,
+      "screenshot": "qa/browser/lessons-13-360.png"
+    },
+    {
+      "page": "lessons/14.html",
+      "width": 360,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 3,
+      "screenshot": "qa/browser/lessons-14-360.png"
+    },
+    {
+      "page": "lessons/15.html",
+      "width": 360,
+      "h1": 1,
+      "overflow_px": 0,
+      "broken_images": 0,
+      "mathml": 2,
+      "screenshot": "qa/browser/lessons-15-360.png"
+    }
+  ],
+  "failures": []
+}
