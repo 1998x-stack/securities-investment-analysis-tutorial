@@ -9,3 +9,4 @@ jobs:
         with:
           python-version: '3.12'
       - run: python3 scripts/validate_site.py
+      - run: python3 -m unittest discover -s examples -p 'test_*.py' -v
